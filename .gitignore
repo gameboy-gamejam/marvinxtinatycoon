@@ -27,3 +27,5 @@ proguard/
 *.ipr
 *.iws
 .idea/
+GameJam/.settings/org.eclipse.core.resources.prefs
+GameJam/.settings/org.eclipse.jdt.core.prefs
