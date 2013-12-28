@@ -12,7 +12,7 @@ public class GBTown extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.screen_splash);
+        setContentView(R.layout.scene_splash);
 
     }
 }

@@ -12,7 +12,7 @@ public class GBTitle extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.screen_title);
+        setContentView(R.layout.scene_title);
 
     }
 }

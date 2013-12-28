@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/btn_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="78dp"
+        android:layout_marginLeft="43dp"
+        android:text="Shop" />
+
+    <Button
+        android:id="@+id/btn_outside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:text="Outside" />
+
+    <Button
+        android:id="@+id/btn_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btn_shop"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="23dp"
+        android:layout_marginRight="31dp"
+        android:text="Restaurant" />
+
+    <Button
+        android:id="@+id/btn_mayor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_restaurant"
+        android:layout_marginBottom="29dp"
+        android:layout_toRightOf="@+id/btn_shop"
+        android:text="Mayor" />
+
+    <Button
+        android:id="@+id/btn_guild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btn_mayor"
+        android:layout_marginBottom="22dp"
+        android:layout_marginLeft="57dp"
+        android:layout_toRightOf="@+id/btn_outside"
+        android:text="Guild" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_shop"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Month: 1 Day: 1" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btn_restaurant"
+        android:layout_alignTop="@+id/linearLayout1"
+        android:src="@drawable/ic_launcher" />
+
+</RelativeLayout>

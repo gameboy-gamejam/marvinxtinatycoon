@@ -6,7 +6,7 @@ import com.gj.gb.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class GBShop extends Activity {
+public class GBMarket extends Activity {
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
