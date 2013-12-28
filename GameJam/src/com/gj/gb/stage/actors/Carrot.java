@@ -47,15 +47,14 @@ public class Carrot {
 		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
 			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_spoiled);
 			mState = STATE_SPOILED;
-		} else if (mState == STATE_SPOILED
-				&& inGameCurrentTime > mSpoiledDownTime) {
+		} else if (mState == STATE_SPOILED && inGameCurrentTime > mSpoiledDownTime) {
 			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
 			mState = STATE_EMPTY;
 		} else if (mState == STATE_HARVESTED) {
 			if (mHarvestDownTimeNoFade == 1000) {
 				mHarvestDownTimeNoFade += inGameCurrentTime;
-				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade + inGameCurrentTime;
-				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade+ inGameCurrentTime;
+				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade;
+				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade;
 				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvested);
 			}
 			if (inGameCurrentTime > mHarvestDownTimeNoFade) {
@@ -87,8 +86,8 @@ public class Carrot {
 	public void setTimeSeeded(int timeSeeded) {
 		initDownTime();
 		mSeedDownTime += timeSeeded;
-		mSproutDownTime += mSeedDownTime + timeSeeded;
-		mRipeDownTime += mSproutDownTime + timeSeeded;
-		mSpoiledDownTime += mRipeDownTime + timeSeeded;
+		mSproutDownTime += mSeedDownTime;
+		mRipeDownTime += mSproutDownTime;
+		mSpoiledDownTime += mRipeDownTime;
 	}
 }
