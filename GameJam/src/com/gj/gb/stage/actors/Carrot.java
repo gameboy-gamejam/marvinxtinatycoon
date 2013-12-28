@@ -9,12 +9,12 @@ import com.gj.gb.R;
 
 public class Carrot {
 
-	public static final int STATE_EMPTY = 1000;
-	public static final int STATE_SEEDED = 1001;
-	public static final int STATE_SPROUT = 1002;
-	public static final int STATE_RIPE = 1003;
-	public static final int STATE_SPOILED = 1004;
-	public static final int STATE_HARVESTED = 1005;
+	public static final int STATE_EMPTY		 	= 1000;
+	public static final int STATE_SEEDED 		= 1001;
+	public static final int STATE_SPROUT 		= 1002;
+	public static final int STATE_RIPE 			= 1003;
+	public static final int STATE_SPOILED 		= 1004;
+	public static final int STATE_HARVESTED 	= 1005;
 
 	private int mState;
 	private int mPosX;
