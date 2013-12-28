@@ -1,13 +1,14 @@
 package com.gj.gb.stage.actors;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.gj.gb.R;
 
 public class Carrot {
-	
+
 	public static final int STATE_EMPTY = 1000;
 	public static final int STATE_SEEDED = 1001;
 	public static final int STATE_SPROUT = 1002;
@@ -18,6 +19,7 @@ public class Carrot {
 	private int mState;
 	private int mPosX;
 	private int mPosY;
+	private Bitmap currentSkin;
 
 	// Down time in ms
 	private long mSeedDownTime;
@@ -33,52 +35,39 @@ public class Carrot {
 		mPosY = posY;
 	}
 
-	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {// like one of your french girls
-		if(mState == STATE_EMPTY) {
-			canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_empty), mPosX, mPosY, null);
-		} else if(mState == STATE_SEEDED){
-			if(inGameCurrentTime > mSeedDownTime){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_sprout), mPosX, mPosY, null);
-				mState = STATE_SPROUT;
-			} else {
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_seeded), mPosX, mPosY, null);
-			}
-		} else if(mState == STATE_SPROUT){
-			if(inGameCurrentTime > mSproutDownTime){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_ripe), mPosX, mPosY, null);
-				mState = STATE_RIPE;
-			} else {
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_sprout), mPosX, mPosY, null);
-			}
-		} else if(mState == STATE_RIPE){
-			if(inGameCurrentTime > mRipeDownTime){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_spoiled), mPosX, mPosY, null);
-				mState = STATE_SPOILED;
-			} else {
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_ripe), mPosX, mPosY, null);
-			}
-		} else if(mState == STATE_SPOILED){
-			if(inGameCurrentTime > mSpoiledDownTime){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_empty), mPosX, mPosY, null);
-				mState = STATE_EMPTY;
-			} else {
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_spoiled), mPosX, mPosY, null);
-			}
-		} else if(mState == STATE_HARVESTED){
-			if(mHarvestDownTimeNoFade == 1000){
+	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
+		if (mState == STATE_EMPTY && currentSkin == null) {
+				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+		} else if (mState == STATE_SEEDED && inGameCurrentTime > mSeedDownTime) {
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_sprout);
+			mState = STATE_SPROUT;
+		} else if (mState == STATE_SPROUT && inGameCurrentTime > mSproutDownTime) {
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_ripe);
+			mState = STATE_RIPE;
+		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_spoiled);
+			mState = STATE_SPOILED;
+		} else if (mState == STATE_SPOILED
+				&& inGameCurrentTime > mSpoiledDownTime) {
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+			mState = STATE_EMPTY;
+		} else if (mState == STATE_HARVESTED) {
+			if (mHarvestDownTimeNoFade == 1000) {
 				mHarvestDownTimeNoFade += inGameCurrentTime;
 				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade + inGameCurrentTime;
-				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade + inGameCurrentTime;
+				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade+ inGameCurrentTime;
+				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvested);
 			}
-			if(inGameCurrentTime > mHarvestDownTimeNoFade){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_harvested), mPosX, mPosY, null);
-			} else if(inGameCurrentTime > mHarvestDownTimeNoFade){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_harvest_fade_half), mPosX, mPosY, null);
-			} else if(inGameCurrentTime > mHarvestDownTimeNoFade){
-				canvas.drawBitmap(BitmapFactory.decodeResource(res, R.drawable.carrot_harvested_fade_full), mPosX, mPosY, null);
+			if (inGameCurrentTime > mHarvestDownTimeNoFade) {
+				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvest_fade_half);
+			} else if (inGameCurrentTime > mHarvestDownTimeHalfFade) {
+				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvested_fade_full);
+			} else if (inGameCurrentTime > mHarvestDownTimeFullFade) {
+				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
 				mState = STATE_EMPTY;
 			}
 		}
+		canvas.drawBitmap(currentSkin, mPosX, mPosY, null);
 	}
 
 	private void initDownTime() {
