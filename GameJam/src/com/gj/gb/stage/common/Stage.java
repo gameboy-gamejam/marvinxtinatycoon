@@ -1,4 +1,4 @@
-package com.gj.jb.stage.common;
+package com.gj.gb.stage.common;
 
 import android.app.Activity;
 import android.content.Context;
