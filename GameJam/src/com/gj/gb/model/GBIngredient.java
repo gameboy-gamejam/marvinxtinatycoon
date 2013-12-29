@@ -25,6 +25,8 @@ public class GBIngredient {
 	
 	/* value from 1-5 */
 	protected int rarity;
+	
+	private int quantity;
 
 	public GBIngredient(int id, String name, IngredientCategory category, int price, int rarity) {
 		super();
@@ -73,5 +75,13 @@ public class GBIngredient {
 
 	public void setCategory(IngredientCategory category) {
 		this.category = category;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }

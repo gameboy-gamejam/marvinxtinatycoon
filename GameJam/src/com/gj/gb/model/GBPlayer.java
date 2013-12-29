@@ -6,10 +6,8 @@ public class GBPlayer {
 
 	protected int gold;
 	
-	protected List<Integer> ingredient;
-	
-	protected List<Integer> recipe;
-	
+	protected List<GBIngredient> ingredient;
+
 	protected int popularity;
 
 	public int getGold() {
@@ -20,20 +18,12 @@ public class GBPlayer {
 		this.gold = gold;
 	}
 
-	public List<Integer> getIngredient() {
+	public List<GBIngredient> getIngredient() {
 		return ingredient;
 	}
 
-	public void setIngredient(List<Integer> ingredient) {
+	public void setIngredient(List<GBIngredient> ingredient) {
 		this.ingredient = ingredient;
-	}
-
-	public List<Integer> getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(List<Integer> recipe) {
-		this.recipe = recipe;
 	}
 
 	public int getPopularity() {
