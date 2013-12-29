@@ -20,7 +20,7 @@ public class GBEconomics {
 	/* every 7 days, market demand changes */
 	protected static int marketDemandDuration = 7;
 	
-	protected static final int MIN_CUSTOMER = 1;
+	protected static final int MIN_CUSTOMER = 3;
 	
 	// this should be called everytime the player advances to next day
 	public static void update() {
@@ -58,16 +58,16 @@ public class GBEconomics {
 		return inDemandRecipe;
 	}
 	
-	public static int getDayCustomerCount(int popularity) {
+	public static int getDayCustomerCount(int ratings) {
 		boolean influx = isCustomerInflux();
 		
-		int max = MIN_CUSTOMER + (MIN_CUSTOMER * popularity);
+		int max = MIN_CUSTOMER + (MIN_CUSTOMER * ratings);
 		int customer = Utils.RANDOM.nextInt(max) + MIN_CUSTOMER;
 		
 		if (influx) {
 			// if there is influx of customer, there will be at least
 			// a minimum of 4 customer in the player's restaurant
-			customer += Utils.RANDOM.nextInt(4) + 3;
+			customer += Utils.RANDOM.nextInt(8) + 3;
 		}
 		
 		return customer;

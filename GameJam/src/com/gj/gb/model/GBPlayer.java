@@ -34,4 +34,8 @@ public class GBPlayer {
 		this.popularity = popularity;
 	}
 	
+	// the number of customers per day
+	public int getRatings(int day) {
+		return this.popularity / day;
+	}
 }
