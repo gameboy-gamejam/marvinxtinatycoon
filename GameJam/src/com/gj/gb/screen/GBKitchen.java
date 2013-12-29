@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBRecipeFactory;
@@ -22,7 +23,7 @@ public class GBKitchen extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.popup_dishlist);
+		setContentView(R.layout.popup_dish_list);
 
 		//initialize
 		init();
@@ -30,12 +31,16 @@ public class GBKitchen extends Activity {
 		//generate dishes
 		generateDishes();
 		
-		customGridAdapter = new GBKitchenAdapter(this);
 		customGridAdapter.setRecipeList(gridArray);
+		customGridAdapter.setInfoView(
+				(TextView)findViewById(R.id.name),
+				(TextView)findViewById(R.id.description),
+				(TextView)findViewById(R.id.price));
 		gridView.setAdapter(customGridAdapter);
 	}
 	
 	private void init(){
+		customGridAdapter = new GBKitchenAdapter(this);
 		gridView = (GridView) findViewById(R.id.dishlist);
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			
@@ -49,6 +54,12 @@ public class GBKitchen extends Activity {
 	private void generateDishes(){
 		for(int i = 0;i < 3; i++){
 			gridArray.add(GBRecipeFactory.getRecipeById(i));
-		}		
+		}	
+		for(int i = 0;i < 3; i++){
+			gridArray.add(GBRecipeFactory.getRecipeById(i));
+		}	
+		for(int i = 0;i < 3; i++){
+			gridArray.add(GBRecipeFactory.getRecipeById(i));
+		}	
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBRecipe;
+import com.gj.gb.util.Utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -27,6 +29,9 @@ public class GBKitchenAdapter extends BaseAdapter {
 	private List<GBRecipe> recipe;
 	private Activity mActivity;
 	private LayoutInflater mInflater;
+	private TextView mName;
+	private TextView mDescription;
+	private TextView mPrice;
 
 	public GBKitchenAdapter(Activity activity) {
 		this.mActivity = activity;
@@ -36,6 +41,12 @@ public class GBKitchenAdapter extends BaseAdapter {
 	public void setRecipeList(List<GBRecipe> recipe) {
 		this.recipe = recipe;
 		notifyDataSetChanged();
+	}
+	
+	public void setInfoView(TextView name, TextView description, TextView price) {
+		this.mName = name;
+		this.mDescription = description;
+		this.mPrice = price;
 	}
 
 	@Override
@@ -67,12 +78,19 @@ public class GBKitchenAdapter extends BaseAdapter {
 			holder = (RecordHolder) convertView.getTag();
 		}
 
-		GBRecipe item = recipe.get(position);
-		// holder.txtTitle.setText(item.getTitle());
-		item.getId();
-		Bitmap userIcon = BitmapFactory.decodeResource(mActivity.getResources(),
-				R.drawable.ic_launcher);
-		 holder.imageItem.setImageBitmap(userIcon);
+		final GBRecipe item = recipe.get(position);
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mName.setText(item.getName());
+				mDescription.setText(item.getDescription());
+				mPrice.setText(item.getPrice()+ " Gold");
+			}
+		});
+		
+		Bitmap userIcon = Utils.getBitmapFromDrawable(mActivity, "recipe", item.getId());
+		holder.imageItem.setImageBitmap(userIcon);
 		return convertView;
 
 	}
@@ -82,4 +100,6 @@ public class GBKitchenAdapter extends BaseAdapter {
 		ImageView imageItem;
 
 	}
+
+
 }
