@@ -1,5 +1,6 @@
 package com.gj.gb.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GBRecipe {
@@ -14,6 +15,19 @@ public class GBRecipe {
 	
 	protected List<Integer> ingredients;
 
+	public GBRecipe(int id, String name, String description, int price, int... ingredient) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.ingredients = new ArrayList<Integer>();
+		int n = ingredient.length;
+		for (int i=0; i<n; i++) {
+			this.ingredients.add(ingredient[i]);
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}

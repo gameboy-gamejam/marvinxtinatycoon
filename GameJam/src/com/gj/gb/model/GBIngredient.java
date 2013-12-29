@@ -2,16 +2,38 @@ package com.gj.gb.model;
 
 public class GBIngredient {
 
+	public enum IngredientCategory {
+		
+		CROPS, // vegetables and other ingredients that can be harvested from land
+		
+		FISH, // fish products
+		
+		MEAT, // meat products
+		
+		FRUIT, // products that can be harvested from tree
+		
+		OTHERS
+	}
+	
 	protected int id;
 	
 	protected String name;
-	
-	protected String description;
-	
+
 	protected int price;
+	
+	protected IngredientCategory category;
 	
 	/* value from 1-5 */
 	protected int rarity;
+
+	public GBIngredient(int id, String name, IngredientCategory category, int price, int rarity) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.category = category;
+		this.price = price;
+		this.rarity = rarity;
+	}
 
 	public int getId() {
 		return id;
@@ -29,14 +51,6 @@ public class GBIngredient {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public int getPrice() {
 		return price;
 	}
@@ -51,5 +65,13 @@ public class GBIngredient {
 
 	public void setRarity(int rarity) {
 		this.rarity = rarity;
+	}
+
+	public IngredientCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(IngredientCategory category) {
+		this.category = category;
 	}
 }
