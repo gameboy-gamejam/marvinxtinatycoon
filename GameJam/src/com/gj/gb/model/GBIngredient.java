@@ -6,6 +6,8 @@ public class GBIngredient {
 	
 	protected String name;
 	
+	protected String description;
+	
 	protected int price;
 	
 	/* value from 1-5 */
