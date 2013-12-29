@@ -3,7 +3,7 @@ package com.gj.gb.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gj.gb.Utils;
+import com.gj.gb.util.Utils;
 
 public class GBEconomics {
 
