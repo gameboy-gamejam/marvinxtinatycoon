@@ -1,49 +1,65 @@
 package com.gj.gb.screen;
 
 import java.util.ArrayList;
-
-import com.gj.gb.R;
-import com.gj.gb.gameview.GBDishModel;
-import com.gj.gb.gameview.GBKitchenAdapter;
+import java.util.List;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
+
+import com.gj.gb.R;
+import com.gj.gb.factory.GBRecipeFactory;
+import com.gj.gb.gameview.GBKitchenAdapter;
+import com.gj.gb.model.GBRecipe;
 
 public class GBKitchen extends Activity {
-	GridView gridView;
-	ArrayList<GBDishModel> gridArray = new ArrayList<GBDishModel>();
-	GBKitchenAdapter customGridAdapter;
+	private GridView gridView;
+	private List<GBRecipe> gridArray = new ArrayList<GBRecipe>();
+	private GBKitchenAdapter customGridAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.popup_dishlist);
+		setContentView(R.layout.popup_dish_list);
 
-		// set grid view item
-		Bitmap homeIcon = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.ic_launcher);
-		Bitmap userIcon = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.ic_launcher);
+		//initialize
+		init();
 
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridArray.add(new GBDishModel(homeIcon, "Home"));
-		gridArray.add(new GBDishModel(userIcon, "User"));
-		gridView = (GridView) findViewById(R.id.dishlist);
-		customGridAdapter = new GBKitchenAdapter(this, R.layout.part_gridview,
-				gridArray);
+		//generate dishes
+		generateDishes();
+		
+		customGridAdapter.setRecipeList(gridArray);
+		customGridAdapter.setInfoView(
+				(TextView)findViewById(R.id.name),
+				(TextView)findViewById(R.id.description),
+				(TextView)findViewById(R.id.price));
 		gridView.setAdapter(customGridAdapter);
+	}
+	
+	private void init(){
+		customGridAdapter = new GBKitchenAdapter(this);
+		gridView = (GridView) findViewById(R.id.dishlist);
+		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
+	
+	private void generateDishes(){
+		for(int i = 0;i < 3; i++){
+			gridArray.add(GBRecipeFactory.getRecipeById(i));
+		}	
+		for(int i = 0;i < 3; i++){
+			gridArray.add(GBRecipeFactory.getRecipeById(i));
+		}	
+		for(int i = 0;i < 3; i++){
+			gridArray.add(GBRecipeFactory.getRecipeById(i));
+		}	
 	}
 }

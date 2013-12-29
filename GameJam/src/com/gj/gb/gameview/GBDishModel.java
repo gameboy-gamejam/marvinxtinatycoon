@@ -3,29 +3,30 @@ package com.gj.gb.gameview;
 import android.graphics.Bitmap;
 
 public class GBDishModel {
-	Bitmap image;
-	String title;
+	private Bitmap mImage;
+	private String mName;
+	private String mDescription;
 
-	public GBDishModel(Bitmap image, String title) {
+	public GBDishModel(Bitmap image, String name) {
 		super();
-		this.image = image;
-		this.title = title;
+		this.mImage = image;
+		this.mName = name;
 	}
 
 	public Bitmap getImage() {
-		return image;
+		return mImage;
 	}
 
 	public void setImage(Bitmap image) {
-		this.image = image;
+		this.mImage = image;
 	}
 
 	public String getTitle() {
-		return title;
+		return mName;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitle(String name) {
+		this.mName = name;
 	}
 
 }

@@ -8,7 +8,7 @@
         <item name="android:textColorTertiary">@color/white</item>
     </style>
 
-    <style name="ThemePop" parent="android:Theme.Dialog">
+    <style name="ThemePop" parent="android:Theme.NoTitleBar.Fullscreen">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowIsTranslucent">true</item>
