@@ -16,6 +16,7 @@ public class Carrot {
 	public static final int STATE_RIPE 			= 1003;
 	public static final int STATE_SPOILED 		= 1004;
 	public static final int STATE_HARVESTED 	= 1005;
+	public static final int STATE_SELECTED	 	= 1006;
 
 	private int mState;
 	private float mPosX;
@@ -32,6 +33,7 @@ public class Carrot {
 	private long mHarvestDownTimeNoFade;
 	private long mHarvestDownTimeHalfFade;
 	private long mHarvestDownTimeFullFade;
+	private static final long mDefaultDownTime = 1000;
 
 	public Carrot(float posX, float posY, float posXRightBorder, float posYBottomBorder) {
 		mPosX = posX;
@@ -52,11 +54,16 @@ public class Carrot {
 		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
 			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_spoiled);
 			mState = STATE_SPOILED;
+			if(inGameCurrentTime > mSpoiledDownTime){
+				mSpoiledDownTime = inGameCurrentTime + mDefaultDownTime;
+			}
+		} else if (mState == STATE_SELECTED) {
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_selected);
 		} else if (mState == STATE_SPOILED && inGameCurrentTime > mSpoiledDownTime) {
 			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
 			mState = STATE_EMPTY;
 		} else if (mState == STATE_HARVESTED) {
-			if (mHarvestDownTimeNoFade == 1000) {
+			if (mHarvestDownTimeNoFade == mDefaultDownTime) {
 				mHarvestDownTimeNoFade += inGameCurrentTime;
 				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade;
 				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade;
@@ -84,9 +91,9 @@ public class Carrot {
 		mSproutDownTime = 3000;
 		mRipeDownTime = 5000;
 		mSpoiledDownTime = 3000;
-		mHarvestDownTimeNoFade = 1000;
-		mHarvestDownTimeHalfFade = 1000;
-		mHarvestDownTimeFullFade = 1000;
+		mHarvestDownTimeNoFade = mDefaultDownTime;
+		mHarvestDownTimeHalfFade = mDefaultDownTime;
+		mHarvestDownTimeFullFade = mDefaultDownTime;
 	}
 
 	public void setState(int state) {
