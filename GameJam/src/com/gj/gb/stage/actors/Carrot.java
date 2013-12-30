@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 import com.gj.gb.R;
+import com.gj.gb.stage.common.StageHelper;
 
 public class Carrot {
 
@@ -19,6 +20,8 @@ public class Carrot {
 	private int mState;
 	private float mPosX;
 	private float mPosY;
+	private float mPosXRightBorder;
+	private float mPosYBottomBorder;
 	private Bitmap currentSkin;
 
 	// Down time in ms
@@ -30,9 +33,11 @@ public class Carrot {
 	private long mHarvestDownTimeHalfFade;
 	private long mHarvestDownTimeFullFade;
 
-	public Carrot(float posX, float posY) {
+	public Carrot(float posX, float posY, float posXRightBorder, float posYBottomBorder) {
 		mPosX = posX;
 		mPosY = posY;
+		mPosXRightBorder = posXRightBorder;
+		mPosYBottomBorder = posYBottomBorder;
 	}
 
 	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
@@ -67,6 +72,11 @@ public class Carrot {
 			}
 		}
 		canvas.drawBitmap(currentSkin, mPosX, mPosY, null);
+	}
+	
+	public boolean isHit(float touchPosX, float touchPosY){
+		return StageHelper.isWithinBorders(mPosX, mPosXRightBorder, mPosY, 
+				mPosYBottomBorder, touchPosX, touchPosY);
 	}
 
 	private void initDownTime() {
