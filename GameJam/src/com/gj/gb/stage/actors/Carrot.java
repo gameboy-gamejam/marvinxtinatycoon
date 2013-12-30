@@ -24,6 +24,8 @@ public class Carrot {
 	private float mPosXRightBorder;
 	private float mPosYBottomBorder;
 	private Bitmap currentSkin;
+	
+	private float recordedTouchPtY;
 
 	// Down time in ms
 	private long mSeedDownTime;
@@ -96,15 +98,23 @@ public class Carrot {
 		mHarvestDownTimeFullFade = mDefaultDownTime;
 	}
 
-	public void setState(int state) {
-		mState = state;
-	}
-
 	public void setTimeSeeded(int timeSeeded) {
 		initDownTime();
 		mSeedDownTime += timeSeeded;
 		mSproutDownTime += mSeedDownTime;
 		mRipeDownTime += mSproutDownTime;
 		mSpoiledDownTime += mRipeDownTime;
+	}
+	
+	public void setState(int state) {
+		mState = state;
+	}
+
+	public float getRecordedTouchPtY() {
+		return recordedTouchPtY;
+	}
+
+	public void setRecordedTouchPtY(float recordedTouchPtY) {
+		this.recordedTouchPtY = recordedTouchPtY;
 	}
 }
