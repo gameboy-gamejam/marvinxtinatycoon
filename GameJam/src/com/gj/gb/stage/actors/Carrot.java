@@ -23,9 +23,9 @@ public class Carrot {
 	private float mPosY;
 	private float mPosXRightBorder;
 	private float mPosYBottomBorder;
-	private Bitmap currentSkin;
+	private Bitmap mCurrentSkin;
 	
-	private float recordedTouchPtY;
+	private float mRecordedTouchPtY;//records user's activity for this carrot only
 
 	// Down time in ms
 	private long mSeedDownTime;
@@ -45,42 +45,42 @@ public class Carrot {
 	}
 
 	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
-		if (mState == STATE_EMPTY && currentSkin == null) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+		if (mState == STATE_EMPTY && mCurrentSkin == null) {
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
 		} else if (mState == STATE_SEEDED && inGameCurrentTime > mSeedDownTime) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_sprout);
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_sprout);
 			mState = STATE_SPROUT;
 		} else if (mState == STATE_SPROUT && inGameCurrentTime > mSproutDownTime) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_ripe);
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_ripe);
 			mState = STATE_RIPE;
 		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_spoiled);
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_spoiled);
 			mState = STATE_SPOILED;
 			if(inGameCurrentTime > mSpoiledDownTime){
 				mSpoiledDownTime = inGameCurrentTime + mDefaultDownTime;
 			}
 		} else if (mState == STATE_SELECTED) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_selected);
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_selected);
 		} else if (mState == STATE_SPOILED && inGameCurrentTime > mSpoiledDownTime) {
-			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
 			mState = STATE_EMPTY;
 		} else if (mState == STATE_HARVESTED) {
 			if (mHarvestDownTimeNoFade == mDefaultDownTime) {
 				mHarvestDownTimeNoFade += inGameCurrentTime;
 				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade;
 				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade;
-				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvested);
+				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested);
 			}
 			if (inGameCurrentTime > mHarvestDownTimeNoFade) {
-				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvest_fade_half);
+				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvest_fade_half);
 			} else if (inGameCurrentTime > mHarvestDownTimeHalfFade) {
-				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_harvested_fade_full);
+				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested_fade_full);
 			} else if (inGameCurrentTime > mHarvestDownTimeFullFade) {
-				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
 				mState = STATE_EMPTY;
 			}
 		}
-		canvas.drawBitmap(currentSkin, mPosX, mPosY, null);
+		canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
 	}
 	
 	public boolean isHit(float touchPosX, float touchPosY){
@@ -111,10 +111,10 @@ public class Carrot {
 	}
 
 	public float getRecordedTouchPtY() {
-		return recordedTouchPtY;
+		return mRecordedTouchPtY;
 	}
 
 	public void setRecordedTouchPtY(float recordedTouchPtY) {
-		this.recordedTouchPtY = recordedTouchPtY;
+		mRecordedTouchPtY = recordedTouchPtY;
 	}
 }
