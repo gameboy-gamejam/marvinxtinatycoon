@@ -7,6 +7,8 @@ import com.gj.gb.R;
 
 public class GBKitchen extends Activity {
 
+	public static final int REQUEST_CODE_DISH = 10001;
+	public static final int RESULT_CODE_DISH = 20001;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -28,7 +28,7 @@ public class GBSplash extends Activity {
 		editor.putInt("ingredient_7", 34);
 		editor.putInt("ingredient_8", 33);
 		editor.putInt("ingredient_9", 32);
-		editor.putInt("ingredient_10", 31);
+		editor.putInt("ingredient_10", 4);
 		editor.commit();
 		
 //		startActivity(new Intent(this, GBKitchen.class));

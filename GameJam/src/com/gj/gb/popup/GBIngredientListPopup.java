@@ -97,7 +97,36 @@ public class GBIngredientListPopup extends Activity {
 				subCount();
 			}
 		});
+		
+		findViewById(R.id.btn_cook).setOnClickListener( new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				cook();
+			}
+		});
+		
 
+	}
+	
+	public void cook(){
+		for (int i = 0; i < mIngredientList.size(); i++) {
+			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
+			int count = mIngredientCountPref.getInt("ingredient_"+ ingredient.getId(), -1);
+			if(mCount > count) return;
+		}
+		
+		//deduct the ingredients from the shared pref
+		SharedPreferences.Editor editor = mIngredientCountPref.edit();
+		for (int i = 0; i < mIngredientList.size(); i++) {
+			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
+			int count = mIngredientCountPref.getInt("ingredient_"+ ingredient.getId(), -1);
+			editor.putInt("ingredient_"+ingredient.getId(), count - mCount);
+		}
+		editor.commit();
+		Intent intent = getIntent();
+		intent.putExtra("cook_count", mCount);
+		setResult(GBDishListPopup.RESULT_CODE_INGREDIENT, intent);
+		finish();
 	}
 
 	public void addCount() {
