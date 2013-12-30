@@ -17,8 +17,8 @@ public class Carrot {
 	public static final int STATE_HARVESTED 	= 1005;
 
 	private int mState;
-	private int mPosX;
-	private int mPosY;
+	private float mPosX;
+	private float mPosY;
 	private Bitmap currentSkin;
 
 	// Down time in ms
@@ -30,14 +30,14 @@ public class Carrot {
 	private long mHarvestDownTimeHalfFade;
 	private long mHarvestDownTimeFullFade;
 
-	public Carrot(int posX, int posY) {
+	public Carrot(float posX, float posY) {
 		mPosX = posX;
 		mPosY = posY;
 	}
 
 	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
 		if (mState == STATE_EMPTY && currentSkin == null) {
-				currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
+			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_empty);
 		} else if (mState == STATE_SEEDED && inGameCurrentTime > mSeedDownTime) {
 			currentSkin = BitmapFactory.decodeResource(res,	R.drawable.carrot_sprout);
 			mState = STATE_SPROUT;
