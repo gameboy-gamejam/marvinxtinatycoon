@@ -73,6 +73,7 @@ public class GBDishListPopup extends Activity {
 	}
 
 	private void generateDishes() {
+		//lagay nyo dito yung mga bagong dish
 		for (int i = 0; i < 3; i++) {
 			mDishList.add(GBRecipeFactory.getRecipeById(i));
 		}
@@ -89,6 +90,8 @@ public class GBDishListPopup extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		switch (requestCode) {
+		// callback afer ma press ung cooked sa ingredients popup... haha
+		// kailangan kasi ng stove_no... streshhhh
 		case REQUEST_CODE_INGREDIENT:
 			if (resultCode == RESULT_CODE_INGREDIENT) {
 				data.putExtra("stove_no", mStoveNo);

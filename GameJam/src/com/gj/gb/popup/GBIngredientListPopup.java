@@ -23,13 +23,13 @@ public class GBIngredientListPopup extends Activity {
 
 	private static int MAX_OVEN_CAPACITY = 5;
 
+	// no choice ako dito hahahah tyaka na lng to i optimize
 	private int[] mNameIdList = new int[] { R.id.name_ingredient_1,
 			R.id.name_ingredient_2, R.id.name_ingredient_3 };
 	private int[] mHolderIdList = new int[] { R.id.holder_ingredient_1,
 			R.id.holder_ingredient_2, R.id.holder_ingredient_3 };
 	private int[] mMaxIdList = new int[] { R.id.max_ingredient_1,
 			R.id.max_ingredient_2, R.id.max_ingredient_3 };
-
 	private int[] mCurrentIdList = new int[] { R.id.current_ingredient_1,
 			R.id.current_ingredient_2, R.id.current_ingredient_3 };
 
@@ -108,6 +108,10 @@ public class GBIngredientListPopup extends Activity {
 
 	}
 	
+	//para sa method na to...
+	// chinecheck ko muna kung kailan pwede gumana yung cook button...
+	// tapos yun na babawasan ko na agad yung ingredients .. astigggg
+	//tapos kailangan kasi ng dishId at cookCount duhhh!!! para sa stove at sa sharedpref sa GB Kitchen thingy...
 	public void cook(){
 		for (int i = 0; i < mIngredientList.size(); i++) {
 			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));

@@ -12,7 +12,7 @@ public class GBSplash extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_title);
-		
+		// MAAWA KAYO DONT DELETE THIS UNLESS NA IMPLEMENT  NA YUNG NEW SAVE FUNCTIONALITIES HEHE
 		//Save Ingredient TEMP
 		SharedPreferences mIngredientCountPref = getSharedPreferences("IngredientCounts", MODE_PRIVATE);
 		SharedPreferences.Editor editorIngredient = mIngredientCountPref.edit();

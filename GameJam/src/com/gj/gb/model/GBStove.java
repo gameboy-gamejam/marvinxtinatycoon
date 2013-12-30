@@ -54,6 +54,18 @@ public class GBStove {
 		this.mCount = count;
 	}
 
+	// process
+	// at start nasa VACANT yung stove
+	// tapos tatawagin to after ma press  yung cook button sa pop up
+	// edi magiging COOKING status... sya
+	// kapag na click ulit sya tapos cooking status pa rin lagot sya... raw yun..
+	// after 10 sec lilipat na sya sa FINISHED
+	// ayun ang sakto lng pero hindi pa dun nagtatapos
+	// may after cooking pa... 
+	// mga 5sec after mapunta sya sa FInished ay masusunog na  yung dish...
+	// panic mode n yun
+	// in short fail..
+	//so kapag COOKING at OVERCOOKED yung status rereset ko n lng yung lahat
 	public void startCooking() {
 		mStatus = OvenStatus.COOKING;
 		Log.d("Marvin_Debug", "moved to cooking");
