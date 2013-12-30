@@ -7,7 +7,10 @@ import android.widget.ProgressBar;
 
 public class GBStove {
 	public enum OvenStatus {
-		VACANT, COOKING, FINISHED, OVERCOOKED
+		VACANT, 
+		COOKING, //RAW pa
+		FINISHED, // Tama lng
+		OVERCOOKED // sunog na
 	}
 
 	private OvenStatus mStatus;

@@ -124,6 +124,7 @@ public class GBIngredientListPopup extends Activity {
 		}
 		editor.commit();
 		Intent intent = getIntent();
+		intent.putExtra("DishId", mDishId);
 		intent.putExtra("cook_count", mCount);
 		setResult(GBDishListPopup.RESULT_CODE_INGREDIENT, intent);
 		finish();

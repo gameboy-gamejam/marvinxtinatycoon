@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -85,6 +86,8 @@ public class GBKitchen extends Activity {
 					stove4.reset();
 				} else if(stove4.getStatus() == OvenStatus.FINISHED){
 					stove4.reset();
+				}else if(stove4.getStatus() == OvenStatus.OVERCOOKED){
+					stove4.reset();		
 				}
 			}
 		});
@@ -98,11 +101,15 @@ public class GBKitchen extends Activity {
 	}
 	
 	private void addDishCount(GBStove stove){
+		//eto yung nag add na sa shared pref ng dish count
 		SharedPreferences mDishCountPref = getSharedPreferences("DishCounts", MODE_PRIVATE);
 		SharedPreferences.Editor editorDish = mDishCountPref.edit();
+		//dish
+		Log.d("Marvin_Debug", "dishId:  "+stove.getDishId());
+		Log.d("Marvin_Debug", "dishCount:  "+stove.getCount());
 		editorDish.putInt("dish_"+stove.getDishId(), mDishCountPref.getInt("dish_"+stove.getDishId(), 0)+ stove.getCount());
 		editorDish.commit();
-
+		Log.d("Marvin_Debug", "dishCount:  "+mDishCountPref.getInt("dish_"+stove.getDishId(), 0));
 	}
 
 	@Override
