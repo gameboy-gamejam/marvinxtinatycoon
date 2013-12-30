@@ -110,6 +110,10 @@ public class Carrot {
 		mState = state;
 	}
 
+	public int getState() {
+		return mState;
+	}
+
 	public float getRecordedTouchPtY() {
 		return mRecordedTouchPtY;
 	}
