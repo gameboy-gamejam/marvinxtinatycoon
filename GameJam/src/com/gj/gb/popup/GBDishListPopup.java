@@ -24,12 +24,16 @@ public class GBDishListPopup extends Activity {
 
 	private static final int REQUEST_CODE_INGREDIENT = 10001;
 	public static final int RESULT_CODE_INGREDIENT = 20001;
+	
+	private int mStoveNo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popup_dish_list);
 
+		Intent intent = getIntent();
+		mStoveNo = intent.getIntExtra("stove_no", -1);
 		// initialize
 		init();
 
@@ -87,6 +91,7 @@ public class GBDishListPopup extends Activity {
 		switch (requestCode) {
 		case REQUEST_CODE_INGREDIENT:
 			if (resultCode == RESULT_CODE_INGREDIENT) {
+				data.putExtra("stove_no", mStoveNo);
 				setResult(GBKitchen.RESULT_CODE_DISH, data);
 				finish();
 			}

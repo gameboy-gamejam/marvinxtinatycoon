@@ -112,7 +112,7 @@ public class GBIngredientListPopup extends Activity {
 		for (int i = 0; i < mIngredientList.size(); i++) {
 			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
 			int count = mIngredientCountPref.getInt("ingredient_"+ ingredient.getId(), -1);
-			if(mCount > count) return;
+			if(mCount > count || mCount == 0) return;
 		}
 		
 		//deduct the ingredients from the shared pref
