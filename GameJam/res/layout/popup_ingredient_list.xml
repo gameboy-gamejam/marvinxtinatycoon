@@ -182,7 +182,7 @@
 
         <ImageView
             android:id="@+id/btn_left"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_20"
@@ -191,7 +191,7 @@
 
         <ImageView
             android:id="@+id/btn_right"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_20"
