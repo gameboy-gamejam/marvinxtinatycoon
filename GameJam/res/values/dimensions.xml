@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="carrot_width">201px</dimen>
-	<dimen name="carrot_height">181px</dimen>
+	<dimen name="carrot_width">101dp</dimen>
+	<dimen name="carrot_height">91dp</dimen>
 </resources>
