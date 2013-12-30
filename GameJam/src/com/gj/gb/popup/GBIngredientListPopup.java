@@ -10,7 +10,7 @@ public class GBIngredientListPopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.scene_splash);
+        setContentView(R.layout.popup_ingredient_list);
 
     }
 }
