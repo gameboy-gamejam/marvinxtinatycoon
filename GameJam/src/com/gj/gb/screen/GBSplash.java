@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.gj.gb.R;
-import com.gj.gb.popup.GBDishListPopup;
 
 public class GBSplash extends Activity {
 	@Override
@@ -15,24 +14,32 @@ public class GBSplash extends Activity {
 		setContentView(R.layout.scene_title);
 		
 		//Save Ingredient TEMP
-		SharedPreferences mIngredientCountPref = getSharedPreferences("IngredientCounts",
-				MODE_PRIVATE);
-		SharedPreferences.Editor editor = mIngredientCountPref.edit();
-		editor.putInt("ingredient_0", 41);
-		editor.putInt("ingredient_1", 40);
-		editor.putInt("ingredient_2", 39);
-		editor.putInt("ingredient_3", 38);
-		editor.putInt("ingredient_4", 37);
-		editor.putInt("ingredient_5", 36);
-		editor.putInt("ingredient_6", 35);
-		editor.putInt("ingredient_7", 34);
-		editor.putInt("ingredient_8", 33);
-		editor.putInt("ingredient_9", 32);
-		editor.putInt("ingredient_10", 4);
-		editor.commit();
+		SharedPreferences mIngredientCountPref = getSharedPreferences("IngredientCounts", MODE_PRIVATE);
+		SharedPreferences.Editor editorIngredient = mIngredientCountPref.edit();
+		//ingredients
+		editorIngredient.putInt("ingredient_0", 41);
+		editorIngredient.putInt("ingredient_1", 40);
+		editorIngredient.putInt("ingredient_2", 39);
+		editorIngredient.putInt("ingredient_3", 38);
+		editorIngredient.putInt("ingredient_4", 37);
+		editorIngredient.putInt("ingredient_5", 36);
+		editorIngredient.putInt("ingredient_6", 35);
+		editorIngredient.putInt("ingredient_7", 34);
+		editorIngredient.putInt("ingredient_8", 33);
+		editorIngredient.putInt("ingredient_9", 32);
+		editorIngredient.putInt("ingredient_10", 4);
+		editorIngredient.commit();
 		
-//		startActivity(new Intent(this, GBKitchen.class));
+		SharedPreferences mDishCountPref = getSharedPreferences("DishCounts", MODE_PRIVATE);
+		SharedPreferences.Editor editorDish = mDishCountPref.edit();
+		//dish
+		editorDish.putInt("dish_0", 0);
+		editorDish.putInt("dish_1", 0);
+		editorDish.putInt("dish_2", 0);
+		editorDish.commit();
+		
+		startActivity(new Intent(this, GBKitchen.class));
 //		startActivity(new Intent(this, GBIngredientListPopup.class));
-		startActivity(new Intent(this, GBDishListPopup.class));
+//		startActivity(new Intent(this, GBDishListPopup.class));
 	}
 }
