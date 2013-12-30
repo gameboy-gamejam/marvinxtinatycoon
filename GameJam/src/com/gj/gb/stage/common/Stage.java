@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
+import android.view.View.OnTouchListener;
 
 import com.gj.gb.screen.GBSplash;
 
@@ -13,6 +14,7 @@ public abstract class Stage extends Activity {
 	public static final int REQUEST_CODE_GAME_START = 11000;
 	protected boolean mIsGameFinish = false;
 	protected boolean mIsShowReadyInstruction = false;
+	protected OnTouchListener mOnTouchListener;
 
 	protected abstract void playGame();// director of the stage
 
@@ -58,6 +60,7 @@ public abstract class Stage extends Activity {
 			showReadyInstruction();
 			mIsShowReadyInstruction = false;
 		} else {
+			//TODO set touch listener
 			playGame();
 		}
 	}
@@ -92,5 +95,11 @@ public abstract class Stage extends Activity {
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
 		releaseResources();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mOnTouchListener = null;
 	}
 }
