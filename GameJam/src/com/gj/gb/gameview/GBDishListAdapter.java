@@ -25,24 +25,34 @@ import android.widget.TextView;
  * @author manish.s
  * 
  */
-public class GBKitchenAdapter extends BaseAdapter {
+public class GBDishListAdapter extends BaseAdapter {
 	private List<GBRecipe> recipe;
 	private Activity mActivity;
 	private LayoutInflater mInflater;
 	private TextView mName;
 	private TextView mDescription;
 	private TextView mPrice;
+	private int mDishId;
 
-	public GBKitchenAdapter(Activity activity) {
+	public GBDishListAdapter(Activity activity) {
 		this.mActivity = activity;
 		this.mInflater = LayoutInflater.from(this.mActivity);
+		this.mDishId = -1;
+	}
+
+	public void setDishId(int dishId) {
+		this.mDishId = dishId;
+	}
+	
+	public int getDishId() {
+		return mDishId;
 	}
 
 	public void setRecipeList(List<GBRecipe> recipe) {
 		this.recipe = recipe;
 		notifyDataSetChanged();
 	}
-	
+
 	public void setInfoView(TextView name, TextView description, TextView price) {
 		this.mName = name;
 		this.mDescription = description;
@@ -72,7 +82,8 @@ public class GBKitchenAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.part_gridview, null);
 			holder = new RecordHolder();
 			// holder.txtTitle = (TextView) row.findViewById(R.id.item_text);
-			holder.imageItem = (ImageView) convertView.findViewById(R.id.item_image);
+			holder.imageItem = (ImageView) convertView
+					.findViewById(R.id.item_image);
 			convertView.setTag(holder);
 		} else {
 			holder = (RecordHolder) convertView.getTag();
@@ -80,16 +91,18 @@ public class GBKitchenAdapter extends BaseAdapter {
 
 		final GBRecipe item = recipe.get(position);
 		convertView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				mName.setText(item.getName());
 				mDescription.setText(item.getDescription());
-				mPrice.setText(item.getPrice()+ " Gold");
+				mPrice.setText(item.getPrice() + " Gold");
+				setDishId(item.getId());
 			}
 		});
-		
-		Bitmap userIcon = Utils.getBitmapFromDrawable(mActivity, "recipe", item.getId());
+
+		Bitmap userIcon = Utils.getBitmapFromDrawable(mActivity, "recipe",
+				item.getId());
 		holder.imageItem.setImageBitmap(userIcon);
 		return convertView;
 
@@ -100,6 +113,4 @@ public class GBKitchenAdapter extends BaseAdapter {
 		ImageView imageItem;
 
 	}
-
-
 }
