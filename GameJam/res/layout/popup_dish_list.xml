@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <GridView
+                android:id="@+id/dishlist"
+                android:layout_width="150dp"
+                android:layout_height="170dp"
+                android:background="@drawable/bg_default"
+                android:numColumns="3" >
+            </GridView>
+
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/holder_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bg_default"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Default Name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/holder_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bg_default"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100 G" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/holder_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/holder_price"
+                    android:layout_below="@id/holder_name"
+                    android:background="@drawable/bg_default"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description:" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:text="SampleDish" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/holder_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default"
+                android:gravity="center"
+                android:text="Close" />
+
+            <TextView
+                android:id="@+id/btn_prepare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default"
+                android:gravity="center"
+                android:text="Prepare" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

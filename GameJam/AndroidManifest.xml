@@ -30,6 +30,18 @@
             android:screenOrientation="landscape"
             android:theme="@style/ThemePop" >
         </activity>
+        <activity
+            android:name="com.gj.gb.popup.GBDishListPopup"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/ThemePop" >
+        </activity>
+        <activity
+            android:name="com.gj.gb.popup.GBIngredientListPopup"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/ThemePop" >
+        </activity>
     </application>
 
 </manifest>
