@@ -38,7 +38,11 @@ public class GBShopLogic {
 	}
 
 	private static int getArrivalTime() {
-		arrivalTime += Utils.RANDOM.nextInt(3);
+		if (arrivalTime == 3) {
+			arrivalTime += Utils.RANDOM.nextInt(3);
+		} else {
+			arrivalTime += Utils.RANDOM.nextInt(10);
+		}
 		if (arrivalTime >= 100) arrivalTime = 100;
 		return arrivalTime;
 	}
