@@ -4,15 +4,9 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/header"
+        android:id="@+id/mainPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </RelativeLayout>
-
-    <SurfaceView
-        android:id="@+id/game_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true" />
 
 </RelativeLayout>

@@ -42,6 +42,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/ThemePop" >
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBShop"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

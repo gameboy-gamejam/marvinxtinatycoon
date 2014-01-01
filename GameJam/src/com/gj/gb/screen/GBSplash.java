@@ -38,7 +38,7 @@ public class GBSplash extends Activity {
 		editorDish.putInt("dish_2", 0);
 		editorDish.commit();
 		
-		startActivity(new Intent(this, GBKitchen.class));
+		startActivity(new Intent(this, GBShop.class));
 //		startActivity(new Intent(this, GBIngredientListPopup.class));
 //		startActivity(new Intent(this, GBDishListPopup.class));
 	}
