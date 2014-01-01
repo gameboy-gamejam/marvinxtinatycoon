@@ -8,6 +8,26 @@ public class GBCustomer {
 	
 	/* decreases as times goes down */
 	protected int satisfaction = 100;
+	
+	protected int arriveTime;
+	
+	public int getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(int arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+
+	public int getDecideTime() {
+		return decideTime;
+	}
+
+	public void setDecideTime(int decideTime) {
+		this.decideTime = decideTime;
+	}
+
+	protected int decideTime;
 
 	public int getId() {
 		return id;
