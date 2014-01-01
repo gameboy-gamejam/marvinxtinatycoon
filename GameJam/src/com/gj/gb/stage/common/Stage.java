@@ -6,19 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
+import android.view.SurfaceHolder;
 import android.view.View.OnTouchListener;
 
-import com.gj.gb.screen.GBSplash;
-
-public abstract class Stage extends Activity {
+public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public static final int REQUEST_CODE_GAME_START = 11000;
 	protected boolean mIsGameFinish = false;
 	protected boolean mIsShowReadyInstruction = false;
 	protected OnTouchListener mOnTouchListener;
 
 	protected abstract void playGame();// director of the stage
-
-	protected abstract void stopGame();
+	
+	protected abstract void endGame();
 
 	protected abstract void showReadyInstruction();
 
@@ -30,7 +29,7 @@ public abstract class Stage extends Activity {
 
 	private void disruptAndExitGame() {
 		mIsGameFinish = true;
-		stopGame();
+		endGame();
 		showPointsAndReward();
 	}
 
@@ -51,18 +50,6 @@ public abstract class Stage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// TODO set phone state listener
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (mIsShowReadyInstruction) {
-			showReadyInstruction();
-			mIsShowReadyInstruction = false;
-		} else {
-			//TODO set touch listener
-			playGame();
-		}
 	}
 
 	@Override
@@ -95,6 +82,7 @@ public abstract class Stage extends Activity {
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
 		releaseResources();
+		finish();
 	}
 
 	@Override
