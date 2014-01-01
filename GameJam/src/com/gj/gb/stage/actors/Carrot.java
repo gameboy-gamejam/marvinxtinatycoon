@@ -17,6 +17,7 @@ public class Carrot {
 	public static final int STATE_SPOILED 		= 1004;
 	public static final int STATE_HARVESTED 	= 1005;
 	public static final int STATE_SELECTED	 	= 1006;
+	public static final int STATE_UNSELECTED 	= 1007;
 
 	private int mState;
 	private float mPosX;
@@ -32,16 +33,17 @@ public class Carrot {
 	private long mSproutDownTime;
 	private long mRipeDownTime;
 	private long mSpoiledDownTime;
-	private long mHarvestDownTimeNoFade;
-	private long mHarvestDownTimeHalfFade;
-	private long mHarvestDownTimeFullFade;
-	private static final long mDefaultDownTime = 1000;
+	private boolean mHarvestDownTimeNoFade;
+	private boolean mHarvestDownTimeHalfFade;
+	private boolean mHarvestDownTimeFullFade;
+	private static final long mDefaultDownTime = 500;
 
 	public Carrot(float posX, float posY, float posXRightBorder, float posYBottomBorder) {
 		mPosX = posX;
 		mPosY = posY;
 		mPosXRightBorder = posXRightBorder;
 		mPosYBottomBorder = posYBottomBorder;
+		mState = STATE_EMPTY;
 	}
 
 	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
@@ -50,7 +52,7 @@ public class Carrot {
 		} else if (mState == STATE_SEEDED && inGameCurrentTime > mSeedDownTime) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_sprout);
 			mState = STATE_SPROUT;
-		} else if (mState == STATE_SPROUT && inGameCurrentTime > mSproutDownTime) {
+		} else if (mState == STATE_UNSELECTED || (mState == STATE_SPROUT && inGameCurrentTime > mSproutDownTime)) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_ripe);
 			mState = STATE_RIPE;
 		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
@@ -65,18 +67,20 @@ public class Carrot {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
 			mState = STATE_EMPTY;
 		} else if (mState == STATE_HARVESTED) {
-			if (mHarvestDownTimeNoFade == mDefaultDownTime) {
-				mHarvestDownTimeNoFade += inGameCurrentTime;
-				mHarvestDownTimeHalfFade += mHarvestDownTimeNoFade;
-				mHarvestDownTimeFullFade += mHarvestDownTimeHalfFade;
+			if (!mHarvestDownTimeNoFade && !mHarvestDownTimeHalfFade && !mHarvestDownTimeFullFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested);
-			}
-			if (inGameCurrentTime > mHarvestDownTimeNoFade) {
+				mHarvestDownTimeNoFade = true;
+			} else if (mHarvestDownTimeNoFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvest_fade_half);
-			} else if (inGameCurrentTime > mHarvestDownTimeHalfFade) {
+				mHarvestDownTimeHalfFade = true;
+				mHarvestDownTimeNoFade = false;
+			} else if (mHarvestDownTimeHalfFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested_fade_full);
-			} else if (inGameCurrentTime > mHarvestDownTimeFullFade) {
+				mHarvestDownTimeFullFade = true;
+				mHarvestDownTimeHalfFade = false;
+			} else if (mHarvestDownTimeFullFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
+				mHarvestDownTimeFullFade = false;
 				mState = STATE_EMPTY;
 			}
 		}
@@ -84,8 +88,11 @@ public class Carrot {
 	}
 	
 	public boolean isHit(float touchPosX, float touchPosY){
-		return StageHelper.isWithinBorders(mPosX, mPosXRightBorder, mPosY, 
-				mPosYBottomBorder, touchPosX, touchPosY);
+		if(mState == STATE_RIPE){
+			return StageHelper.isWithinBorders(mPosX, mPosXRightBorder, mPosY, 
+					mPosYBottomBorder, touchPosX, touchPosY);
+		}
+		return false;
 	}
 
 	private void initDownTime() {
@@ -93,12 +100,12 @@ public class Carrot {
 		mSproutDownTime = 3000;
 		mRipeDownTime = 5000;
 		mSpoiledDownTime = 3000;
-		mHarvestDownTimeNoFade = mDefaultDownTime;
-		mHarvestDownTimeHalfFade = mDefaultDownTime;
-		mHarvestDownTimeFullFade = mDefaultDownTime;
+		mHarvestDownTimeNoFade = false;
+		mHarvestDownTimeHalfFade = false;
+		mHarvestDownTimeFullFade = false;
 	}
 
-	public void setTimeSeeded(int timeSeeded) {
+	public void setTimeSeeded(long timeSeeded) {
 		initDownTime();
 		mSeedDownTime += timeSeeded;
 		mSproutDownTime += mSeedDownTime;
