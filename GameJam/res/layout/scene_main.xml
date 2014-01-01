@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout 
+        android:id="@+id/panelStart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TextView 
+            android:id="@+id/textTap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Touch to Start"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+        
+        <ImageView 
+            android:id="@+id/imageLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/textTap"
+            android:scaleType="fitCenter"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/panelButtons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/buttonNewGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="New Game" />
+
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonNewGame"
+            android:layout_centerHorizontal="true"
+            android:text="Continue" />
+
+        <Button
+            android:id="@+id/buttonScores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonNewGame"
+            android:layout_centerHorizontal="true"
+            android:text="Scores" />
+    </RelativeLayout>
+
+</RelativeLayout>
