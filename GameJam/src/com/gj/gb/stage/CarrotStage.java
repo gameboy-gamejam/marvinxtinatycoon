@@ -7,7 +7,6 @@ import java.util.Random;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +24,7 @@ import com.gj.gb.stage.common.StageHelper;
 public class CarrotStage extends Stage {
 
     private static final int CARROT_NUMBER_OF_SOIL = 9;
+    private static final int POINTS_EARNED_PER_CARROT = 10; //FIXME Pau dagdagan mo na lang kung kulang yung points... basta dagdag lang sya ng dagdag
 	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 90000;
 	private static final int DEFAULT_SWIPE_DISTANCE_PX = 100;
 	private static final int FRAMEDELAY = 100;
@@ -36,6 +36,7 @@ public class CarrotStage extends Stage {
     private Random mSeeder;
     //timer
     private Paint mTimerBackground;
+    private Paint mTimerLabelBackground;
     private Paint mTimerLabel;
     private Paint mTimer;
 	
@@ -51,7 +52,9 @@ public class CarrotStage extends Stage {
 	private long mRecordTimeStarted = -1;
 	private long mEstimateTimeFinish;
 	private boolean mIsScriptRunning;
-	private Resources res;	
+	private Resources res;
+	
+	private int mPointsEarned = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,8 @@ public class CarrotStage extends Stage {
                                 }
                                 float timerRate = (float) ((currentTime - mRecordTimeStarted)/(DEFAULT_CARROT_GAME_TIMER_MS*1.0));
                                 float currentHeightTimer = INITIAL_HEIGHT_RED_TIMER*timerRate;
-                                canvas.drawText(res.getString(R.string.timer), 750, 80, mTimerLabel);
+                                canvas.drawRect(653, 50, 900, 100, mTimerLabelBackground);
+                                canvas.drawText(res.getString(R.string.score)+" "+String.valueOf(mPointsEarned), 703, 80, mTimerLabel);
                                 canvas.drawRect(703, 89, 853, 593, mTimerBackground);
                                 canvas.drawRect(713, 99+currentHeightTimer, 843, 581, mTimer);
                                 int oddChecker = mSeeder.nextInt(50);
@@ -128,7 +132,8 @@ public class CarrotStage extends Stage {
 						if(carrotOnMove != null) {
 							float recordedPtY = carrotOnMove.getRecordedTouchPtY();
 							float distance = recordedPtY - event.getY(pointerIdx);
-							if(distance >= DEFAULT_SWIPE_DISTANCE_PX || carrotOnMove.getState() == Carrot.STATE_HARVESTED) {
+							if(distance >= DEFAULT_SWIPE_DISTANCE_PX/* || carrotOnMove.getState() == Carrot.STATE_HARVESTED*/) {
+							    mPointsEarned += POINTS_EARNED_PER_CARROT;
 								carrotOnMove.setState(Carrot.STATE_HARVESTED);
 								carrotOnMove.setRecordedTouchPtY(-1);
 								touchPoints.remove(pointerId);
@@ -183,12 +188,12 @@ public class CarrotStage extends Stage {
         mTimerBackground = new Paint();
         mTimerBackground.setColor(res.getColor(R.color.white));
         mTimerBackground.setStyle(Style.FILL);
+        mTimerLabelBackground = new Paint();
+        mTimerLabelBackground.setColor(res.getColor(R.color.black));
+        mTimerLabelBackground.setStyle(Style.FILL);
         mTimerLabel = new Paint();
         mTimerLabel.setColor(res.getColor(R.color.yellow_mild));
         mTimerLabel.setTextSize(30);
-        mTimerLabel.setTextAlign(Paint.Align.CENTER);
-        FontMetrics fm = new FontMetrics();
-        mTimerLabel.getFontMetrics(fm);
         mTimer = new Paint();
         mTimer.setColor(res.getColor(R.color.red));
         mTimer.setStyle(Style.FILL);
@@ -226,6 +231,7 @@ public class CarrotStage extends Stage {
 	//methods called for pop ups
 	@Override
 	protected void showReadyInstruction() {
+	    //TODO show ang instruction instruction with ready animation
 	}
 
 	@Override
@@ -235,6 +241,7 @@ public class CarrotStage extends Stage {
 
 	@Override
 	protected void showPointsAndReward() {
+	    //TODO send yung points then show pop up
 	}
 	
 	//methods for surface view
