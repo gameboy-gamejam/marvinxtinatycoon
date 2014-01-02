@@ -1,13 +1,13 @@
 package com.gj.gb.screen;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 
@@ -50,31 +50,32 @@ public class GBInGameMenu extends Activity {
 		public void onClick(View v) {
 			int id = v.getId();
 			
-			if (selectedId == id) {
-				
-			}
-			
-			selectedId = id;
-			setTextLabel(id);
-			
-			switch (id) {
-			case R.id.buttonClose:
+			if (id == R.id.buttonClose) {
 				finish();
-				break;
-			case R.id.buttonMyInfo:
-				break;
-			case R.id.buttonRecipe:
-				break;
-			case R.id.buttonCustomer:
-				break;
-			case R.id.buttonSystem:
-				break;
-			case R.id.buttonIngredients:
-				break;
+				return;
+			}
+
+			if (selectedId == id) {
+				switch (id) {
+				case R.id.buttonMyInfo:
+					break;
+				case R.id.buttonRecipe:
+					break;
+				case R.id.buttonCustomer:
+					break;
+				case R.id.buttonSystem:
+					startActivity(new Intent(GBInGameMenu.this, GBSystemMenu.class));
+					finish();
+					break;
+				case R.id.buttonIngredients:
+					break;
+				}
+			} else {
+				selectedId = id;
+				setTextLabel(id);
 			}
 		}
 	};
-
 
 	private void setTextLabel(int id) {
 		TextView text = (TextView) findViewById(R.id.textMenuName);

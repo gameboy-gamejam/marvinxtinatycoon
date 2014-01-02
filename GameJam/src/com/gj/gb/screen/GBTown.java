@@ -16,6 +16,8 @@ import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBTown extends Activity {
+	
+	public static boolean returnToMain = false;
   
 	protected GBGameData data;
 	
@@ -54,7 +56,6 @@ public class GBTown extends Activity {
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
 			GBDataManager.createData();
-			GBDataManager.saveData();
 			updateData();
 		} else if (id == R.id.buttonContinue) {
 			// do nothing
@@ -83,5 +84,16 @@ public class GBTown extends Activity {
 			return Color.DKGRAY;
 		}
 		return 0;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		/* CHEAT! */
+		if (returnToMain) {
+			GBTown.returnToMain = false;
+			finish();
+		}
 	}
 }
