@@ -43,7 +43,7 @@ public class GBMain extends Activity {
 				if (GBDataManager.hasSaveData()) {
 					// ask popup if want to clear data and start new game
 				} else {
-					startActivity(new Intent(GBMain.this, GBTown.class));
+					toGameScreen(id);
 				}
 				break;
 			case R.id.buttonContinue:
@@ -55,4 +55,16 @@ public class GBMain extends Activity {
 			}
 		}
 	};
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		GBDataManager.cleanup();
+	}
+
+	protected void toGameScreen(int id) {
+		Intent intent = new Intent(this, GBTown.class);
+		intent.putExtra("button_id", id);
+		startActivity(intent);
+	}
 }
