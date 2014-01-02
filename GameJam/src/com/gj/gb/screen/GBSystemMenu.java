@@ -25,16 +25,12 @@ public class GBSystemMenu extends Activity {
 		findViewById(R.id.buttonSave).setOnClickListener(listener);
 		findViewById(R.id.buttonMain).setOnClickListener(listener);
 	}
-	
-	
-	
+
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(GBSystemMenu.this, GBInGameMenu.class));
 		finish();
 	}
-
-
 
 	private OnClickListener listener = new OnClickListener() {
 		

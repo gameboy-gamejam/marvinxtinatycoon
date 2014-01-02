@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77000000" >
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Close" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonClose"
+        android:layout_centerHorizontal="true"
+        android:text="YOUR CURRENT INGREDIENTS" />
+
+    <LinearLayout 
+        android:layout_below="@id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp">
+
+        <GridView
+            android:id="@+id/gridList"
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:layout_height="match_parent"
+            android:numColumns="3">
+        </GridView>
+        
+        <RelativeLayout 
+            android:id="@+id/panelItemDetail"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageIngredientIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/textIngredientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageIngredientIcon"
+                android:layout_centerHorizontal="true"
+                android:text="Potato"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textIngredientPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textIngredientName"
+                android:layout_centerHorizontal="true"
+                android:text="5"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textIngredientQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="50x"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textIngredientDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textIngredientQty"
+                android:layout_below="@+id/textIngredientPrice"
+                android:gravity="center"
+                android:text="This is a sample description." />
+            
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

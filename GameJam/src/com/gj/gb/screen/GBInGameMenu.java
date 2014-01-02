@@ -62,14 +62,13 @@ public class GBInGameMenu extends Activity {
 					finish();
 					break;
 				case R.id.buttonRecipe:
-					break;
 				case R.id.buttonCustomer:
+				case R.id.buttonIngredients:
+					goToGridList(id);
 					break;
 				case R.id.buttonSystem:
 					startActivity(new Intent(GBInGameMenu.this, GBSystemMenu.class));
 					finish();
-					break;
-				case R.id.buttonIngredients:
 					break;
 				}
 			} else {
@@ -99,5 +98,12 @@ public class GBInGameMenu extends Activity {
 			text.setText("Ingredients List");
 			break;
 		}
+	}
+
+	protected void goToGridList(int id) {
+		Intent intent = new Intent(this, GBCommonGridList.class);
+		intent.putExtra("type", id);
+		startActivity(intent);
+		finish();
 	}
 }
