@@ -58,6 +58,8 @@ public class GBInGameMenu extends Activity {
 			if (selectedId == id) {
 				switch (id) {
 				case R.id.buttonMyInfo:
+					startActivity(new Intent(GBInGameMenu.this, GBMyInfo.class));
+					finish();
 					break;
 				case R.id.buttonRecipe:
 					break;

@@ -50,6 +50,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Transparent">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBMyInfo"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Transparent">
+        </activity>
     </application>
 
 </manifest>
