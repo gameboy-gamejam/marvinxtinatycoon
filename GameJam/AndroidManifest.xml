@@ -38,6 +38,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Dialog">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBInGameMenu"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Transparent">
+        </activity>
     </application>
 
 </manifest>
