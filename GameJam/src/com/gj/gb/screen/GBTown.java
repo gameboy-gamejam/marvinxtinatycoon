@@ -1,8 +1,11 @@
 package com.gj.gb.screen;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +26,30 @@ public class GBTown extends Activity {
 
         int id = getIntent().getIntExtra("button_id", R.id.buttonNewGame);
         initData(id);
+        initButtons();
     }
+
+	private void initButtons() {
+		findViewById(R.id.buttonMenu).setOnClickListener(buttonListener);
+	}
+	
+	private OnClickListener buttonListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			int id = v.getId();
+			switch (id) {
+			case R.id.buttonMenu:
+				startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+				break;
+			}
+		}
+	};
+	
+	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+	}
 
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {

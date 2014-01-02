@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77000000" >
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Close" />
+
+    <TextView
+        android:id="@+id/textMenuName"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/buttonMyInfo"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textMenuName"
+        android:layout_centerHorizontal="true"
+        android:text="Info" />
+
+    <Button
+        android:id="@+id/buttonIngredients"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/textMenuName"
+        android:text="Ingredients" />
+
+    <Button
+        android:id="@+id/buttonSystem"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/buttonMyInfo"
+        android:text="System" />
+
+    <Button
+        android:id="@+id/buttonRecipe"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonSystem"
+        android:layout_below="@+id/textMenuName"
+        android:layout_marginLeft="25dp"
+        android:text="Recipe" />
+
+    <Button
+        android:id="@+id/buttonCustomer"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textMenuName"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/buttonRecipe"
+        android:text="Customer List" />
+
+</RelativeLayout>
