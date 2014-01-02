@@ -13,6 +13,9 @@ public class GBSplash extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.screen_splash);
+        if(getIntent().getBooleanExtra("ExitMe", false)){
+            finish();
+        }
 
     }
 }
