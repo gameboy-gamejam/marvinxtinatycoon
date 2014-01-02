@@ -51,6 +51,9 @@ public class GBTown extends Activity {
 			case R.id.buttonOutside:
 				startActivity(new Intent(GBTown.this, GBOutside.class));
 				break;
+			case R.id.buttonMarket:
+				startActivity(new Intent(GBTown.this, GBMarket.class));
+				break;
 			}
 		}
 	};

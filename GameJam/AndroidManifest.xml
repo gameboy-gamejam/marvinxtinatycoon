@@ -67,6 +67,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBMarket"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
