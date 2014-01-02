@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="500dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:background="#556677" >
+
+        <TextView
+            android:id="@+id/textMessage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:text="This is a sample message."
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:gravity="center" >
+            
+            <Button 
+                android:id="@+id/buttonPositive"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Yes"/>
+            
+            <Button 
+                android:id="@+id/buttonNegative"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="No"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
