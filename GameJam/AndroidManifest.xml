@@ -16,38 +16,19 @@
         <activity
             android:name="com.gj.gb.screen.GBSplash"
             android:launchMode="singleTop"
-            android:screenOrientation="landscape"
-            android:theme="@style/GBTheme" >
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gj.gb.screen.GBKitchen"
-            android:launchMode="singleTop"
-            android:screenOrientation="landscape"
-            android:theme="@style/ThemePop" >
-        </activity>
-        <activity
-            android:name="com.gj.gb.popup.GBDishListPopup"
-            android:launchMode="singleTop"
-            android:screenOrientation="landscape"
-            android:theme="@style/ThemePop" >
-        </activity>
-        <activity
-            android:name="com.gj.gb.popup.GBIngredientListPopup"
-            android:launchMode="singleTop"
-            android:screenOrientation="landscape"
-            android:theme="@style/ThemePop" >
-        </activity>
-        <activity 
-            android:name="com.gj.gb.screen.GBShop"
-            android:launchMode="singleTop"
-            android:screenOrientation="landscape"></activity>
         <activity 
             android:name="com.gj.gb.screen.GBMain"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBTown"
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
         </activity>
