@@ -28,9 +28,11 @@ public class GBTown extends Activity {
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
 			GBDataManager.createData();
+			GBDataManager.saveData();
 			updateData();
 		} else if (id == R.id.buttonContinue) {
 			// do nothing
+			GBDataManager.loadData();
 			updateData();
 		} else {
 			// fatal error

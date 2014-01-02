@@ -2,6 +2,7 @@ package com.gj.gb.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
@@ -52,5 +53,27 @@ public class GBDataManager {
 	
 	public static GBGameData getGameData() {
 		return GAME_DATA;
+	}
+
+	public static void saveData() {
+		Editor edit = PREFS.edit();
+		
+		edit.putInt("currentDay", GAME_DATA.getCurrentDay());
+		edit.putInt("currentMonth", GAME_DATA.getCurrentMonth());
+		edit.putInt("currentYear", GAME_DATA.getCurrentYear());
+		edit.putInt("totalDay", GAME_DATA.getTotalDay());
+		edit.putInt("currentGold", GAME_DATA.getCurrentGold());
+		edit.putString("dayState", GAME_DATA.getDayState().toString());
+		edit.putInt("level", GAME_DATA.getLevel());
+		edit.putInt("nextLevel", GAME_DATA.getNextLevel());
+		edit.putInt("experience", GAME_DATA.getExperience());
+		edit.putInt("totalCustomer", GAME_DATA.getTotalCustomers());
+		edit.putInt("stamina", GAME_DATA.getStamina());
+		
+		edit.commit();
+	}
+
+	public static void loadData() {
+		
 	}
 }
