@@ -32,6 +32,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBPopConfirm"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Dialog">
+        </activity>
     </application>
 
 </manifest>

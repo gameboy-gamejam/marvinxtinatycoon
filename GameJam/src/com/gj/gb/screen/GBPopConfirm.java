@@ -23,11 +23,13 @@ public class GBPopConfirm extends Activity {
 		if (oneButton) {
 			((TextView) findViewById(R.id.buttonNegative)).setVisibility(View.GONE);
 		} else {
-			btnText2 = getIntent().getStringExtra("btn_1");
+			btnText2 = getIntent().getStringExtra("btn_2");
 		}
 		
-		((TextView) findViewById(R.id.buttonPositive)).setText(btnText1);
-		((TextView) findViewById(R.id.buttonNegative)).setText(btnText2);
+		if (btnText1 != null)
+			((TextView) findViewById(R.id.buttonPositive)).setText(btnText1);
+		if (btnText2 != null)
+			((TextView) findViewById(R.id.buttonNegative)).setText(btnText2);
 		((TextView) findViewById(R.id.textMessage)).setText(message);
 		
 

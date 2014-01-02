@@ -42,11 +42,13 @@ public class GBMain extends Activity {
 			case R.id.buttonNewGame:
 				if (GBDataManager.hasSaveData()) {
 					// ask popup if want to clear data and start new game
+					confirmNewGame();
 				} else {
 					toGameScreen(id);
 				}
 				break;
 			case R.id.buttonContinue:
+				toGameScreen(id);
 				break;
 			case R.id.buttonScores:
 			case R.id.textTap:
@@ -62,9 +64,24 @@ public class GBMain extends Activity {
 		GBDataManager.cleanup();
 	}
 
+	protected void confirmNewGame() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Your game data will be reset.\n Are you sure you want to start a new game?");
+		startActivityForResult(intent, 100);
+	}
+
 	protected void toGameScreen(int id) {
 		Intent intent = new Intent(this, GBTown.class);
 		intent.putExtra("button_id", id);
 		startActivity(intent);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == 100 && resultCode == RESULT_OK) {
+			toGameScreen(R.id.buttonNewGame);
+		}
 	}
 }
