@@ -40,9 +40,8 @@ public class GBDataManager {
 		GAME_DATA.setCurrentDay(1);
 		GAME_DATA.setCurrentMonth(1);
 		GAME_DATA.setCurrentYear(2014);
-		GAME_DATA.setTotalDay(1);
+		GAME_DATA.setTotalDay(0);
 		GAME_DATA.setCurrentGold(500);
-		GAME_DATA.setCurrentRating(0);
 		GAME_DATA.setDayState(GBDayState.MORNING);
 		GAME_DATA.setLevel(1);
 		GAME_DATA.setNextLevel(50);
@@ -74,6 +73,18 @@ public class GBDataManager {
 	}
 
 	public static void loadData() {
+		GAME_DATA = new GBGameData();
 		
+		GAME_DATA.setCurrentDay(PREFS.getInt("currentDay", 1));
+		GAME_DATA.setCurrentMonth(PREFS.getInt("currentMonth", 1));
+		GAME_DATA.setCurrentYear(PREFS.getInt("currentYear", 2014));
+		GAME_DATA.setTotalDay(PREFS.getInt("totalDay", 0));
+		GAME_DATA.setCurrentGold(PREFS.getInt("currentGold", 1));
+		GAME_DATA.setDayState(GBDayState.valueOf(PREFS.getString("dayState", GBDayState.MORNING.toString())));
+		GAME_DATA.setLevel(PREFS.getInt("level", 1));
+		GAME_DATA.setNextLevel(PREFS.getInt("nextLevel", 50));
+		GAME_DATA.setExperience(PREFS.getInt("experience", 0));
+		GAME_DATA.setTotalCustomers(PREFS.getInt("totalCustomer", 0));
+		GAME_DATA.setStamina(PREFS.getInt("stamina", 10)); // pano logic nito? haha
 	}
 }
