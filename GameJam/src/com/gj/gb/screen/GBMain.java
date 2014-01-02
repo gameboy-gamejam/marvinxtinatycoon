@@ -1,11 +1,13 @@
 package com.gj.gb.screen;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.gj.gb.R;
+import com.gj.gb.util.GBDataManager;
 
 public class GBMain extends Activity {
 
@@ -18,8 +20,19 @@ public class GBMain extends Activity {
 		findViewById(R.id.buttonContinue).setOnClickListener(listener);
 		findViewById(R.id.buttonScores).setOnClickListener(listener);
 		findViewById(R.id.textTap).setOnClickListener(listener);
+		
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// enables the continue button if there is save file
+		if (GBDataManager.hasSaveData()) {
+			findViewById(R.id.buttonContinue).setEnabled(true);
+		}
+	}
+
 	protected OnClickListener listener = new OnClickListener() {
 		
 		@Override
@@ -27,7 +40,14 @@ public class GBMain extends Activity {
 			int id = v.getId();
 			switch (id) {
 			case R.id.buttonNewGame:
+				if (GBDataManager.hasSaveData()) {
+					// ask popup if want to clear data and start new game
+				} else {
+					startActivity(new Intent(GBMain.this, GBTown.class));
+				}
+				break;
 			case R.id.buttonContinue:
+				break;
 			case R.id.buttonScores:
 			case R.id.textTap:
 				findViewById(R.id.panelButtons).setVisibility(View.VISIBLE);
