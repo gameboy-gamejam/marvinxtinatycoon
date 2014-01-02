@@ -46,6 +46,11 @@
             android:name="com.gj.gb.screen.GBShop"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBMain"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

@@ -32,26 +32,27 @@
         android:visibility="gone" >
 
         <Button
-            android:id="@+id/buttonNewGame"
+            android:id="@+id/buttonContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="New Game" />
+            android:text="Continue"
+            android:enabled="false" />
 
         <Button
-            android:id="@+id/buttonContinue"
+            android:id="@+id/buttonNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/buttonNewGame"
+            android:layout_above="@+id/buttonContinue"
             android:layout_centerHorizontal="true"
-            android:text="Continue" />
+            android:text="New Game" />
 
         <Button
             android:id="@+id/buttonScores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonNewGame"
+            android:layout_below="@+id/buttonContinue"
             android:layout_centerHorizontal="true"
             android:text="Scores" />
     </RelativeLayout>

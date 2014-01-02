@@ -30,6 +30,8 @@ public class GBMain extends Activity {
 			case R.id.buttonContinue:
 			case R.id.buttonScores:
 			case R.id.textTap:
+				findViewById(R.id.panelButtons).setVisibility(View.VISIBLE);
+				findViewById(R.id.panelStart).setVisibility(View.INVISIBLE);
 			}
 		}
 	};
