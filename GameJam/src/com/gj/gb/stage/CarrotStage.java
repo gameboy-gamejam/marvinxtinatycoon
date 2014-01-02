@@ -60,8 +60,84 @@ public class CarrotStage extends Stage {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stage_carrot);
-		//preparing script play
-		mScript = new Runnable() {
+		
+		prepareScript();
+        prepareFloorDirectors();
+		prepareStage();
+	}
+	
+	@Override
+	protected void playGame() {
+		if(mRecordTimeStarted == -1) {
+			mRecordTimeStarted = System.currentTimeMillis();
+			mEstimateTimeFinish = mRecordTimeStarted + DEFAULT_CARROT_GAME_TIMER_MS; 
+		}
+		mIsScriptRunning = true;
+		mDirector = new Handler();
+		mDirector.postDelayed(mScript, FRAMEDELAY);
+	}
+	
+	@Override
+    protected void resumeGame() {
+        mIsScriptRunning = true;   
+    }
+	
+	
+	//methods called when game has ended
+	@Override
+	protected void endGame() {
+	    mIsScriptRunning = false;
+	}
+	
+	@Override
+    protected void releaseResources() {
+        if(mSurfaceHolder != null){
+            mSurfaceHolder = null;
+        }
+        if(mDirector != null){
+            mDirector.removeCallbacks(mScript);
+            mDirector = null;
+        }
+    }	
+
+	
+	//methods called for pop ups
+	@Override
+	protected void showReadyInstruction() {
+	    //TODO show ang instruction instruction with ready animation
+	}
+
+	@Override
+	protected void showInGameMenu() {
+		mIsScriptRunning = false;
+		//TODO show yung exit menu
+	}
+
+	@Override
+	protected void showPointsAndReward() {
+	    //TODO send yung points then show pop up
+	}
+	
+	
+	//methods for surface view
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		playGame();
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int frmt, int w, int h) {
+		//Do nothing
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		mIsScriptRunning = false;	
+	}
+	
+	//other methods
+	private void prepareScript(){
+        mScript = new Runnable() {
             @Override
             public void run() {
                 if(mIsScriptRunning) {
@@ -103,88 +179,73 @@ public class CarrotStage extends Stage {
                 }
             }
         };
-        //preparing floor directors
-		mOnTouchListener = new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View view, MotionEvent event) {
-				int pointerIdx 	= event.getActionIndex();
-				int pointerId 	= event.getPointerId(pointerIdx);
-				int maskedAction= event.getActionMasked();
-				
-				switch (maskedAction) {
-					case MotionEvent.ACTION_DOWN:
-					case MotionEvent.ACTION_POINTER_DOWN:
-						float touchPosX = event.getX(pointerIdx);
-						float touchPosY = event.getY(pointerIdx);
-						if(StageHelper.isWithinBorders(mLeftBorderCanvasPos, mRightBorderCanvasPos, 
-								mTopBorderCanvasPos, mBottomBorderCanvasPos, touchPosX, touchPosY)){
-							for(Carrot carrot: carrots){
-								if(carrot.isHit(touchPosX, touchPosY)){
-									carrot.setState(Carrot.STATE_SELECTED);
-									carrot.setRecordedTouchPtY(touchPosY);
-									touchPoints.put(pointerId, carrot);
-								}
-							}
-						}
-						break;
-					case MotionEvent.ACTION_MOVE:
-						Carrot carrotOnMove = touchPoints.get(pointerId);
-						if(carrotOnMove != null) {
-							float recordedPtY = carrotOnMove.getRecordedTouchPtY();
-							float distance = recordedPtY - event.getY(pointerIdx);
-							if(distance >= DEFAULT_SWIPE_DISTANCE_PX/* || carrotOnMove.getState() == Carrot.STATE_HARVESTED*/) {
-							    mPointsEarned += POINTS_EARNED_PER_CARROT;
-								carrotOnMove.setState(Carrot.STATE_HARVESTED);
-								carrotOnMove.setRecordedTouchPtY(-1);
-								touchPoints.remove(pointerId);
-							}
-						}
-						break;
-					case MotionEvent.ACTION_CANCEL:
-					case MotionEvent.ACTION_UP:
-					case MotionEvent.ACTION_POINTER_UP:
-						Carrot carrotUp = touchPoints.get(pointerId);
-						if(carrotUp != null){
-							carrotUp.setState(Carrot.STATE_UNSELECTED);
-							touchPoints.remove(pointerId);
-						}
-						return false;
-				}
-				return true;
-			}
-		};
-		SurfaceView surfaceView = (SurfaceView)findViewById(R.id.gameCanvas);
-		surfaceView.setOnTouchListener(mOnTouchListener);
-		mSurfaceHolder = surfaceView.getHolder();
-		mSurfaceHolder.addCallback(this);
-		mSeeder = new Random(System.currentTimeMillis());
-		
-		//preparing the stage
-		res = getResources();
+    }
+    	
+	private void prepareFloorDirectors(){
+        mOnTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                int pointerIdx  = event.getActionIndex();
+                int pointerId   = event.getPointerId(pointerIdx);
+                int maskedAction= event.getActionMasked();
+                
+                switch (maskedAction) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        float touchPosX = event.getX(pointerIdx);
+                        float touchPosY = event.getY(pointerIdx);
+                        if(StageHelper.isWithinBorders(mLeftBorderCanvasPos, mRightBorderCanvasPos, 
+                                mTopBorderCanvasPos, mBottomBorderCanvasPos, touchPosX, touchPosY)){
+                            for(Carrot carrot: carrots){
+                                if(carrot.isHit(touchPosX, touchPosY)){
+                                    carrot.setState(Carrot.STATE_SELECTED);
+                                    carrot.setRecordedTouchPtY(touchPosY);
+                                    touchPoints.put(pointerId, carrot);
+                                }
+                            }
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Carrot carrotOnMove = touchPoints.get(pointerId);
+                        if(carrotOnMove != null) {
+                            float recordedPtY = carrotOnMove.getRecordedTouchPtY();
+                            float distance = recordedPtY - event.getY(pointerIdx);
+                            if(distance >= DEFAULT_SWIPE_DISTANCE_PX/* || carrotOnMove.getState() == Carrot.STATE_HARVESTED*/) {
+                                mPointsEarned += POINTS_EARNED_PER_CARROT;
+                                carrotOnMove.setState(Carrot.STATE_HARVESTED);
+                                carrotOnMove.setRecordedTouchPtY(-1);
+                                touchPoints.remove(pointerId);
+                            }
+                        }
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_POINTER_UP:
+                        Carrot carrotUp = touchPoints.get(pointerId);
+                        if(carrotUp != null){
+                            carrotUp.setState(Carrot.STATE_UNSELECTED);
+                            touchPoints.remove(pointerId);
+                        }
+                        return false;
+                }
+                return true;
+            }
+        };
+        SurfaceView surfaceView = (SurfaceView)findViewById(R.id.gameCanvas);
+        surfaceView.setOnTouchListener(mOnTouchListener);
+        mSurfaceHolder = surfaceView.getHolder();
+        mSurfaceHolder.addCallback(this);
+        mSeeder = new Random(System.currentTimeMillis());
+    }
+    
+    private void prepareStage(){
+        //stage
+        res = getResources();
         touchPoints = new SparseArray<Carrot>();
-		mLeftBorderCanvasPos = 50;
-		mRightBorderCanvasPos = 653;
-		mTopBorderCanvasPos = 50;
-		mBottomBorderCanvasPos = 593;
-		carrots = new ArrayList<Carrot>();
-		Carrot carrot = new Carrot(50, 50, 251 , 231);
-		carrots.add(carrot);
-		carrot = new Carrot(50, 231, 251 , 412);
-		carrots.add(carrot);
-		carrot = new Carrot(50, 412, 251 , 593);
-		carrots.add(carrot);
-		carrot = new Carrot(251, 50, 452 , 231);
-		carrots.add(carrot);
-		carrot = new Carrot(251, 231, 452 , 412);
-		carrots.add(carrot);
-		carrot = new Carrot(251, 412, 452 , 593);
-		carrots.add(carrot);
-		carrot = new Carrot(452, 50, 653 , 231);
-		carrots.add(carrot);
-		carrot = new Carrot(452, 231, 653 , 412);
-		carrots.add(carrot);
-		carrot = new Carrot(452, 412, 653 , 593);
-		carrots.add(carrot);
+        mLeftBorderCanvasPos = 50;
+        mRightBorderCanvasPos = 653;
+        mTopBorderCanvasPos = 50;
+        mBottomBorderCanvasPos = 593;
         mTimerBackground = new Paint();
         mTimerBackground.setColor(res.getColor(R.color.white));
         mTimerBackground.setStyle(Style.FILL);
@@ -197,66 +258,26 @@ public class CarrotStage extends Stage {
         mTimer = new Paint();
         mTimer.setColor(res.getColor(R.color.red));
         mTimer.setStyle(Style.FILL);
-	}
-
-	@Override
-	protected void playGame() {
-		if(mRecordTimeStarted == -1) {
-			mRecordTimeStarted = System.currentTimeMillis();
-			mEstimateTimeFinish = mRecordTimeStarted + DEFAULT_CARROT_GAME_TIMER_MS; 
-		}
-		mIsScriptRunning = true;
-		mDirector = new Handler();
-		mDirector.postDelayed(mScript, FRAMEDELAY);
-	}
-	
-	//methods called when game has ended
-	@Override
-	protected void endGame() {
-	    mIsScriptRunning = false;
-	}
-	
-	@Override
-    protected void releaseResources() {
-        if(mSurfaceHolder != null){
-            mSurfaceHolder = null;
-        }
-        mIsScriptRunning = false;
-        if(mDirector != null){
-            mDirector.removeCallbacks(mScript);
-            mDirector = null;
-        }
-    }	
-
-	//methods called for pop ups
-	@Override
-	protected void showReadyInstruction() {
-	    //TODO show ang instruction instruction with ready animation
-	}
-
-	@Override
-	protected void showInGameMenu() {
-		mIsScriptRunning = false;
-	}
-
-	@Override
-	protected void showPointsAndReward() {
-	    //TODO send yung points then show pop up
-	}
-	
-	//methods for surface view
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		playGame();
-	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int frmt, int w, int h) {
-		//Do nothing
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		mIsScriptRunning = false;	
-	}
+        //actors
+        carrots = new ArrayList<Carrot>();
+        Carrot carrot = new Carrot(50, 50, 251 , 231);
+        carrots.add(carrot);
+        carrot = new Carrot(50, 231, 251 , 412);
+        carrots.add(carrot);
+        carrot = new Carrot(50, 412, 251 , 593);
+        carrots.add(carrot);
+        carrot = new Carrot(251, 50, 452 , 231);
+        carrots.add(carrot);
+        carrot = new Carrot(251, 231, 452 , 412);
+        carrots.add(carrot);
+        carrot = new Carrot(251, 412, 452 , 593);
+        carrots.add(carrot);
+        carrot = new Carrot(452, 50, 653 , 231);
+        carrots.add(carrot);
+        carrot = new Carrot(452, 231, 653 , 412);
+        carrots.add(carrot);
+        carrot = new Carrot(452, 412, 653 , 593);
+        carrots.add(carrot);
+        
+    }
 }

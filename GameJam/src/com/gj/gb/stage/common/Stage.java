@@ -13,11 +13,14 @@ import com.gj.gb.screen.GBSplash;
 
 public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public static final int REQUEST_CODE_GAME_START = 11000;
+	public static final int REQUEST_CODE_SHOW_EXIT_MENU = 11001;
 	protected boolean mIsGameFinish = false;
 	protected boolean mIsShowReadyInstruction = false;
 	protected OnTouchListener mOnTouchListener;
 
 	protected abstract void playGame();// director of the stage
+	
+	protected abstract void resumeGame();
 	
 	protected abstract void endGame();
 
@@ -34,16 +37,20 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 		endGame();
 		showPointsAndReward();
 	}
+	
+	protected void closeAllExceptSplash(){
+        Intent intent = new Intent(this, GBSplash.class);
+        intent.putExtra("ExitMe", true);//TODO add me to GBSplash (add finish();)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
 	//TODO baka pedeng iakyat
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-			Intent intent = new Intent(this, GBSplash.class);
-			intent.putExtra("ExitMe", true);//TODO add me to GBSplash (add finish();)
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+			showInGameMenu();
 		}
 		return super.dispatchKeyEvent(event);
 	}
@@ -63,7 +70,13 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 			} else if (resultCode == RESULT_CANCELED) {
 				finish();
 			}
-		}
+		} if (requestCode == REQUEST_CODE_SHOW_EXIT_MENU) {
+            if (resultCode == RESULT_OK) {
+                finish();
+            } else if (resultCode == RESULT_CANCELED) {
+                resumeGame();
+            }
+        }  
 	}
 
 	@Override
