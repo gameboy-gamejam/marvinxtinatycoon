@@ -24,6 +24,8 @@ public class Carrot {
 	private float mPosY;
 	private float mPosXRightBorder;
 	private float mPosYBottomBorder;
+	private int mWidth;
+	private int mHeight;
 	private Bitmap mCurrentSkin;
 	
 	private float mRecordedTouchPtY;//records user's activity for this carrot only
@@ -44,42 +46,54 @@ public class Carrot {
 		mPosXRightBorder = posXRightBorder;
 		mPosYBottomBorder = posYBottomBorder;
 		mState = STATE_EMPTY;
+		mHeight = (int) (mPosYBottomBorder - mPosY);
+		mWidth = (int) (mPosXRightBorder - mPosX);
 	}
 
 	public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime) {
-		if (mState == STATE_EMPTY && mCurrentSkin == null) {
+		if (mCurrentSkin == null) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 		} else if (mState == STATE_SEEDED && inGameCurrentTime > mSeedDownTime) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_sprout);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 			mState = STATE_SPROUT;
 		} else if (mState == STATE_UNSELECTED || (mState == STATE_SPROUT && inGameCurrentTime > mSproutDownTime)) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_ripe);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 			mState = STATE_RIPE;
 		} else if (mState == STATE_RIPE && inGameCurrentTime > mRipeDownTime) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_spoiled);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 			mState = STATE_SPOILED;
 			if(inGameCurrentTime > mSpoiledDownTime){
 				mSpoiledDownTime = inGameCurrentTime + mDefaultDownTime;
 			}
 		} else if (mState == STATE_SELECTED) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_selected);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 		} else if (mState == STATE_SPOILED && inGameCurrentTime > mSpoiledDownTime) {
 			mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
+			Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 			mState = STATE_EMPTY;
 		} else if (mState == STATE_HARVESTED) {
 			if (!mHarvestDownTimeNoFade && !mHarvestDownTimeHalfFade && !mHarvestDownTimeFullFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested);
+				Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 				mHarvestDownTimeNoFade = true;
 			} else if (mHarvestDownTimeNoFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvest_fade_half);
+				Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 				mHarvestDownTimeHalfFade = true;
 				mHarvestDownTimeNoFade = false;
 			} else if (mHarvestDownTimeHalfFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested_fade_full);
+				Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 				mHarvestDownTimeFullFade = true;
 				mHarvestDownTimeHalfFade = false;
 			} else if (mHarvestDownTimeFullFade) {
 				mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_empty);
+				Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 				mHarvestDownTimeFullFade = false;
 				mState = STATE_EMPTY;
 			}
@@ -88,7 +102,7 @@ public class Carrot {
 	}
 	
 	public boolean isHit(float touchPosX, float touchPosY){
-		if(mState == STATE_RIPE){
+		if(mState == STATE_RIPE||mState == STATE_SELECTED || mState == STATE_UNSELECTED){
 			return StageHelper.isWithinBorders(mPosX, mPosXRightBorder, mPosY, 
 					mPosYBottomBorder, touchPosX, touchPosY);
 		}
