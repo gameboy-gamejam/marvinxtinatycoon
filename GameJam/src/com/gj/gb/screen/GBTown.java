@@ -33,6 +33,10 @@ public class GBTown extends Activity {
 
 	private void initButtons() {
 		findViewById(R.id.buttonMenu).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonOutside).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonMarket).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonBulletin).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonShop).setOnClickListener(buttonListener);
 	}
 	
 	private OnClickListener buttonListener = new OnClickListener() {
@@ -43,6 +47,9 @@ public class GBTown extends Activity {
 			switch (id) {
 			case R.id.buttonMenu:
 				startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+				break;
+			case R.id.buttonOutside:
+				startActivity(new Intent(GBTown.this, GBOutside.class));
 				break;
 			}
 		}
