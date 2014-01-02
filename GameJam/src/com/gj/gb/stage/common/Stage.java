@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View.OnTouchListener;
 
+import com.gj.gb.screen.GBSplash;
+
 public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public static final int REQUEST_CODE_GAME_START = 11000;
 	protected boolean mIsGameFinish = false;
