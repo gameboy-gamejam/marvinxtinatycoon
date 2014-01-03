@@ -150,6 +150,15 @@ public class GBGameData {
 	public void addIngredient(GBIngredient ingredient) {
 		this.ingredients.add(ingredient);
 	}
+	
+	public void removeIngredient(int id) {
+		int n = this.ingredients.size();
+		for (int i=0; i<n; i++) {
+			if (ingredients.get(i).getId() == id) {
+				ingredients.remove(i);
+			}
+		}
+	}
 
 	/**
 	 * @return the stamina
