@@ -1,0 +1,160 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="25dp"
+        android:background="#E9E1D8"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF5F34"
+            android:gravity="right"
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/buttonClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageIcon"
+                android:text="RARE CANDY"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#550000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="250G"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textName"
+                android:layout_toRightOf="@id/imageIcon"
+                android:text="This is a sample description."
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/textLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Item amount"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/textCross"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/buttonSpinner"
+                android:layout_toRightOf="@id/textLabel"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="X"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/buttonSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Button" />
+
+            <TextView
+                android:id="@+id/textTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical"
+                android:text="250G"
+                android:layout_centerVertical="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/textEqual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/buttonSpinner"
+                android:layout_toLeftOf="@+id/textTotalAmount"
+                android:layout_toRightOf="@+id/buttonSpinner"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="="
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <Button
+                android:id="@+id/buttonBack"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Back to Market" />
+
+            <Button
+                android:id="@+id/buttonBuy"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Confirm Buy" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

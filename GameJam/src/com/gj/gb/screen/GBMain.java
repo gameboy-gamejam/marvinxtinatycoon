@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.gj.gb.R;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.util.GBDataManager;
 
 public class GBMain extends Activity {
@@ -62,6 +63,7 @@ public class GBMain extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		GBDataManager.cleanup();
+		GBEconomics.cleanup();
 	}
 
 	protected void confirmNewGame() {

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.gj.gb.factory.GBIngredientsFactory;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.model.GBIngredient;
@@ -74,6 +75,64 @@ public class GBDataManager {
 			ingredients.add(butter);
 
 			GAME_DATA.setIngredients(ingredients);
+			
+			// init on market
+			List<Integer> market = new ArrayList<Integer>();
+			market.add(6);
+			market.add(8);
+			market.add(9);
+			market.add(10);
+			market.add(11);
+			market.add(12);
+			market.add(14);
+			market.add(17);
+			market.add(18);
+			market.add(19);
+			market.add(22);
+			market.add(26);
+			market.add(29);
+			market.add(31);
+			market.add(33);
+			market.add(34);
+			market.add(39);
+			market.add(41);
+			market.add(43);
+			market.add(45);
+			
+			// init unlocked
+			List<Integer> unlocked = new ArrayList<Integer>();
+			unlocked.add(4);
+			unlocked.add(5);
+			unlocked.add(16);
+			unlocked.add(23);
+			unlocked.add(35);
+			
+			// init locked
+			List<Integer> locked = new ArrayList<Integer>();
+			locked.add(1);
+			locked.add(2);
+			locked.add(3);
+			locked.add(7);
+			locked.add(13);
+			locked.add(15);
+			locked.add(20);
+			locked.add(21);
+			locked.add(24);
+			locked.add(25);
+			locked.add(27);
+			locked.add(28);
+			locked.add(30);
+			locked.add(32);
+			locked.add(36);
+			locked.add(37);
+			locked.add(38);
+			locked.add(40);
+			locked.add(42);
+			locked.add(44);
+			locked.add(46);
+			locked.add(47);
+			
+			GBEconomics.initMarket(market, unlocked, locked);
 		}
 	}
 

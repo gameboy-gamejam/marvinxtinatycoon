@@ -72,6 +72,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBMarketPopConfirm"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Transparent">
+        </activity>
     </application>
 
 </manifest>

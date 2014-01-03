@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import com.gj.gb.util.Utils;
 
@@ -16,10 +15,7 @@ public class GBEconomics {
 	
 	/* decreases as day increase, when value is equal to 0, market rate is changed */
 	protected static int marketRateDuration = 5;
-	
-	/* recipes that are in demand are more likely to be ordered in your restaurant if you have one */
-	protected static List<Integer> inDemandRecipe = new ArrayList<Integer>();
-	
+
 	/* every 7 days, market demand changes */
 	protected static int marketDemandDuration = 7;
 	
@@ -32,9 +28,6 @@ public class GBEconomics {
 	}
 	
 	public static int recomputePrice(int originalPrice) {
-		Log.w("test", "Price: " + originalPrice);
-		Log.w("test", "Rate: " + currentMarketRate);
-		Log.w("test", "New Price: " + (currentMarketRate * originalPrice));
 		float newPrice = currentMarketRate * originalPrice;
 		return Math.round(newPrice);
 	}
@@ -53,7 +46,6 @@ public class GBEconomics {
 		marketDemandDuration--;
 		
 		if (marketDemandDuration == 0) {
-			// TODO: randomly select 5 recipe in demand
 			
 			// reset duration to 7 days
 			marketDemandDuration = 7;
@@ -75,10 +67,6 @@ public class GBEconomics {
 		}
 	}
 
-	public static List<Integer> getAllInDemandRecipe() {
-		return inDemandRecipe;
-	}
-	
 	public static int getDayCustomerCount(int ratings) {
 		boolean influx = isCustomerInflux();
 		
@@ -100,9 +88,33 @@ public class GBEconomics {
 		int random = Utils.RANDOM.nextInt(10) + 1;
 		return random == 2;
 	}
+	
+	protected static List<Integer> onMarket = new ArrayList<Integer>();
+	protected static List<Integer> unlocked = new ArrayList<Integer>();
+	protected static List<Integer> locked = new ArrayList<Integer>();
 
+	public static void initMarket(List<Integer> onMarket, List<Integer> unlocked, List<Integer> locked) {
+		GBEconomics.onMarket.clear();
+		GBEconomics.onMarket.addAll(onMarket);
+		
+		GBEconomics.locked.clear();
+		GBEconomics.locked.addAll(locked);
+		
+		GBEconomics.unlocked.clear();
+		GBEconomics.unlocked.addAll(unlocked);
+	}
+	
+	public static List<Integer> getMarketList() {
+		return onMarket;
+	}
+	
 	public static void cleanup() {
-		inDemandRecipe.clear();
-		inDemandRecipe = null;
+		onMarket.clear();
+		unlocked.clear();
+		locked.clear();
+		
+		onMarket = null;
+		unlocked = null;
+		locked = null;
 	}
 }
