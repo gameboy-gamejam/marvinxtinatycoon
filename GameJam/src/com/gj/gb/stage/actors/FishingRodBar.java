@@ -21,9 +21,9 @@ public class FishingRodBar {
     private static final int BAR_WIDTH = 390;
     private static final int POINTER_WIDTH = 10;
 
-    private static final float DISTANCE_CATCH_BAR_RT_EASY = 0.5f;
-    private static final float DISTANCE_CATCH_BAR_RT_NORMAL = 0.25f;
-    private static final float DISTANCE_CATCH_BAR_RT_HARD = 0.125f;
+    private static final float DISTANCE_CATCH_BAR_RT_EASY = 0.25f;
+    private static final float DISTANCE_CATCH_BAR_RT_NORMAL = 0.125f;
+    private static final float DISTANCE_CATCH_BAR_RT_HARD = 0.0625f;
 
     private static final int TOTAL_TIME_MS_BAR_REACH_END_EASY = 7000;
     private static final int TOTAL_TIME_MS_BAR_REACH_END_NORMAL = 5000;
@@ -69,7 +69,7 @@ public class FishingRodBar {
         mRodPointerPosX=BAR_START_X;
     }
 
-    /*
+    /**
      * - difficulty value - 0: novice 1: easy 2: normal 3: hard 4: expert
      */
     public void adjustDifficulty(int difficultyValue, int frameDelay) {
@@ -101,8 +101,9 @@ public class FishingRodBar {
         canvas.drawRect(BAR_START_X - 10, 50, BAR_WIDTH + BAR_START_X + 10, 150, mBarBorder);
         canvas.drawRect(BAR_START_X, 60, BAR_WIDTH + BAR_START_X, 140, mFreeBarSpaceBackground);
         canvas.drawRect(mCatchBarPosX, 60, mCatchBarPosX + mCatchBarWidth, 140, mCatchBarBackground);
-        canvas.drawRect(mRodPointerPosX, 60, POINTER_WIDTH, 140, mRodPointerBackground);
-        if((mMovementRate > 0 && BAR_START_X + mMovableDistanceWidth <= mRodPointerPosX)||(mMovementRate < 0 && BAR_START_X >= mRodPointerPosX)) {
+        canvas.drawRect(mRodPointerPosX, 60, mRodPointerPosX + POINTER_WIDTH, 140, mRodPointerBackground);
+        if((mMovementRate > 0 && BAR_START_X + BAR_WIDTH - POINTER_WIDTH <= mRodPointerPosX + mMovementRate)||
+        		(mMovementRate < 0 && BAR_START_X >= mRodPointerPosX + mMovementRate)) {
             mMovementRate *= -1;
         }
         mRodPointerPosX += mMovementRate;
