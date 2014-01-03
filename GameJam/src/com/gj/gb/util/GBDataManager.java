@@ -1,11 +1,16 @@
 package com.gj.gb.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.model.GBIngredient;
 
 public class GBDataManager {
 
@@ -48,6 +53,21 @@ public class GBDataManager {
 		GAME_DATA.setExperience(0);
 		GAME_DATA.setTotalCustomers(0);
 		GAME_DATA.setStamina(10); // pano logic nito? haha
+		
+		/* assign starting ingredients */
+		List<GBIngredient> ingredients = new ArrayList<GBIngredient>();
+		
+		// EGG
+		GBIngredient egg = GBIngredientsFactory.getIngredientById(16);
+		egg.setQuantity(20);
+		ingredients.add(egg);
+		
+		// BUTTER
+		GBIngredient butter = GBIngredientsFactory.getIngredientById(8);
+		butter.setQuantity(10);
+		ingredients.add(butter);
+		
+		GAME_DATA.setIngredients(ingredients);
 	}
 	
 	public static GBGameData getGameData() {
@@ -70,7 +90,30 @@ public class GBDataManager {
 		edit.putInt("totalCustomer", GAME_DATA.getTotalCustomers());
 		edit.putInt("stamina", GAME_DATA.getStamina());
 		
+		String converted = convertIngredientList(GAME_DATA.getIngredients());
+		edit.putString("ingredients", converted);
+		
 		edit.commit();
+	}
+
+	private static String convertIngredientList(List<GBIngredient> ingredients) {
+		int n = ingredients.size();
+		String retVal = "";
+		
+		for (int i=0; i<n; i++) {
+			GBIngredient ingredient = ingredients.get(i);
+			
+			int id = ingredient.getId();
+			int qty = ingredient.getQuantity();
+			
+			if (i > 0) {
+				retVal += ":";
+			}
+			
+			retVal += id + "x" + qty;
+		}
+		
+		return retVal;
 	}
 
 	private static void initPrefs() {
@@ -91,5 +134,27 @@ public class GBDataManager {
 		GAME_DATA.setExperience(PREFS.getInt("experience", 0));
 		GAME_DATA.setTotalCustomers(PREFS.getInt("totalCustomer", 0));
 		GAME_DATA.setStamina(PREFS.getInt("stamina", 10)); // pano logic nito? haha
+		
+		List<GBIngredient> parsed = parseIngredientString(PREFS.getString("ingredients", ""));
+		GAME_DATA.setIngredients(parsed);
+	}
+
+	private static List<GBIngredient> parseIngredientString(String string) {
+		List<GBIngredient> retVal = new ArrayList<GBIngredient>();
+		
+		if (string.length() > 0) {
+			String[] items = string.split(":");
+			int n = items.length;
+			for (int i=0; i<n; i++) {
+				String[] data = items[i].split("x");
+				if (data.length == 2) {
+					GBIngredient ingredient = GBIngredientsFactory.getIngredientById(Integer.valueOf(data[0]));
+					ingredient.setQuantity(Integer.valueOf(data[1]));
+					retVal.add(ingredient);
+				}
+			}
+		}
+		
+		return retVal;
 	}
 }
