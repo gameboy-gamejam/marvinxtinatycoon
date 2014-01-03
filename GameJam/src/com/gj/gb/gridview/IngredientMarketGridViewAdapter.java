@@ -45,8 +45,8 @@ public class IngredientMarketGridViewAdapter extends ArrayAdapter<GBIngredient> 
 		}
 		
 		GBIngredient ingredient = getItem(position);
-
-		holder.textPrice.setText(GBEconomics.recomputePrice(ingredient.getPrice()) + "G");
+		int reprice = GBEconomics.recomputePrice(ingredient.getPrice());
+		holder.textPrice.setText(reprice + "G");
 		holder.textPrice.setTextColor(GBEconomics.getRateColor());
 		
 		return super.getView(position, convertView, parent);

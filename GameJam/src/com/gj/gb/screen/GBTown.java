@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
-import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.util.GBDataManager;
@@ -78,11 +77,14 @@ public class GBTown extends Activity {
 
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
+			GBDataManager.clear();
 			GBDataManager.createData();
+			data = GBDataManager.getGameData();
 			updateData();
 		} else if (id == R.id.buttonContinue) {
 			// do nothing
 			GBDataManager.loadData();
+			data = GBDataManager.getGameData();
 			updateData();
 		} else {
 			// fatal error
@@ -90,8 +92,6 @@ public class GBTown extends Activity {
 	}
 
 	private void updateData() {
-		data = GBDataManager.getGameData();
-		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
@@ -132,7 +132,6 @@ public class GBTown extends Activity {
 		
 		if (requestCode == 201 || requestCode == 202) {
 			this.data.update();
-			GBEconomics.update();
 			updateData();
 		}
 	}

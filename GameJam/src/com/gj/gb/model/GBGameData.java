@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.util.Log;
+
+import com.gj.gb.logic.GBEconomics;
+
 public class GBGameData {
 
 	public enum GBDayState {
@@ -173,11 +177,13 @@ public class GBGameData {
 		} else if (dayState == GBDayState.EVENING) {
 			dayState = GBDayState.MORNING;
 			updateDay();
+			GBEconomics.update();
 		}
 	}
 
 	private void updateDay() {
 		totalDay++;
+		Log.w("called", "Day: " + totalDay);
 		
 		currentDay++;
 		

@@ -2,11 +2,18 @@ package com.gj.gb.screen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBGameData;
+import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.util.GBDataManager;
+import com.gj.gb.util.Utils;
 
 public class GBOutside extends Activity {
 
@@ -16,6 +23,27 @@ public class GBOutside extends Activity {
 		setContentView(R.layout.scene_outside);
 	
 		initButtons();
+		updateData();
+	}
+	
+	private void updateData() {
+		GBGameData data = GBDataManager.getGameData();
+		
+		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
+		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
+		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
+		((ImageView) findViewById(R.id.imageDayState)).setBackgroundColor(formatDayState(data.getDayState()));
+	}
+
+	private int formatDayState(GBDayState dayState) {
+		if (dayState == GBDayState.MORNING) {
+			return Color.BLUE;
+		} else if (dayState == GBDayState.AFTERNOON) {
+			return Color.MAGENTA;
+		} else if (dayState == GBDayState.EVENING) {
+			return Color.DKGRAY;
+		}
+		return 0;
 	}
 	
 	private OnClickListener buttonListener = new OnClickListener() {
@@ -50,5 +78,10 @@ public class GBOutside extends Activity {
 			setResult(RESULT_OK);
 			finish();
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		toTown();
 	}
 }

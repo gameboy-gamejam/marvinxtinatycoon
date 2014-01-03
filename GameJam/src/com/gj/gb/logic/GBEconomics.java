@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.gj.gb.util.Utils;
 
@@ -11,7 +12,7 @@ public class GBEconomics {
 
 	protected static final float[] MARKET_RATE = { 0.5f, 0.75f, 1.0f, 1.5f, 2.0f };
 	
-	protected static float currentMarketRate = 2.0f;
+	protected static float currentMarketRate = 1.0f;
 	
 	/* decreases as day increase, when value is equal to 0, market rate is changed */
 	protected static int marketRateDuration = 5;
@@ -31,8 +32,11 @@ public class GBEconomics {
 	}
 	
 	public static int recomputePrice(int originalPrice) {
-		int newPrice = (int) (currentMarketRate * originalPrice);
-		return newPrice;
+		Log.w("test", "Price: " + originalPrice);
+		Log.w("test", "Rate: " + currentMarketRate);
+		Log.w("test", "New Price: " + (currentMarketRate * originalPrice));
+		float newPrice = currentMarketRate * originalPrice;
+		return Math.round(newPrice);
 	}
 	
 	public static int getRateColor() {
@@ -60,7 +64,7 @@ public class GBEconomics {
 		marketRateDuration--;
 		
 		if (marketRateDuration == 0) {
-			int rate = Utils.RANDOM.nextInt(MARKET_RATE.length);
+			float rate = MARKET_RATE[Utils.RANDOM.nextInt(MARKET_RATE.length)];
 			if (rate == currentMarketRate) {
 				currentMarketRate = 1.0f;
 			} else {

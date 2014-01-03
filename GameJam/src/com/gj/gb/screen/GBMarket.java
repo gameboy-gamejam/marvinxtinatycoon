@@ -25,8 +25,8 @@ public class GBMarket extends Activity {
 		
 		data = GBDataManager.getGameData();
 		
-		initData();
 		initButtons();
+		updateData();
 	}
 	
 	private OnClickListener buttonListener = new OnClickListener() {
@@ -65,7 +65,7 @@ public class GBMarket extends Activity {
 		grid.setAdapter(new IngredientMarketGridViewAdapter(this, data.getIngredients()));
 	}
 
-	private void initData() {
+	private void updateData() {
 		GBGameData data = GBDataManager.getGameData();
 		
 		((TextView) findViewById(R.id.textCurrentGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
@@ -79,6 +79,11 @@ public class GBMarket extends Activity {
 			setResult(RESULT_OK);
 			finish();
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		confirmExit();
 	}
 
 }
