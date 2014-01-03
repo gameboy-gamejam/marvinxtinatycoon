@@ -50,7 +50,7 @@ public class GBTown extends Activity {
 				startActivity(new Intent(GBTown.this, GBInGameMenu.class));
 				break;
 			case R.id.buttonOutside:
-				startActivity(new Intent(GBTown.this, GBOutside.class));
+				toOutside();
 				break;
 			case R.id.buttonMarket:
 				toMarket();
@@ -65,9 +65,15 @@ public class GBTown extends Activity {
 	}
 
 	protected void toMarket() {
-		Intent intent = new Intent(this, GBMarket.class);
+		Intent intent = new Intent(this, GBPopConfirm.class);
 		intent.putExtra("message", "Do you want to visit the market to buy or sell ingredients?");
 		startActivityForResult(intent, 100);
+	}
+
+	protected void toOutside() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Do you want to go outside town and hunt for ingredients?");
+		startActivityForResult(intent, 101);
 	}
 
 	private void initData(int id) {
@@ -118,7 +124,13 @@ public class GBTown extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if (requestCode == 100) {
+		if (requestCode == 100 && resultCode == RESULT_OK) {
+			startActivityForResult(new Intent(this, GBMarket.class), 201);
+		} else if (requestCode == 101 && resultCode == RESULT_OK) {
+			startActivityForResult(new Intent(this, GBOutside.class), 202);
+		}
+		
+		if (requestCode == 201 || requestCode == 202) {
 			this.data.update();
 			GBEconomics.update();
 			updateData();
