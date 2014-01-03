@@ -17,7 +17,7 @@ public class GBDataManager {
 	
 	public static void init(Context context) {
 		GBDataManager.CONTEXT_REF = context;
-		GBDataManager.PREFS = context.getSharedPreferences("gb-prefs", Context.MODE_PRIVATE);
+		initPrefs();
 	}
 	
 	public static void cleanup() {
@@ -55,6 +55,7 @@ public class GBDataManager {
 	}
 
 	public static void saveData() {
+		if (PREFS == null) initPrefs();
 		Editor edit = PREFS.edit();
 		
 		edit.putInt("currentDay", GAME_DATA.getCurrentDay());
@@ -70,6 +71,10 @@ public class GBDataManager {
 		edit.putInt("stamina", GAME_DATA.getStamina());
 		
 		edit.commit();
+	}
+
+	private static void initPrefs() {
+		GBDataManager.PREFS = CONTEXT_REF.getSharedPreferences("gb-prefs", Context.MODE_PRIVATE);
 	}
 
 	public static void loadData() {
