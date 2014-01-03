@@ -1,6 +1,7 @@
 package com.gj.gb.model;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class GBGameData {
@@ -158,5 +159,51 @@ public class GBGameData {
 	 */
 	public void setStamina(int stamina) {
 		this.stamina = stamina;
+	}
+
+	public void update() {
+		updateDayState();
+	}
+
+	private void updateDayState() {
+		if (dayState == GBDayState.MORNING) {
+			dayState = GBDayState.AFTERNOON;
+		} else if (dayState == GBDayState.AFTERNOON) {
+			dayState = GBDayState.EVENING;
+		} else if (dayState == GBDayState.EVENING) {
+			dayState = GBDayState.MORNING;
+			updateDay();
+		}
+	}
+
+	private void updateDay() {
+		totalDay++;
+		
+		currentDay++;
+		
+		if (currentMonth == 2) {
+			boolean isLeapYear = new GregorianCalendar().isLeapYear(currentYear);
+			if ((isLeapYear && currentDay > 29) || (!isLeapYear && currentDay > 28)) {
+				currentDay = 1;
+				currentMonth++;
+			}
+		} else if (currentDay > 31 && is31()) {
+			currentDay = 1;
+			currentMonth++;
+		} else if (currentDay > 30) {
+			currentDay = 1;
+			currentMonth++;
+		}
+		
+		if (currentMonth > 12) {
+			currentMonth = 1;
+			currentYear++;
+		}
+	}
+
+	private boolean is31() {
+		return currentMonth == 1 || currentMonth == 3 || currentMonth == 5
+				|| currentMonth == 7 || currentMonth == 8 || currentMonth == 10
+				|| currentMonth == 12;
 	}
 }

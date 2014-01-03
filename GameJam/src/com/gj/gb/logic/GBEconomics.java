@@ -3,13 +3,15 @@ package com.gj.gb.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+
 import com.gj.gb.util.Utils;
 
 public class GBEconomics {
 
 	protected static final float[] MARKET_RATE = { 0.5f, 0.75f, 1.0f, 1.5f, 2.0f };
 	
-	protected static float currentMarketRate = 1.0f;
+	protected static float currentMarketRate = 2.0f;
 	
 	/* decreases as day increase, when value is equal to 0, market rate is changed */
 	protected static int marketRateDuration = 5;
@@ -26,6 +28,21 @@ public class GBEconomics {
 	public static void update() {
 		updateMarketRate();
 		updateMarketDemand();
+	}
+	
+	public static int recomputePrice(int originalPrice) {
+		int newPrice = (int) (currentMarketRate * originalPrice);
+		return newPrice;
+	}
+	
+	public static int getRateColor() {
+		if (currentMarketRate < 1) {
+			return Color.BLUE;
+		} else if (currentMarketRate > 1) {
+			return Color.RED;
+		} else {
+			return Color.BLACK;
+		}
 	}
 
 	private static void updateMarketDemand() {

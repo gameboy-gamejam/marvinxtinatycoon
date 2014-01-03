@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.util.GBDataManager;
@@ -52,7 +53,7 @@ public class GBTown extends Activity {
 				startActivity(new Intent(GBTown.this, GBOutside.class));
 				break;
 			case R.id.buttonMarket:
-				startActivity(new Intent(GBTown.this, GBMarket.class));
+				toMarket();
 				break;
 			}
 		}
@@ -61,6 +62,12 @@ public class GBTown extends Activity {
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+	}
+
+	protected void toMarket() {
+		Intent intent = new Intent(this, GBMarket.class);
+		intent.putExtra("message", "Do you want to visit the market to buy or sell ingredients?");
+		startActivityForResult(intent, 100);
 	}
 
 	private void initData(int id) {
@@ -104,6 +111,17 @@ public class GBTown extends Activity {
 		if (returnToMain) {
 			GBTown.returnToMain = false;
 			finish();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == 100) {
+			this.data.update();
+			GBEconomics.update();
+			updateData();
 		}
 	}
 }
