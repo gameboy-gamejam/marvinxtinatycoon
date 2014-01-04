@@ -23,7 +23,7 @@ public class GBEconomics {
 	/* every 7 days, market demand changes */
 	protected static int marketDemandDuration = 7;
 	
-	protected static final int MIN_CUSTOMER = 3;
+	protected static final int MIN_CUSTOMER = 5;
 	
 	// this should be called everytime the player advances to next day
 	public static void update() {
@@ -119,8 +119,8 @@ public class GBEconomics {
 		
 		if (influx) {
 			// if there is influx of customer, there will be at least
-			// a minimum of 4 customer in the player's restaurant
-			customer += Utils.RANDOM.nextInt(8) + 3;
+			// a minimum of 7 customer in the player's restaurant
+			customer += Utils.RANDOM.nextInt(8) + 2;
 		}
 		
 		return customer;
@@ -178,10 +178,14 @@ public class GBEconomics {
 	}
 	
 	public static void loadData(SharedPreferences prefs) {
-		onMarket.clear();
+		if (onMarket != null) {
+			onMarket.clear();
+		}
 		onMarket = parseIngredientIdString(prefs.getString("market_list", ""));
 	
-		offMarket.clear();
+		if (offMarket != null) {
+			offMarket.clear();
+		}
 		offMarket = parseIngredientIdString(prefs.getString("off_list", ""));
 		
 		currentMarketRate = prefs.getFloat("current_rate", 1.0f);

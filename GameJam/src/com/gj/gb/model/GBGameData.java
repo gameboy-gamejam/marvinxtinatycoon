@@ -91,6 +91,10 @@ public class GBGameData {
 		this.totalCustomers = totalCustomers;
 	}
 	
+	public void addCustomerCount(int customer) {
+		this.totalCustomers += customer;
+	}
+	
 	public boolean removeIngredient(GBIngredient ingredient) {
 		return this.ingredients.remove(ingredient);
 	}

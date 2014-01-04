@@ -75,13 +75,49 @@ public class GBCustomerFactory {
 	public static List<GBCustomer> getCustomerList(int max, int n) {
 		List<GBCustomer> customers = new ArrayList<GBCustomer>();
 		
+		int arriveTime = 10;
+		
 		for (int i=0; i<n; i++) {
-			customers.add(getCustomerById(Utils.RANDOM.nextInt(max)));
+			GBCustomer customer = getCustomerById(Utils.RANDOM.nextInt(max));
+			
+			if (arriveTime == 3) {
+				arriveTime += Utils.RANDOM.nextInt(3) + 1;
+			} else {
+				arriveTime += Utils.RANDOM.nextInt(8) + 1;
+			}
+			
+			if (arriveTime >= 45) {
+				arriveTime = 45;
+			}
+			
+			customer.setArriveTime(arriveTime);
+			customer.setDecideTime(arriveTime + getDecideTime(customer.getAvatar()));
+			customer.setId(i);
+			
+			customers.add(customer);
 		}
 		
 		return customers;
 	}
 	
+	private static int getDecideTime(int avatar) {
+		switch (avatar) {
+		case 1:
+		case 2:
+			return Utils.RANDOM.nextInt(2);
+		case 3:
+		case 4:
+			return Utils.RANDOM.nextInt(4) + 2;
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+			return Utils.RANDOM.nextInt(3);
+		}
+		return 0;
+	}
+
 	public static List<GBCustomer> getAllCustomerType() {
 		List<GBCustomer> customers = new ArrayList<GBCustomer>();
 		

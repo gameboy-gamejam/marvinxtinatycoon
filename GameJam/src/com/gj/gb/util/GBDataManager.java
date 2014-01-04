@@ -184,4 +184,8 @@ public class GBDataManager {
 
 		return retVal;
 	}
+
+	public static void setContextRef(Context context) {
+		CONTEXT_REF = context;
+	}
 }
