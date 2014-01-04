@@ -38,6 +38,8 @@ public class GBTown extends Activity {
 		findViewById(R.id.buttonMarket).setOnClickListener(buttonListener);
 		findViewById(R.id.buttonBulletin).setOnClickListener(buttonListener);
 		findViewById(R.id.buttonShop).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonMayor).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonGuild).setOnClickListener(buttonListener);
 	}
 	
 	private OnClickListener buttonListener = new OnClickListener() {
@@ -55,6 +57,14 @@ public class GBTown extends Activity {
 			case R.id.buttonMarket:
 				toMarket();
 				break;
+			case R.id.buttonMayor:
+				toMayor();
+				break;
+			case R.id.buttonGuild:
+				toGuild();
+				break;
+			case R.id.buttonBulletin:
+				break;
 			}
 		}
 	};
@@ -62,6 +72,22 @@ public class GBTown extends Activity {
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+	}
+
+	protected void toGuild() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Sorry, the guild isn't open. Come back again some other time.");
+		intent.putExtra("one_button", true);
+		intent.putExtra("btn_1", "OK");
+		startActivity(intent);
+	}
+
+	protected void toMayor() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Sorry, the mayor doesn't want to be disturbed right now.");
+		intent.putExtra("one_button", true);
+		intent.putExtra("btn_1", "OK");
+		startActivity(intent);
 	}
 
 	protected void toMarket() {
