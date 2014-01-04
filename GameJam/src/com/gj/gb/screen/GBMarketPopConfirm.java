@@ -43,6 +43,14 @@ public class GBMarketPopConfirm extends Activity {
 			}
 		});
 		
+		findViewById(R.id.buttonBack).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		
 		GBIngredient ingredient = GBIngredientsFactory.getIngredientById(ingredientId);
 		if (ingredient != null) {
 			price = GBEconomics.recomputePrice(ingredient.getPrice());

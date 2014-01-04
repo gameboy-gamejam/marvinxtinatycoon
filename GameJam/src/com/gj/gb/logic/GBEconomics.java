@@ -134,14 +134,6 @@ public class GBEconomics {
 	protected static List<Integer> onMarket = new ArrayList<Integer>();
 	protected static List<Integer> offMarket = new ArrayList<Integer>();
 
-	public static void initMarket(List<Integer> onMarket, List<Integer> offMarket) {
-		GBEconomics.onMarket.clear();
-		GBEconomics.onMarket.addAll(onMarket);
-	
-		GBEconomics.offMarket.clear();
-		GBEconomics.offMarket.addAll(offMarket);
-	}
-	
 	public static List<Integer> getMarketList() {
 		return onMarket;
 	}
@@ -207,5 +199,58 @@ public class GBEconomics {
 		}
 		
 		return retVal;
+	}
+
+	public static void initMarket() {
+		onMarket.clear();
+		onMarket.add(5);
+		onMarket.add(7);
+		onMarket.add(8);
+		onMarket.add(9);
+		onMarket.add(10);
+		onMarket.add(11);
+		onMarket.add(13);
+		onMarket.add(16);
+		onMarket.add(17);
+		onMarket.add(20);
+		onMarket.add(21);
+		onMarket.add(25);
+		onMarket.add(28);
+		onMarket.add(30);
+		onMarket.add(32);
+		onMarket.add(33);
+		onMarket.add(38);
+		onMarket.add(40);
+		onMarket.add(42);
+		onMarket.add(44);
+		
+		offMarket.clear();
+		offMarket.add(0);
+		offMarket.add(1);
+		offMarket.add(2);
+		offMarket.add(3);
+		offMarket.add(4);
+		offMarket.add(6);
+		offMarket.add(12);
+		offMarket.add(14);
+		offMarket.add(15);
+		offMarket.add(19);
+		offMarket.add(20);
+		offMarket.add(22);
+		offMarket.add(23);
+		offMarket.add(24);
+		offMarket.add(26);
+		offMarket.add(27);
+		offMarket.add(29);
+		offMarket.add(31);
+		offMarket.add(34);
+		offMarket.add(35);
+		offMarket.add(36);
+		offMarket.add(37);
+		offMarket.add(39);
+		offMarket.add(41);
+		offMarket.add(43);
+		offMarket.add(45);
+		offMarket.add(46);
 	}
 }

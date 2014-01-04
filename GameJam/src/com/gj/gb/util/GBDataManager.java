@@ -80,61 +80,8 @@ public class GBDataManager {
 			ingredients.add(butter);
 
 			GAME_DATA.setIngredients(ingredients);
-			
-			// init on market
-			List<Integer> market = new ArrayList<Integer>();
-			market.add(5);
-			market.add(7);
-			market.add(8);
-			market.add(9);
-			market.add(10);
-			market.add(11);
-			market.add(13);
-			market.add(16);
-			market.add(17);
-			market.add(20);
-			market.add(21);
-			market.add(25);
-			market.add(28);
-			market.add(30);
-			market.add(32);
-			market.add(33);
-			market.add(38);
-			market.add(40);
-			market.add(42);
-			market.add(44);
-			
-			// init unlocked
-			List<Integer> offmarket = new ArrayList<Integer>();
-			offmarket.add(0);
-			offmarket.add(1);
-			offmarket.add(2);
-			offmarket.add(3);
-			offmarket.add(4);
-			offmarket.add(6);
-			offmarket.add(12);
-			offmarket.add(14);
-			offmarket.add(15);
-			offmarket.add(19);
-			offmarket.add(20);
-			offmarket.add(22);
-			offmarket.add(23);
-			offmarket.add(24);
-			offmarket.add(26);
-			offmarket.add(27);
-			offmarket.add(29);
-			offmarket.add(31);
-			offmarket.add(34);
-			offmarket.add(35);
-			offmarket.add(36);
-			offmarket.add(37);
-			offmarket.add(39);
-			offmarket.add(41);
-			offmarket.add(43);
-			offmarket.add(45);
-			offmarket.add(46);
-			
-			GBEconomics.initMarket(market, offmarket);
+
+			GBEconomics.initMarket();
 		}
 	}
 

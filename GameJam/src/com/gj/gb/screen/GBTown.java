@@ -2,7 +2,6 @@ package com.gj.gb.screen;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -124,18 +123,16 @@ public class GBTown extends Activity {
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
-		((ImageView) findViewById(R.id.imageDayState)).setBackgroundColor(formatDayState(data.getDayState()));
+		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
 	}
 
 	private int formatDayState(GBDayState dayState) {
-		if (dayState == GBDayState.MORNING) {
-			return Color.BLUE;
-		} else if (dayState == GBDayState.AFTERNOON) {
-			return Color.MAGENTA;
+		if (dayState == GBDayState.AFTERNOON) {
+			return R.drawable.daystate_1;
 		} else if (dayState == GBDayState.EVENING) {
-			return Color.DKGRAY;
+			return R.drawable.daystate_2;
 		}
-		return 0;
+		return R.drawable.daystate_0;
 	}
 
 	@Override

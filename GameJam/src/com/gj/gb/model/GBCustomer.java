@@ -2,7 +2,9 @@ package com.gj.gb.model;
 
 public class GBCustomer {
 
-	protected int id;
+	private int id;
+	
+	private String name;
 	
 	protected int avatar;
 	
@@ -10,6 +12,13 @@ public class GBCustomer {
 	protected int satisfaction = 100;
 	
 	protected int arriveTime;
+	
+	private int tip;
+	
+	public GBCustomer(int avatar, String name) {
+		this.avatar = avatar;
+		this.name = name;
+	}
 	
 	public int getArriveTime() {
 		return arriveTime;
@@ -29,14 +38,6 @@ public class GBCustomer {
 
 	protected int decideTime;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getAvatar() {
 		return avatar;
 	}
@@ -51,5 +52,27 @@ public class GBCustomer {
 
 	public void setSatisfaction(int satisfaction) {
 		this.satisfaction = satisfaction;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getTip() {
+		return tip;
+	}
+
+	public void setTip(int tip) {
+		this.tip = tip;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }
