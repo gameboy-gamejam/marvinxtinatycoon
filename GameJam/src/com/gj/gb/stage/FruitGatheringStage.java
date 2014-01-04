@@ -54,13 +54,14 @@ public class FruitGatheringStage extends Stage{
 	protected void playGame() {
 		mRecordTimeStarted = System.currentTimeMillis();
 		mIsScriptRunning = true;
+		mPointsEarned = 0;
 		tree.setTimeTreeLived(mRecordTimeStarted);
 		mDirector.postDelayed(mScript, 70);
 	}
 
 	@Override
 	protected void resumeGame() {
-		mIsScriptRunning = true;
+		//Do nothing
 	}
 
 	@Override

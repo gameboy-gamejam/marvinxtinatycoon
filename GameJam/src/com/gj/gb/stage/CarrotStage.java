@@ -67,12 +67,14 @@ public class CarrotStage extends Stage {
 	
 	@Override
 	protected void playGame() {
-		if(mRecordTimeStarted == -1) {
-			mRecordTimeStarted = System.currentTimeMillis();
-			mEstimateTimeFinish = mRecordTimeStarted + DEFAULT_CARROT_GAME_TIMER_MS; 
-		}
+		mRecordTimeStarted = System.currentTimeMillis();
+		mEstimateTimeFinish = mRecordTimeStarted + DEFAULT_CARROT_GAME_TIMER_MS;
 		mIsScriptRunning = true;
-		mDirector = new Handler();
+		mPointsEarned = 0;
+		touchPoints = new SparseArray<Carrot>();
+		for(Carrot carrot: carrots){
+			carrot.setState(Carrot.STATE_EMPTY);
+		}
 		mDirector.postDelayed(mScript, FRAMEDELAY);
 	}
 	
@@ -180,6 +182,7 @@ public class CarrotStage extends Stage {
     }
     	
 	private void prepareFloorDirectors(){
+		mDirector = new Handler();
         mOnTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -239,7 +242,6 @@ public class CarrotStage extends Stage {
     private void prepareStage(){
         //stage
         res = getResources();
-        touchPoints = new SparseArray<Carrot>();
         mLeftBorderCanvasPos = 50;
         mRightBorderCanvasPos = 653;
         mTopBorderCanvasPos = 50;

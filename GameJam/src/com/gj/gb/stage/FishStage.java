@@ -55,7 +55,7 @@ public class FishStage extends Stage {
     @Override
     protected void onResume() {
     	super.onResume();
-    	mDirector.postDelayed(new Runnable() {
+    	mDirector.postDelayed(new Runnable() {//lipat ng onactivity result
 			
 			@Override
 			public void run() {
@@ -80,7 +80,7 @@ public class FishStage extends Stage {
 		}, FRAMEDELAY);
     }
     @Override
-    protected void playGame() {//nandito yung laman ng sa ontouchevent
+    protected void playGame() {
     	mFishingRod.adjustDifficulty(mSeeder.nextInt(5), FRAMEDELAY);
     	mFishingRod.setCatchBarPosX(mSeeder.nextInt((int) mFishingRod.getMovableDistanceWidth()));
     	mFishingRod.setIsLakeWithFish(mSeeder.nextBoolean());
