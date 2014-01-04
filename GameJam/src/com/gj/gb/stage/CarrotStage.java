@@ -174,7 +174,7 @@ public class CarrotStage extends Stage {
                     }
                     mDirector.postDelayed(mScript, FRAMEDELAY);
                 } else {
-                    endGame();
+                	showPointsAndReward();
                 }
             }
         };
