@@ -15,6 +15,7 @@ import com.gj.gb.R;
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBIngredient;
+import com.gj.gb.util.ImageCache;
 
 public class IngredientMarketGridViewAdapter2 extends ArrayAdapter<Integer> {
 
@@ -47,6 +48,8 @@ public class IngredientMarketGridViewAdapter2 extends ArrayAdapter<Integer> {
 		int reprice = GBEconomics.recomputePrice(ingredient.getPrice());
 		holder.textPrice.setText(reprice + "G");
 		holder.textPrice.setTextColor(GBEconomics.getRateColor());
+
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "ingredient_"+(ingredient.getId()+1)));
 		
 		return super.getView(position, convertView, parent);
 	}

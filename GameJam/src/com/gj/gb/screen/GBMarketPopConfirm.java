@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
@@ -15,6 +16,7 @@ import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.util.GBDataManager;
+import com.gj.gb.util.ImageCache;
 
 public class GBMarketPopConfirm extends Activity {
 
@@ -83,13 +85,21 @@ public class GBMarketPopConfirm extends Activity {
 				GBGameData data = GBDataManager.getGameData();
 				if (type == GBMarket.TYPE_BUY) {
 					data.setCurrentGold(data.getCurrentGold() - totalAmount);
+					data.updateIngredient(ingredientId, quantity);
 				} else {
 					data.setCurrentGold(data.getCurrentGold() + totalAmount);
+					if (quantity == maxQty) {
+						data.removeIngredient(ingredientId);
+					} else {
+						data.updateIngredient(ingredientId, -1 * quantity);
+					}
 				}
 				setResult(RESULT_OK);
 				finish();
 			}
 		});
+		
+		((ImageView) findViewById(R.id.imageIcon)).setImageBitmap(ImageCache.getBitmap(this, "ingredient_" + (ingredientId+1)));
 	}
 
 	private void updateQuantity(int i) {

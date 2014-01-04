@@ -49,7 +49,8 @@
                 android:text="RARE CANDY"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#550000"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp" />
 
             <TextView
                 android:id="@+id/textPrice"
@@ -69,7 +70,8 @@
                 android:layout_toRightOf="@id/imageIcon"
                 android:text="This is a sample description."
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:layout_marginLeft="5dp" />
         </RelativeLayout>
 
         <RelativeLayout

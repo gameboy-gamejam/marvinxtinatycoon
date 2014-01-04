@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.GBEconomics;
 
 public class GBGameData {
@@ -156,8 +157,24 @@ public class GBGameData {
 		for (int i=0; i<n; i++) {
 			if (ingredients.get(i).getId() == id) {
 				ingredients.remove(i);
+				break;
 			}
 		}
+	}
+
+	public void updateIngredient(int id, int quantity) {
+		int n = this.ingredients.size();
+		for (int i=0; i<n; i++) {
+			GBIngredient ingredient = ingredients.get(i);
+			if (ingredient.getId() == id) {
+				ingredient.setQuantity(ingredient.getQuantity() + quantity);
+				return; // quick return
+			}
+		}
+		
+		GBIngredient ingredient = GBIngredientsFactory.getIngredientById(id);
+		ingredient.setQuantity(quantity);
+		ingredients.add(ingredient);
 	}
 
 	/**

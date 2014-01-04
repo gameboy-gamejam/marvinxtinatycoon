@@ -108,6 +108,14 @@ public class GBEconomics {
 		return onMarket;
 	}
 	
+	public static List<Integer> getLockedList() {
+		return locked;
+	}
+	
+	public static List<Integer> getUnlockedList() {
+		return unlocked;
+	}
+	
 	public static void cleanup() {
 		onMarket.clear();
 		unlocked.clear();

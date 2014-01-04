@@ -78,59 +78,59 @@ public class GBDataManager {
 			
 			// init on market
 			List<Integer> market = new ArrayList<Integer>();
-			market.add(6);
+			market.add(5);
+			market.add(7);
 			market.add(8);
 			market.add(9);
 			market.add(10);
 			market.add(11);
-			market.add(12);
-			market.add(14);
+			market.add(13);
+			market.add(16);
 			market.add(17);
-			market.add(18);
-			market.add(19);
-			market.add(22);
-			market.add(26);
-			market.add(29);
-			market.add(31);
+			market.add(20);
+			market.add(21);
+			market.add(25);
+			market.add(28);
+			market.add(30);
+			market.add(32);
 			market.add(33);
-			market.add(34);
-			market.add(39);
-			market.add(41);
-			market.add(43);
-			market.add(45);
+			market.add(38);
+			market.add(40);
+			market.add(42);
+			market.add(44);
 			
 			// init unlocked
 			List<Integer> unlocked = new ArrayList<Integer>();
+			unlocked.add(3);
 			unlocked.add(4);
-			unlocked.add(5);
-			unlocked.add(16);
-			unlocked.add(23);
-			unlocked.add(35);
+			unlocked.add(15);
+			unlocked.add(22);
+			unlocked.add(34);
 			
 			// init locked
 			List<Integer> locked = new ArrayList<Integer>();
+			locked.add(0);
 			locked.add(1);
 			locked.add(2);
-			locked.add(3);
-			locked.add(7);
-			locked.add(13);
-			locked.add(15);
+			locked.add(6);
+			locked.add(12);
+			locked.add(14);
+			locked.add(19);
 			locked.add(20);
-			locked.add(21);
+			locked.add(23);
 			locked.add(24);
-			locked.add(25);
+			locked.add(26);
 			locked.add(27);
-			locked.add(28);
-			locked.add(30);
-			locked.add(32);
+			locked.add(29);
+			locked.add(31);
+			locked.add(35);
 			locked.add(36);
 			locked.add(37);
-			locked.add(38);
-			locked.add(40);
-			locked.add(42);
-			locked.add(44);
+			locked.add(39);
+			locked.add(41);
+			locked.add(43);
+			locked.add(45);
 			locked.add(46);
-			locked.add(47);
 			
 			GBEconomics.initMarket(market, unlocked, locked);
 		}
@@ -159,8 +159,29 @@ public class GBDataManager {
 
 		String converted = convertIngredientList(GAME_DATA.getIngredients());
 		edit.putString("ingredients", converted);
+		
+		String market = convertIngredientIdList(GBEconomics.getMarketList());
+		String locked = convertIngredientIdList(GBEconomics.getLockedList());
+		String unlocked = convertIngredientIdList(GBEconomics.getUnlockedList());
+		edit.putString("market_list", market);
+		edit.putString("locked_list", locked);
+		edit.putString("unlocked_list", unlocked);
 
 		edit.commit();
+	}
+
+	private static String convertIngredientIdList(List<Integer> ingredients) {
+		int n = ingredients.size();
+		String retVal = "";
+		
+		for (int i = 0; i < n; i++) {
+			if (i > 0) {
+				retVal += ":";
+			}
+			retVal += String.valueOf(ingredients.get(i));
+		}
+		
+		return retVal;
 	}
 
 	private static String convertIngredientList(List<GBIngredient> ingredients) {
@@ -208,6 +229,25 @@ public class GBDataManager {
 		List<GBIngredient> parsed = parseIngredientString(PREFS.getString(
 				"ingredients", ""));
 		GAME_DATA.setIngredients(parsed);
+		
+		List<Integer> market = parseIngredientIdString(PREFS.getString("market_list", ""));
+		List<Integer> locked = parseIngredientIdString(PREFS.getString("locked_list", ""));
+		List<Integer> unlocked = parseIngredientIdString(PREFS.getString("unlocked_list", ""));
+		GBEconomics.initMarket(market, locked, unlocked);
+	}
+	
+	private static List<Integer> parseIngredientIdString(String string) {
+		List<Integer> retVal = new ArrayList<Integer>();
+		
+		if (string.length() > 0) {
+			String[] items = string.split(":");
+			int n = items.length;
+			for (int i = 0; i < n; i++) {
+				retVal.add(Integer.valueOf(items[i]));
+			}
+		}
+		
+		return retVal;
 	}
 
 	private static List<GBIngredient> parseIngredientString(String string) {

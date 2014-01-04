@@ -41,7 +41,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageIngredientIcon"
+                android:id="@+id/imageIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -53,7 +53,7 @@
                 android:id="@+id/textIngredientName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageIngredientIcon"
+                android:layout_below="@+id/imageIcon"
                 android:layout_centerHorizontal="true"
                 android:text="Potato"
                 android:textAppearance="?android:attr/textAppearanceMedium" />

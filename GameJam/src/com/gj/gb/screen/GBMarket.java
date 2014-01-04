@@ -26,6 +26,8 @@ public class GBMarket extends Activity {
 	
 	private GBGameData data;
 	
+	private int type;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class GBMarket extends Activity {
 	}
 
 	protected void updateBuyGridView() {
+		type = TYPE_BUY;
 		GridView grid = (GridView) findViewById(R.id.gridList);
 		grid.setAdapter(new IngredientMarketGridViewAdapter2(this, GBEconomics.getMarketList()));
 		grid.setOnItemClickListener(new OnItemClickListener() {
@@ -118,6 +121,7 @@ public class GBMarket extends Activity {
 	}
 
 	protected void updateSellGridView() {
+		type = TYPE_SELL;
 		GridView grid = (GridView) findViewById(R.id.gridList);
 		grid.setAdapter(new IngredientMarketGridViewAdapter(this, data.getIngredients()));
 		grid.setOnItemClickListener(new OnItemClickListener() {
@@ -149,6 +153,9 @@ public class GBMarket extends Activity {
 			finish();
 		} else if (requestCode == 1000 && resultCode == RESULT_OK) {
 			updateData();
+			if (type == TYPE_SELL) {
+				updateSellGridView();
+			}
 		}
 	}
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBIngredient;
+import com.gj.gb.util.ImageCache;
 
 public class IngredientGridViewAdapter extends ArrayAdapter<GBIngredient> {
 
@@ -46,6 +47,7 @@ public class IngredientGridViewAdapter extends ArrayAdapter<GBIngredient> {
 		GBIngredient ingredient = getItem(position);
 
 		holder.textRarity.setText(ingredient.getRarity() + "☆");
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "ingredient_"+(ingredient.getId()+1)));
 		
 		return super.getView(position, convertView, parent);
 	}

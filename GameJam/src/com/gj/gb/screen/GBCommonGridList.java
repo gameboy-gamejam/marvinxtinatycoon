@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
@@ -15,28 +16,31 @@ import com.gj.gb.gridview.IngredientGridViewAdapter;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.util.GBDataManager;
+import com.gj.gb.util.ImageCache;
 
 public class GBCommonGridList extends Activity {
 
 	protected GBGameData data;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		data = GBDataManager.getGameData();
-		
+
 		int type = getIntent().getIntExtra("type", -1);
 		setContent(type);
-		
-		findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(GBCommonGridList.this, GBInGameMenu.class));
-				finish();
-			}
-		});
+
+		findViewById(R.id.buttonClose).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(GBCommonGridList.this,
+								GBInGameMenu.class));
+						finish();
+					}
+				});
 	}
 
 	private void setContent(int type) {
@@ -44,7 +48,8 @@ public class GBCommonGridList extends Activity {
 		case R.id.buttonIngredients:
 			setContentView(R.layout.scene_ingredients_grid);
 			GridView grid = (GridView) findViewById(R.id.gridList);
-			grid.setAdapter(new IngredientGridViewAdapter(this, data.getIngredients()));
+			grid.setAdapter(new IngredientGridViewAdapter(this, data
+					.getIngredients()));
 			grid.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -68,10 +73,16 @@ public class GBCommonGridList extends Activity {
 
 	protected void updateIngredientInfo(int position) {
 		GBIngredient ingredient = data.getIngredients().get(position);
-		
-		((TextView) findViewById(R.id.textIngredientName)).setText(ingredient.getName());
-		((TextView) findViewById(R.id.textIngredientPrice)).setText(""+ingredient.getPrice());
-		((TextView) findViewById(R.id.textIngredientQty)).setText(ingredient.getQuantity()+"x");
+
+		((TextView) findViewById(R.id.textIngredientName)).setText(ingredient
+				.getName());
+		((TextView) findViewById(R.id.textIngredientPrice)).setText(""
+				+ ingredient.getPrice());
+		((TextView) findViewById(R.id.textIngredientQty)).setText(ingredient
+				.getQuantity() + "x");
+		((ImageView) findViewById(R.id.imageIcon))
+				.setImageBitmap(ImageCache.getBitmap(this, "ingredient_"
+						+ (ingredient.getId() + 1)));
 	}
 
 	@Override
