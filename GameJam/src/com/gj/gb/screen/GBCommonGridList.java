@@ -12,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.factory.GBCustomerFactory;
+import com.gj.gb.gridview.CustomerGridViewAdapter;
 import com.gj.gb.gridview.IngredientGridViewAdapter;
 import com.gj.gb.gridview.RecipeGridViewAdapter;
 import com.gj.gb.logic.GBEconomics;
+import com.gj.gb.model.GBCustomer;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.model.GBRecipe;
@@ -80,10 +83,28 @@ public class GBCommonGridList extends Activity {
 			break;
 		case R.id.buttonCustomer:
 			setContentView(R.layout.scene_customer_grid);
+			grid = (GridView) findViewById(R.id.gridList);
+			grid.setAdapter(new CustomerGridViewAdapter(this, GBCustomerFactory.getAllCustomerType()));
+			grid.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					updateCustomerInfo(position);
+				}
+			});
+			updateCustomerInfo(0);
 			break;
 		default:
 			finish();
 		}
+	}
+
+	protected void updateCustomerInfo(int position) {
+		GBCustomer customer = GBCustomerFactory.getAllCustomerType().get(position);
+		
+		((TextView) findViewById(R.id.textCustomerName)).setText(customer.getName());
+		((TextView) findViewById(R.id.textCustomerDescription)).setText(customer.getDescription());
 	}
 
 	protected void updateRecipeInfo(int position) {

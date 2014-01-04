@@ -8,6 +8,8 @@ public class GBCustomer {
 	
 	protected int avatar;
 	
+	private String description;
+	
 	/* decreases as times goes down */
 	protected int satisfaction = 100;
 	
@@ -15,9 +17,10 @@ public class GBCustomer {
 	
 	private int tip;
 	
-	public GBCustomer(int avatar, String name) {
+	public GBCustomer(int avatar, String name, String description) {
 		this.avatar = avatar;
 		this.name = name;
+		this.description = description;
 	}
 	
 	public int getArriveTime() {
@@ -74,5 +77,13 @@ public class GBCustomer {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

@@ -24,9 +24,9 @@ public class GBCustomerFactory {
 		case 62:
 		case 63:
 		case 64:
-			return new GBCustomer(2, "TIME CONSCIOUS");
+			return new GBCustomer(2, "TIME CONSCIOUS", "The faster you give her the order, the larger the tip she gives.");
 		case 65:
-			return new GBCustomer(3, "PRANKSTER");
+			return new GBCustomer(3, "PRANKSTER", "Spends precious time in the counter only not to buy any food. Beware!");
 		case 66:
 		case 67:
 		case 68:
@@ -39,36 +39,36 @@ public class GBCustomerFactory {
 		case 75:
 		case 76:
 		case 77:
-			return new GBCustomer(4, "INDECISIVE");
+			return new GBCustomer(4, "INDECISIVE", "Thinks twice on what to order. Very indecisive.");
 		case 78:
 		case 79:
-			return new GBCustomer(5, "POPSTAR");
+			return new GBCustomer(5, "POPSTAR", "A celebrity! Gives a lot of tip. So much win.");
 		case 80:
 		case 81:
 		case 82:
 		case 83:
 		case 84:
-			return new GBCustomer(6, "THE BULLIED");
+			return new GBCustomer(6, "THE BULLIED", "Feel sorry for this guy, he buys food for other people. The good part, he orders in bunch.");
 		case 85:
 		case 86:
 		case 87:
 		case 88:
 		case 89:
-			return new GBCustomer(7, "CHEAPSKATE");
+			return new GBCustomer(7, "CHEAPSKATE", "Doesn't want to spend money. Buys the cheapest dish in the menu. Worst, no tip!");
 		case 90:
 		case 91:
 		case 92:
 		case 93:
 		case 94:
-			return new GBCustomer(8, "THE RICH KID");
+			return new GBCustomer(8, "THE RICH KID", "Orders the most expensive dish in large quantity.");
 		case 95:
 		case 96:
 		case 97:
 		case 98:
 		case 99:
-			return new GBCustomer(9, "PROBLEMATIC");
+			return new GBCustomer(9, "PROBLEMATIC", "Very impatient. Wants her order right away.");
 		default:
-			return new GBCustomer(1, "AVERAGE JOE");
+			return new GBCustomer(1, "AVERAGE JOE", "The normal guy. Buys food. Leaves tip. Nothig more, nothing less");
 		}
 	}
 	
@@ -78,6 +78,22 @@ public class GBCustomerFactory {
 		for (int i=0; i<n; i++) {
 			customers.add(getCustomerById(Utils.RANDOM.nextInt(max)));
 		}
+		
+		return customers;
+	}
+	
+	public static List<GBCustomer> getAllCustomerType() {
+		List<GBCustomer> customers = new ArrayList<GBCustomer>();
+		
+		customers.add(getCustomerById(1));
+		customers.add(getCustomerById(51));
+		customers.add(getCustomerById(65));
+		customers.add(getCustomerById(66));
+		customers.add(getCustomerById(78));
+		customers.add(getCustomerById(80));
+		customers.add(getCustomerById(85));
+		customers.add(getCustomerById(90));
+		customers.add(getCustomerById(95));
 		
 		return customers;
 	}
