@@ -15,10 +15,17 @@ public class GBInGameMenu extends Activity {
 
 	protected int selectedId = -1;
 	
+	protected String from;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_game_menu);
+		
+		from = getIntent().getStringExtra("from");
+		if (from == null) {
+			from = "town";
+		}
 		
 		initButtons();
 		animateButtons();
@@ -67,7 +74,9 @@ public class GBInGameMenu extends Activity {
 					goToGridList(id);
 					break;
 				case R.id.buttonSystem:
-					startActivity(new Intent(GBInGameMenu.this, GBSystemMenu.class));
+					Intent intent = new Intent(GBInGameMenu.this, GBSystemMenu.class);
+					intent.putExtra("from", from);
+					startActivity(intent);
 					finish();
 					break;
 				}

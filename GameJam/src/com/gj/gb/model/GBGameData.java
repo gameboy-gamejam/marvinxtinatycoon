@@ -7,6 +7,7 @@ import java.util.List;
 import android.util.Log;
 
 import com.gj.gb.factory.GBIngredientsFactory;
+import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBEconomics;
 
 public class GBGameData {
@@ -37,6 +38,8 @@ public class GBGameData {
 	protected int totalCustomers;
 
 	protected List<GBIngredient> ingredients = new ArrayList<GBIngredient>();
+	
+	protected List<GBRecipe> recipes = new ArrayList<GBRecipe>();
 	
 	protected int level;
 	
@@ -157,9 +160,45 @@ public class GBGameData {
 		for (int i=0; i<n; i++) {
 			if (ingredients.get(i).getId() == id) {
 				ingredients.remove(i);
+				updateRecipe();
 				break;
 			}
 		}
+	}
+	
+	private void updateRecipe() {
+		if (recipes == null) recipes = new ArrayList<GBRecipe>();
+		
+		recipes.clear();
+		recipes.addAll(GBRecipeFactory.getAllAvailableRecipe());
+	}
+
+	public boolean hasIngredient(List<Integer> ingredients) {
+		int n = ingredients.size();
+		int m = this.ingredients.size();
+		
+		int ok = 0;
+		for (int i=0; i<n; i++) {
+			int iid = ingredients.get(i);
+			for (int j=0; j<m; j++) {
+				int jid = this.ingredients.get(j).getId();
+				if (iid == jid) {
+					ok++;
+					break;
+				}
+			}
+		}
+		
+		return ok == n;
+	}
+	
+	public List<GBRecipe> getRecipes() {
+		if (recipes == null || recipes.size() == 0) {
+			recipes = new ArrayList<GBRecipe>();
+			recipes.clear();
+			updateRecipe();
+		}
+		return recipes;
 	}
 
 	public void updateIngredient(int id, int quantity) {
@@ -175,6 +214,7 @@ public class GBGameData {
 		GBIngredient ingredient = GBIngredientsFactory.getIngredientById(id);
 		ingredient.setQuantity(quantity);
 		ingredients.add(ingredient);
+		updateRecipe();
 	}
 
 	/**

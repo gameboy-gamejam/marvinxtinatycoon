@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.Utils;
 
@@ -92,7 +93,7 @@ public class GBDishListAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				mName.setText(item.getName());
 				mDescription.setText(item.getDescription());
-				mPrice.setText(item.getPrice() + " Gold");
+				mPrice.setText(GBEconomics.getRecipePrice(item) + " Gold");
 				setDishId(item.getId());
 			}
 		});

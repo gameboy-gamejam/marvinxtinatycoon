@@ -56,6 +56,9 @@ public class GBTown extends Activity {
 			case R.id.buttonMarket:
 				toMarket();
 				break;
+			case R.id.buttonShop:
+				toShop();
+				break;
 			case R.id.buttonMayor:
 				toMayor();
 				break;
@@ -72,7 +75,7 @@ public class GBTown extends Activity {
 	public void onBackPressed() {
 		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
 	}
-
+	
 	protected void toGuild() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
 		intent.putExtra("message", "Sorry, the guild isn't open. Come back again some other time.");
@@ -99,6 +102,12 @@ public class GBTown extends Activity {
 		Intent intent = new Intent(this, GBPopConfirm.class);
 		intent.putExtra("message", "Do you want to go outside town and hunt for ingredients?");
 		startActivityForResult(intent, 101);
+	}
+
+	protected void toShop() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Do you want to open your shop?");
+		startActivityForResult(intent, 102);
 	}
 
 	private void initData(int id) {
@@ -154,9 +163,11 @@ public class GBTown extends Activity {
 			startActivityForResult(new Intent(this, GBMarket.class), 201);
 		} else if (requestCode == 101 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBOutside.class), 202);
+		} else if (requestCode == 102 && resultCode == RESULT_OK) {
+			startActivityForResult(new Intent(this, GBShop.class), 203);
 		}
 		
-		if (requestCode == 201 || requestCode == 202) {
+		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
 			this.data.update();
 			updateData();
 		}

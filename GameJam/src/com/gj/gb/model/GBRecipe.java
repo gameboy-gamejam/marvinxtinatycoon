@@ -11,16 +11,13 @@ public class GBRecipe {
 	
 	protected String description;
 	
-	protected int price;
-	
 	protected List<Integer> ingredients;
 
-	public GBRecipe(int id, String name, String description, int price, int... ingredient) {
+	public GBRecipe(int id, String name, String description, int... ingredient) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.price = price;
 		this.ingredients = new ArrayList<Integer>();
 		int n = ingredient.length;
 		for (int i=0; i<n; i++) {
@@ -50,14 +47,6 @@ public class GBRecipe {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public List<Integer> getIngredients() {

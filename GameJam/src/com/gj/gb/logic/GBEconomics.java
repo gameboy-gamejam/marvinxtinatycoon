@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
+import com.gj.gb.factory.GBIngredientsFactory;
+import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.Utils;
 
 public class GBEconomics {
@@ -252,5 +254,22 @@ public class GBEconomics {
 		offMarket.add(43);
 		offMarket.add(45);
 		offMarket.add(46);
+	}
+	
+	public static int getRecipePrice(GBRecipe recipe) {
+		List<Integer> ingredients = recipe.getIngredients();
+		
+		int n = ingredients.size();
+		int totalPrice = 0;
+		
+		for (int i=0; i<n; i++) {
+			totalPrice += GBIngredientsFactory.getIngredientById(ingredients.get(i)).getPrice();
+		}
+		
+		totalPrice -= 20;
+		
+		if (totalPrice < 10) totalPrice = 10;
+		
+		return totalPrice;
 	}
 }

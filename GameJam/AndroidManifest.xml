@@ -78,6 +78,11 @@
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Transparent">
         </activity>
+        <activity 
+            android:name="com.gj.gb.screen.GBShop"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
