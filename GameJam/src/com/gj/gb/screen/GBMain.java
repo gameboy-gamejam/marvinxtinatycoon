@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
@@ -29,9 +30,7 @@ public class GBMain extends Activity {
 		super.onResume();
 		
 		// enables the continue button if there is save file
-		if (GBDataManager.hasSaveData()) {
-			findViewById(R.id.buttonContinue).setEnabled(true);
-		}
+		findViewById(R.id.buttonContinue).setEnabled(GBDataManager.hasSaveData());
 	}
 
 	protected OnClickListener listener = new OnClickListener() {
@@ -73,6 +72,7 @@ public class GBMain extends Activity {
 	}
 
 	protected void toGameScreen(int id) {
+		GBDataManager.clearGameData();
 		Intent intent = new Intent(this, GBTown.class);
 		intent.putExtra("button_id", id);
 		startActivity(intent);
@@ -82,6 +82,8 @@ public class GBMain extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 100 && resultCode == RESULT_OK) {
+			Toast.makeText(this, "Go To New Game", Toast.LENGTH_SHORT).show();
+			GBDataManager.clearGamePrefs();
 			toGameScreen(R.id.buttonNewGame);
 		}
 	}

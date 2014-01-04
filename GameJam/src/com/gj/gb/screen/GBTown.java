@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
@@ -77,16 +78,18 @@ public class GBTown extends Activity {
 
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
-			GBDataManager.clear();
+			Toast.makeText(this, "New Game", Toast.LENGTH_SHORT).show();
 			GBDataManager.createData();
 			data = GBDataManager.getGameData();
 			updateData();
 		} else if (id == R.id.buttonContinue) {
+			Toast.makeText(this, "Continue", Toast.LENGTH_SHORT).show();
 			// do nothing
 			GBDataManager.loadData();
 			data = GBDataManager.getGameData();
 			updateData();
 		} else {
+			Toast.makeText(this, "FATAL!", Toast.LENGTH_SHORT).show();
 			// fatal error
 		}
 	}

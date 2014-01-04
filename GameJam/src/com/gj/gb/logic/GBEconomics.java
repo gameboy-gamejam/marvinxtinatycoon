@@ -3,6 +3,8 @@ package com.gj.gb.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
 import com.gj.gb.util.Utils;
@@ -46,10 +48,50 @@ public class GBEconomics {
 		marketDemandDuration--;
 		
 		if (marketDemandDuration == 0) {
+			shuffleMarketList();
 			
 			// reset duration to 7 days
 			marketDemandDuration = 7;
 		}
+	}
+
+	private static void shuffleMarketList() {
+		List<Integer> toBeRemoved = new ArrayList<Integer>();
+		int n = onMarket.size();
+		
+		while(toBeRemoved.size() < 5) {
+			int index = Utils.RANDOM.nextInt(n);
+			int iid = onMarket.get(index);
+			if (toBeRemoved.contains(iid)) {
+				continue;
+			} else {
+				toBeRemoved.add(iid);
+			}
+		}
+		
+		for (int i=0; i<5; i++) {
+			onMarket.remove(Integer.valueOf(toBeRemoved.get(i)));
+		}
+		
+		List<Integer> toBeAdded = new ArrayList<Integer>();
+		int m = offMarket.size();
+
+		while(toBeAdded.size() < 5) {
+			int index = Utils.RANDOM.nextInt(m);
+			int iid = offMarket.get(index);
+			if (toBeAdded.contains(iid)) {
+				continue;
+			} else {
+				toBeAdded.add(iid);
+			}
+		}
+		
+		for (int i=0; i<5; i++) {
+			offMarket.remove(Integer.valueOf(toBeAdded.get(i)));
+		}
+		
+		onMarket.addAll(0, toBeAdded);
+		offMarket.addAll(toBeRemoved);
 	}
 
 	private static void updateMarketRate() {
@@ -90,39 +132,80 @@ public class GBEconomics {
 	}
 	
 	protected static List<Integer> onMarket = new ArrayList<Integer>();
-	protected static List<Integer> unlocked = new ArrayList<Integer>();
-	protected static List<Integer> locked = new ArrayList<Integer>();
+	protected static List<Integer> offMarket = new ArrayList<Integer>();
 
-	public static void initMarket(List<Integer> onMarket, List<Integer> unlocked, List<Integer> locked) {
+	public static void initMarket(List<Integer> onMarket, List<Integer> offMarket) {
 		GBEconomics.onMarket.clear();
 		GBEconomics.onMarket.addAll(onMarket);
-		
-		GBEconomics.locked.clear();
-		GBEconomics.locked.addAll(locked);
-		
-		GBEconomics.unlocked.clear();
-		GBEconomics.unlocked.addAll(unlocked);
+	
+		GBEconomics.offMarket.clear();
+		GBEconomics.offMarket.addAll(offMarket);
 	}
 	
 	public static List<Integer> getMarketList() {
 		return onMarket;
 	}
-	
-	public static List<Integer> getLockedList() {
-		return locked;
-	}
-	
-	public static List<Integer> getUnlockedList() {
-		return unlocked;
+
+	public static List<Integer> getOffMarketList() {
+		return offMarket;
 	}
 	
 	public static void cleanup() {
 		onMarket.clear();
-		unlocked.clear();
-		locked.clear();
+		offMarket.clear();
 		
 		onMarket = null;
-		unlocked = null;
-		locked = null;
+		offMarket = null;
+	}
+	
+	public static void saveData(Editor edit) {
+		String market = convertIngredientIdList(GBEconomics.getMarketList());
+		String unlocked = convertIngredientIdList(GBEconomics.getOffMarketList());
+		edit.putString("market_list", market);
+		edit.putString("off_list", unlocked);
+
+		edit.putFloat("current_rate", currentMarketRate);
+		edit.putInt("market_rate_duration", marketRateDuration);
+		edit.putInt("market_demand_duration", marketDemandDuration);
+	}
+
+	private static String convertIngredientIdList(List<Integer> ingredients) {
+		int n = ingredients.size();
+		String retVal = "";
+		
+		for (int i = 0; i < n; i++) {
+			if (i > 0) {
+				retVal += ":";
+			}
+			retVal += String.valueOf(ingredients.get(i));
+		}
+		
+		return retVal;
+	}
+	
+	public static void loadData(SharedPreferences prefs) {
+		onMarket.clear();
+		onMarket = parseIngredientIdString(prefs.getString("market_list", ""));
+	
+		offMarket.clear();
+		offMarket = parseIngredientIdString(prefs.getString("off_list", ""));
+		
+		currentMarketRate = prefs.getFloat("current_rate", 1.0f);
+		marketRateDuration = prefs.getInt("market_rate_duration", 5);
+		marketDemandDuration = prefs.getInt("market_demand_duration", 7);
+	}
+	
+	private static List<Integer> parseIngredientIdString(String string) {
+		List<Integer> retVal = new ArrayList<Integer>();
+		
+		if (string.length() > 0) {
+			String[] items = string.split(":");
+			int n = items.length;
+			for (int i = 0; i < n; i++) {
+				retVal.add(Integer.valueOf(items[i]));
+			}
+		}
+		
+		return retVal;
 	}
 }
