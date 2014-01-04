@@ -88,7 +88,7 @@ public class FruitGatheringStage extends Stage{
 
     @Override
     protected void showInGameMenu() {
-        // TODO show pop up
+        //Do nothing
     }
 
     @Override

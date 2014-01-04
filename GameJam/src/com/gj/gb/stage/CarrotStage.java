@@ -108,8 +108,7 @@ public class CarrotStage extends Stage {
 
 	@Override
 	protected void showInGameMenu() {
-		mIsScriptRunning = false;
-		//TODO show yung exit menu
+		//Do nothing
 	}
 
 	@Override

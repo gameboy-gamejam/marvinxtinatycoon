@@ -53,6 +53,7 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			showInGameMenu();
+			return true;
 		}
 		return super.dispatchKeyEvent(event);
 	}
