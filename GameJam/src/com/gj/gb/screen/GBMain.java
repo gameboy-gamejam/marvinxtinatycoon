@@ -30,6 +30,7 @@ public class GBMain extends Activity {
 		super.onResume();
 		
 		// enables the continue button if there is save file
+		GBDataManager.setContextRef(this);
 		findViewById(R.id.buttonContinue).setEnabled(GBDataManager.hasSaveData());
 	}
 
