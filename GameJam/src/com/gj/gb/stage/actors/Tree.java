@@ -32,6 +32,8 @@ public class Tree {
     private int mWidth;
     private int mHeight;
     private Bitmap mCurrentSkin;
+    private Bitmap bearingFallBitmap;
+    private Bitmap oldFallBitmap;
     private long mTimeTreeLived;
     private boolean mIsShaking;
     private int mShakingIdx;
@@ -49,24 +51,24 @@ public class Tree {
     public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime){
     	long age = inGameCurrentTime - mTimeTreeLived;
     	if(mState == STATE_DIED || age >= AGE_DIED_MS){
-        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_harvested_fade_full);
+        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_died);
             Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
             mState = STATE_DIED;
         } else if (age < AGE_BEARING_FRUIT_MS) {
         	if(mState != STATE_YOUNG){
-	            mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_sprout);
+	            mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_young);
 	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 	            mState = STATE_YOUNG;
         	}
         } else if(age < AGE_OLD_MS) {
         	if(mState == STATE_YOUNG) {
-	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_ripe);
+	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_bearing);
 	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 	            mState = STATE_BEARING;
         	}
         } else if(age < AGE_DIED_MS) {
         	if(mState == STATE_BEARING){
-	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.carrot_spoiled);
+	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_old);
 	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
 	            mState = STATE_OLD;
         	}
@@ -79,7 +81,21 @@ public class Tree {
     			mShakingIdx = 0;
     		}
     		if(mShakingIdx%2 != 0){
-    			canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
+    			if(mState == STATE_BEARING){
+    				if(bearingFallBitmap == null){
+    					bearingFallBitmap = BitmapFactory.decodeResource(res, R.drawable.tree_bearing_fall);
+    			        Bitmap.createScaledBitmap(bearingFallBitmap, mWidth, mHeight, false);
+    				}
+    				canvas.drawBitmap(bearingFallBitmap, mPosX+7, mPosY, null);
+    			} else if(mState == STATE_OLD){
+    				if(oldFallBitmap == null){
+    					oldFallBitmap = BitmapFactory.decodeResource(res, R.drawable.tree_old_fall);
+    			        Bitmap.createScaledBitmap(oldFallBitmap, mWidth, mHeight, false);
+    				}
+    				canvas.drawBitmap(oldFallBitmap, mPosX+7, mPosY, null);
+    			} else {
+    				canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
+    			}
     			return;
     		}
     	}
