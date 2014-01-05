@@ -1,10 +1,16 @@
 package com.gj.gb.model;
 
+import java.util.List;
+
+import com.gj.gb.util.Utils;
+
 public class GBNewCustomer {
 
 	public enum GBCustomerState {
 		
 		ARRIVING,
+		
+		ARRIVED,
 		
 		IN_QUEUE,
 		
@@ -31,19 +37,23 @@ public class GBNewCustomer {
 	
 	private long totalStayTime = 0;
 
-	private boolean hasArrived = false;
-	
 	// you don't like the customer when they're angry and hungry
 	private boolean angryAtQueue = false, angryAtWaiting = false;
 	
 	// bonus gold earned after satisfying this customer
 	private int tip = 0;
+
+	private int id;
+	private int avatar;
 	
 	private String name;
 	private String description;
 	
-	private int id;
-	private int avatar;
+	private List<GBRecipe> selection;
+
+	private long offset = 0;
+	
+	private GBRecipe order = null;
 	
 	public GBNewCustomer(int avatar, String name, String description) {
 		this.avatar = avatar;
@@ -51,48 +61,68 @@ public class GBNewCustomer {
 		this.description = description;
 	}
 	
-	// kung ung time na pinasa ay mas mataas sa time na expected
-	// ibig sabihin dumating na sa shop 'tong customer na 'to
-	public void arrive(long time) {
-		hasArrived = arrivalTime <= time;
+	public int getId() {
+		return id;
 	}
-	
+
+	public int getAvatar() {
+		return avatar;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 	public void update(long elapsed) {
-		if (hasArrived) {
-			totalStayTime += elapsed;
-			
-			switch (state) {
-				case ARRIVING:
-					break;
-				case IN_QUEUE:
-					if (!angryAtQueue && totalStayTime >= queueTime) {
-						angryAtQueue = true;
-					}
-					break;
-				case DECIDING:
-					if (totalStayTime >= decideTime) {
-						state = GBCustomerState.WAITING;
-						decide();
-					}
-					break;
-				case WAITING:
-					if (!angryAtWaiting && totalStayTime >= waitTime) {
-						angryAtWaiting = true;
-					}
-					if (angryAtQueue && angryAtWaiting) {
-						state = GBCustomerState.RAGE_QUIT;
-					}
-					break;
-				case SERVED:
-					break;
-				case RAGE_QUIT:
-					break;
-			}
+		totalStayTime += elapsed;
+		
+		switch (state) {
+			case ARRIVING:
+				if (totalStayTime >= arrivalTime) {
+					state = GBCustomerState.ARRIVED;
+				}
+				break;
+			case ARRIVED:
+				break;
+			case IN_QUEUE:
+				offset = queueTime;
+				if (!angryAtQueue && totalStayTime >= (queueTime + arrivalTime)) {
+					angryAtQueue = true;
+				}
+				break;
+			case DECIDING:
+				long decidePlus = offset + arrivalTime;
+				if (totalStayTime >= (decideTime + decidePlus)) {
+					state = GBCustomerState.WAITING;
+					decide();
+				}
+				break;
+			case WAITING:
+				long waitPlus = offset + arrivalTime + decideTime;
+				if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
+					angryAtWaiting = true;
+				}
+				if (angryAtQueue && angryAtWaiting) {
+					state = GBCustomerState.RAGE_QUIT;
+				}
+				break;
+			case SERVED:
+				break;
+			case RAGE_QUIT:
+				break;
 		}
 	}
 	
 	private void decide() {
 		// ai chever para malaman kung anu ung gustong foods
+		int n = selection.size();
+		int index = Utils.RANDOM.nextInt(n);
+		
+		order = selection.get(index);
 	}
 
 	public void setState(GBCustomerState state) {
@@ -101,5 +131,45 @@ public class GBNewCustomer {
 	
 	public GBCustomerState getState() {
 		return this.state;
+	}
+	
+	public void setMenu(List<GBRecipe> recipes) {
+		if (this.selection != null) {
+			this.selection.clear();
+		}
+		this.selection = recipes;
+	}
+
+	public void setTimeBounds(long arrive) {
+		this.arrivalTime = arrive;
+		this.waitTime = getTolerableWaitingTime();
+		this.queueTime = this.waitTime;
+		this.decideTime = getDecidingTime();
+	}
+
+	private long getDecidingTime() {
+		int retVal = 2 + Utils.RANDOM.nextInt(2);
+		
+		// the indecisive && prankster
+		if (avatar == 1) {
+			retVal += 2;
+		}
+		
+		return retVal;
+	}
+
+	private int getTolerableWaitingTime() {
+		int retVal = 15 + Utils.RANDOM.nextInt(2);
+		
+		// the impatient
+		if (avatar == 5) {
+			retVal -= 5;
+		}
+		
+		return retVal * 1000;
+	}
+	
+	public GBRecipe getOrder() {
+		return order;
 	}
 }

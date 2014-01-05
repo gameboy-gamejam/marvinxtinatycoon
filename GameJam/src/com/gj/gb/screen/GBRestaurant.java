@@ -15,7 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.model.GBGameData;
+import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
@@ -42,6 +44,7 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	
 	private GBGameData gameData;
 	private List<GBRecipe> availableRecipe;
+	private List<GBNewCustomer> customerList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,27 +85,45 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 		isRunning = true;
 		
 		initializeData();
+
+		long startTime = System.currentTimeMillis();
+		long currentTime = startTime;
 		
 		while (isRunning) {
+			long elapsedTime = System.currentTimeMillis() - currentTime;
+			currentTime += elapsedTime;
+			
 			if (!isSuspended) {
-				updateData();
+				updateData(elapsedTime);
 				updateView();
 			}
 		}
 	}
 
 	private void updateView() {
-		
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+			}
+		});
 	}
 
-	private void updateData() {
-		
+	private void updateData(long elapsedTime) {
+		int n = customerList.size();
+		for (int i=0; i<n; i++) {
+			GBNewCustomer customer = customerList.get(i);
+			customer.setMenu(availableRecipe);
+			customer.update(elapsedTime);
+		}
 	}
 
 	private void initializeData() {
 		gameData = GBDataManager.getGameData();
 		
 		availableRecipe = gameData.getRecipes();
+		customerList = GBNewCustomerFactory.getRandomCustomers(10);
 	}
 
 	@Override
