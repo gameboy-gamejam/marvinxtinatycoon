@@ -2,6 +2,9 @@ package com.gj.gb.model;
 
 import java.util.List;
 
+import android.util.Log;
+
+import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBNewCustomer {
@@ -17,6 +20,8 @@ public class GBNewCustomer {
 		DECIDING,
 		
 		WAITING,
+		
+		LEAVING,
 		
 		SERVED,
 		
@@ -104,9 +109,17 @@ public class GBNewCustomer {
 			case WAITING:
 				long waitPlus = offset + arrivalTime + decideTime;
 				if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
+					Log.w("test", "Customer " + id + " is very angry...");
 					angryAtWaiting = true;
+					state = GBCustomerState.LEAVING;
 				}
 				if (angryAtQueue && angryAtWaiting) {
+					state = GBCustomerState.RAGE_QUIT;
+				}
+				break;
+			case LEAVING:
+				long leavePlus = offset + arrivalTime + decideTime + waitTime + 2000; // buffer of 2 seconds before leaving
+				if (totalStayTime >= leavePlus) {
 					state = GBCustomerState.RAGE_QUIT;
 				}
 				break;
@@ -118,11 +131,13 @@ public class GBNewCustomer {
 	}
 	
 	private void decide() {
+		List<GBRecipe> recipes = GBDataManager.getGameData().getRecipes();
 		// ai chever para malaman kung anu ung gustong foods
-		int n = selection.size();
+		int n = recipes.size();
 		int index = Utils.RANDOM.nextInt(n);
 		
-		order = selection.get(index);
+		order = recipes.get(index);
+		Log.w("test", "Customer " + id + " decided to order " + order.getName());
 	}
 
 	public void setState(GBCustomerState state) {
@@ -131,13 +146,6 @@ public class GBNewCustomer {
 	
 	public GBCustomerState getState() {
 		return this.state;
-	}
-	
-	public void setMenu(List<GBRecipe> recipes) {
-		if (this.selection != null) {
-			this.selection.clear();
-		}
-		this.selection = recipes;
 	}
 
 	public void setTimeBounds(long arrive) {
@@ -155,7 +163,7 @@ public class GBNewCustomer {
 			retVal += 2;
 		}
 		
-		return retVal;
+		return retVal * 1000;
 	}
 
 	private int getTolerableWaitingTime() {
@@ -171,5 +179,14 @@ public class GBNewCustomer {
 	
 	public GBRecipe getOrder() {
 		return order;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return "[A="+arrivalTime+":"+"Q="+queueTime+":D="+decideTime+":W="+waitTime+"]";
 	}
 }

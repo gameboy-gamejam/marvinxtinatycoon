@@ -30,11 +30,25 @@ public class GBNewCustomerFactory {
 		
 		// first customer will arrive in 5 seconds after opening
 		int arrive = 5000;
+		int max = 75000;
+		
+		int maxNext = 90/n;
 		
 		for (int i=0; i<n; i++) {
 			
 			GBNewCustomer customer = getCustomer(Utils.RANDOM.nextInt(10));
 			customer.setTimeBounds(arrive);
+			customer.setId(i);
+			
+			int next = 1 + Utils.RANDOM.nextInt(maxNext);
+			next *= 1000;
+			
+			arrive += next;
+			if (next > max) {
+				next = max;
+			}
+			
+			customers.add(customer);
 		}
 		
 		return customers;

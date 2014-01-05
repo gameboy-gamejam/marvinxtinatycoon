@@ -12,17 +12,25 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBNewCustomerFactory;
+import com.gj.gb.gridview.ShopDishGridViewAdapter;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBNewCustomer.GBCustomerState;
+import com.gj.gb.model.GBQueueManager;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
-public class GBRestaurant extends Activity implements Runnable, Handler.Callback {
+public class GBRestaurant extends Activity implements Runnable,
+		Handler.Callback {
 
 	public static final int HANDLE_MESSAGE_START_SHOP = 500;
 	public static final int HANDLE_MESSAGE_SHOP_READY = 501;
@@ -30,10 +38,10 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	public static final int HANDLE_MESSAGE_SHOP_GO = 503;
 	public static final int HANDLE_MESSAGE_SHOP_OPEN = 504;
 	public static final int HANDLE_MESSAGE_SHOP_CLOSE = 505;
-	
+
 	public static final int REQUEST_CLOSE = 1000;
 	public static final int REQUEST_MENU = 1001;
-	
+
 	private Thread thread = null;
 	private Handler handler = null;
 	private boolean isRunning = false;
@@ -41,19 +49,27 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	protected Animation fadeInAnim, fadeOutAnim;
 	private boolean enableBack = false;
 	private boolean isSuspended = false;
-	
+
 	private GBGameData gameData;
-	private List<GBRecipe> availableRecipe;
 	private List<GBNewCustomer> customerList;
-	
+	private GBQueueManager queueManager;
+
+	private int goldEarned = 0;
+	private int experienceEarned = 0;
+	private int ratingsEarned = 0;
+	private int customerServed = 0;
+	private int totalCustomer = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_shop_alt);
-		
+
+		gameData = GBDataManager.getGameData();
+
 		initAnimations();
 		initButton();
-		
+
 		handler = new Handler(this);
 		handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
 	}
@@ -83,62 +99,103 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	@Override
 	public void run() {
 		isRunning = true;
-		
+
 		initializeData();
+		ProgressBar timer = (ProgressBar) findViewById(R.id.progressGameTime);
 
 		long startTime = System.currentTimeMillis();
 		long currentTime = startTime;
-		
+
 		while (isRunning) {
-			long elapsedTime = System.currentTimeMillis() - currentTime;
+			final long elapsedTime = System.currentTimeMillis() - currentTime;
 			currentTime += elapsedTime;
-			
+
 			if (!isSuspended) {
+				int timeProgress = timer.getProgress();
+
 				updateData(elapsedTime);
-				updateView();
+
+				timeProgress -= elapsedTime;
+
+				timer.setProgress(timeProgress);
+
+				if (timeProgress <= 0) {
+					stopGame();
+				}
 			}
 		}
 	}
 
-	private void updateView() {
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-			}
-		});
+	private void stopGame() {
+		isRunning = false;
+		handler.sendEmptyMessage(HANDLE_MESSAGE_SHOP_CLOSE);
 	}
 
 	private void updateData(long elapsedTime) {
 		int n = customerList.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			GBNewCustomer customer = customerList.get(i);
-			customer.setMenu(availableRecipe);
 			customer.update(elapsedTime);
+
+			if (customer.getState() == GBCustomerState.ARRIVED) {
+				queueManager.addNewCustomer(customer);
+			} else if (customer.getState() == GBCustomerState.RAGE_QUIT) {
+				queueManager.removeCustomer(customer);
+			} else if (customer.getState() == GBCustomerState.SERVED) {
+				customerServed++;
+				queueManager.removeCustomer(customer);
+			}
 		}
+
+		List<GBNewCustomer> left = queueManager.getLeft();
+		while (left.size() > 0) {
+			customerList.remove(left.remove(0));
+		}
+
+		queueManager.update(elapsedTime);
 	}
 
 	private void initializeData() {
-		gameData = GBDataManager.getGameData();
-		
-		availableRecipe = gameData.getRecipes();
 		customerList = GBNewCustomerFactory.getRandomCustomers(10);
+		queueManager = new GBQueueManager();
+
+		totalCustomer = customerList.size();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		isSuspended = false;
+
+		refreshDishList();
+	}
+
+	private void refreshDishList() {
+		GridView list = (GridView) findViewById(R.id.listReadyDish);
+		list.setAdapter(new ShopDishGridViewAdapter(this, gameData
+				.getReadyDish()));
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				List<GBRecipe> ready = gameData.getReadyDish();
+				GBRecipe recipe = ready.get(position);
+				if(queueManager.serve(recipe)) {
+					ready.remove(position);
+					refreshDishList();
+				}
+			}
+		});
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		isRunning = false;
-		
+
 		while (true) {
 			try {
 				thread.join();
@@ -147,159 +204,160 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 				e.printStackTrace();
 			}
 		}
-		
+
 		cleanup();
 	}
 
 	// linis linis din pag.may-time
 	protected void cleanup() {
-		
+
 	}
 
 	@Override
 	public boolean handleMessage(Message msg) {
 		int what = msg.what;
-		
+
 		TextView text1, text2;
-		
+
 		switch (what) {
-			case HANDLE_MESSAGE_START_SHOP:
-				text1 = (TextView) findViewById(R.id.textReady);
-				text1.setVisibility(View.VISIBLE);
-				fadeInAnim.setAnimationListener(new AnimationListener() {
+		case HANDLE_MESSAGE_START_SHOP:
+			text1 = (TextView) findViewById(R.id.textReady);
+			text1.setVisibility(View.VISIBLE);
+			fadeInAnim.setAnimationListener(new AnimationListener() {
 
-					@Override
-					public void onAnimationStart(Animation animation) {
+				@Override
+				public void onAnimationStart(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationRepeat(Animation animation) {
+				@Override
+				public void onAnimationRepeat(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						handler.sendEmptyMessageDelayed(HANDLE_MESSAGE_SHOP_READY, 500);
-					}
-				});
-				text1.startAnimation(fadeInAnim);
-				break;
-			case HANDLE_MESSAGE_SHOP_READY:
-				text1 = (TextView) findViewById(R.id.textReady);
-				text1.setVisibility(View.VISIBLE);
-				fadeInAnim.setAnimationListener(null);
-				fadeOutAnim.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					handler.sendEmptyMessageDelayed(HANDLE_MESSAGE_SHOP_READY,
+							500);
+				}
+			});
+			text1.startAnimation(fadeInAnim);
+			break;
+		case HANDLE_MESSAGE_SHOP_READY:
+			text1 = (TextView) findViewById(R.id.textReady);
+			text1.setVisibility(View.VISIBLE);
+			fadeInAnim.setAnimationListener(null);
+			fadeOutAnim.setAnimationListener(new AnimationListener() {
 
-					@Override
-					public void onAnimationStart(Animation animation) {
+				@Override
+				public void onAnimationStart(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationRepeat(Animation animation) {
+				@Override
+				public void onAnimationRepeat(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						findViewById(R.id.textReady).setVisibility(View.INVISIBLE);
-						handler.sendEmptyMessage(HANDLE_MESSAGE_SHOP_READY_OUT);
-					}
-				});
-				text1.startAnimation(fadeOutAnim);
-				break;
-			case HANDLE_MESSAGE_SHOP_READY_OUT:
-				text2 = (TextView) findViewById(R.id.textGo);
-				text2.setVisibility(View.VISIBLE);
-				fadeOutAnim.setAnimationListener(null);
-				fadeInAnim.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					findViewById(R.id.textReady).setVisibility(View.INVISIBLE);
+					handler.sendEmptyMessage(HANDLE_MESSAGE_SHOP_READY_OUT);
+				}
+			});
+			text1.startAnimation(fadeOutAnim);
+			break;
+		case HANDLE_MESSAGE_SHOP_READY_OUT:
+			text2 = (TextView) findViewById(R.id.textGo);
+			text2.setVisibility(View.VISIBLE);
+			fadeOutAnim.setAnimationListener(null);
+			fadeInAnim.setAnimationListener(new AnimationListener() {
 
-					@Override
-					public void onAnimationStart(Animation animation) {
+				@Override
+				public void onAnimationStart(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationRepeat(Animation animation) {
+				@Override
+				public void onAnimationRepeat(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						handler.sendEmptyMessageDelayed(HANDLE_MESSAGE_SHOP_GO, 500);
-					}
-				});
-				text2.startAnimation(fadeInAnim);
-				break;
-			case HANDLE_MESSAGE_SHOP_GO:
-				text2 = (TextView) findViewById(R.id.textGo);
-				text2.setVisibility(View.VISIBLE);
-				fadeInAnim.setAnimationListener(null);
-				fadeOutAnim.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					handler.sendEmptyMessageDelayed(HANDLE_MESSAGE_SHOP_GO, 500);
+				}
+			});
+			text2.startAnimation(fadeInAnim);
+			break;
+		case HANDLE_MESSAGE_SHOP_GO:
+			text2 = (TextView) findViewById(R.id.textGo);
+			text2.setVisibility(View.VISIBLE);
+			fadeInAnim.setAnimationListener(null);
+			fadeOutAnim.setAnimationListener(new AnimationListener() {
 
-					@Override
-					public void onAnimationStart(Animation animation) {
+				@Override
+				public void onAnimationStart(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationRepeat(Animation animation) {
+				@Override
+				public void onAnimationRepeat(Animation animation) {
 
-					}
+				}
 
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						findViewById(R.id.textGo).setVisibility(View.INVISIBLE);
-						handler.sendEmptyMessage(HANDLE_MESSAGE_SHOP_OPEN);
-					}
-				});
-				text2.startAnimation(fadeOutAnim);
-				break;
-			case HANDLE_MESSAGE_SHOP_OPEN:
-				fadeOutAnim.setAnimationListener(null);
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					findViewById(R.id.textGo).setVisibility(View.INVISIBLE);
+					handler.sendEmptyMessage(HANDLE_MESSAGE_SHOP_OPEN);
+				}
+			});
+			text2.startAnimation(fadeOutAnim);
+			break;
+		case HANDLE_MESSAGE_SHOP_OPEN:
+			fadeOutAnim.setAnimationListener(null);
 
-				findViewById(R.id.filter1).setVisibility(View.GONE);
-				findViewById(R.id.filter2).setVisibility(View.GONE);
+			findViewById(R.id.filter1).setVisibility(View.GONE);
+			findViewById(R.id.filter2).setVisibility(View.GONE);
 
-				findViewById(R.id.buttonMenu).setEnabled(true);
-				findViewById(R.id.buttonKitchen).setEnabled(true);
+			findViewById(R.id.buttonMenu).setEnabled(true);
+			findViewById(R.id.buttonKitchen).setEnabled(true);
 
-				enableBack = true;
+			enableBack = true;
 
-				startGame();
-				break;
-			case HANDLE_MESSAGE_SHOP_CLOSE:
-				enableBack = false;
-				findViewById(R.id.filter1).setVisibility(View.VISIBLE);
-				findViewById(R.id.filter2).setVisibility(View.VISIBLE);
+			startGame();
+			break;
+		case HANDLE_MESSAGE_SHOP_CLOSE:
+			enableBack = false;
+			findViewById(R.id.filter1).setVisibility(View.VISIBLE);
+			findViewById(R.id.filter2).setVisibility(View.VISIBLE);
 
-				TextView text3 = (TextView) findViewById(R.id.textClose);
-				text3.setVisibility(View.VISIBLE);
-				fadeInAnim.setAnimationListener(new AnimationListener() {
-					
-					@Override
-					public void onAnimationStart(Animation animation) {
-						
-					}
-					
-					@Override
-					public void onAnimationRepeat(Animation animation) {
-						
-					}
-					
-					@Override
-					public void onAnimationEnd(Animation animation) {
-						enableBack = true;
-						toClosePopup();
-					}
-				});
-				text3.startAnimation(fadeInAnim);
-				findViewById(R.id.buttonMenu).setEnabled(false);
-				findViewById(R.id.buttonKitchen).setEnabled(false);
-				break;
+			TextView text3 = (TextView) findViewById(R.id.textClose);
+			text3.setVisibility(View.VISIBLE);
+			fadeInAnim.setAnimationListener(new AnimationListener() {
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					enableBack = true;
+					toClosePopup();
+				}
+			});
+			text3.startAnimation(fadeInAnim);
+			findViewById(R.id.buttonMenu).setEnabled(false);
+			findViewById(R.id.buttonKitchen).setEnabled(false);
+			break;
 		}
-		
+
 		return true;
 	}
 
@@ -315,7 +373,8 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 
 					@Override
 					public void onClick(View v) {
-						Intent intent = Utils.getIntent(GBRestaurant.this, GBKitchen.class);
+						Intent intent = Utils.getIntent(GBRestaurant.this,
+								GBKitchen.class);
 						startActivity(intent);
 					}
 				});
@@ -328,7 +387,7 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 			}
 		});
 	}
-	
+
 	private void startGame() {
 		thread = new Thread(this);
 		thread.start();
@@ -336,11 +395,11 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 
 	protected void toClosePopup() {
 		Intent intent = new Intent(this, GBShopPopClose.class);
-//		intent.putExtra("gold_earned", totalAmountEarned);
-//		intent.putExtra("total_customer", customers.size());
-//		intent.putExtra("customer_served", totalCustomerServed);
-//		intent.putExtra("experience_gained", experienceEarned);
-//		intent.putExtra("ratings_earned", totalRatingsEarned);
+		intent.putExtra("gold_earned", goldEarned);
+		intent.putExtra("total_customer", totalCustomer);
+		intent.putExtra("customer_served", customerServed);
+		intent.putExtra("experience_gained", experienceEarned);
+		intent.putExtra("ratings_earned", ratingsEarned);
 		startActivityForResult(intent, REQUEST_CLOSE);
 	}
 }

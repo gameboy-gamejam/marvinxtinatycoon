@@ -310,7 +310,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					handler.sendEmptyMessageDelayed(1001, 500);
+					handler.sendEmptyMessageDelayed(1001, 300);
 				}
 			});
 			text1.startAnimation(fadeInAnim);
@@ -355,7 +355,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 
 				@Override
 				public void onAnimationEnd(Animation animation) {
-					handler.sendEmptyMessageDelayed(1003, 500);
+					handler.sendEmptyMessageDelayed(1003, 300);
 				}
 			});
 			text2.startAnimation(fadeInAnim);

@@ -32,8 +32,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/textGoldEarn"
-            android:max="60000"
-            android:progress="60000" />
+            android:max="90000"
+            android:progress="90000" />
 
         <Button
             android:id="@+id/buttonDummy"
@@ -79,93 +79,6 @@
             android:layout_toRightOf="@id/imageCustomerSlot2"
             android:src="@drawable/ic_launcher"
             android:visibility="invisible" />
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud1"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot1"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageRegister"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <ImageView
-                android:id="@+id/imageOrderIcon"
-                android:layout_width="75dp"
-                android:layout_height="75dp" />
-
-            <TextView
-                android:id="@+id/textOrderQty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="...." />
-
-            <ProgressBar
-                android:id="@+id/progressWait"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud2"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot2"
-            android:layout_marginLeft="75dp"
-            android:layout_toRightOf="@id/imageCustomerSlot1"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <ImageView
-                android:id="@+id/imageOrderIcon"
-                android:layout_width="75dp"
-                android:layout_height="75dp" />
-
-            <TextView
-                android:id="@+id/textOrderQty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="...." />
-
-            <ProgressBar
-                android:id="@+id/progressWait"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud3"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot3"
-            android:layout_marginLeft="75dp"
-            android:layout_toRightOf="@id/imageCustomerSlot2"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <ImageView
-                android:id="@+id/imageOrderIcon"
-                android:layout_width="75dp"
-                android:layout_height="75dp" />
-
-            <TextView
-                android:id="@+id/textOrderQty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="...." />
-
-            <ProgressBar
-                android:id="@+id/progressWait"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/textPendingCustomer"

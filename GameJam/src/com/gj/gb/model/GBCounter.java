@@ -36,11 +36,11 @@ public class GBCounter {
 		avatar1 = (ImageView) activity.findViewById(R.id.imageCustomerSlot1);
 		avatar2 = (ImageView) activity.findViewById(R.id.imageCustomerSlot2);
 		avatar3 = (ImageView) activity.findViewById(R.id.imageCustomerSlot3);
-
-		cloud1 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud1);
-		cloud2 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud2);
-		cloud3 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud3);
-		
+//
+//		cloud1 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud1);
+//		cloud2 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud2);
+//		cloud3 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud3);
+//		
 		decide1 = false;
 		decide2 = false;
 		decide3 = false;
