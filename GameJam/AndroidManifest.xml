@@ -106,6 +106,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/ThemePop">
        </activity>
+       <activity
+            android:name="com.gj.gb.popup.GBGameTipPopUp"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/ThemePop">
+       </activity>
        <activity  
             android:name="com.gj.gb.screen.GBShopPopClose"
             android:launchMode="singleTop"

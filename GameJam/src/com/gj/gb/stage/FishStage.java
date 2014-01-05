@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Fisher;
 import com.gj.gb.stage.actors.FishingRodBar;
@@ -54,7 +55,7 @@ public class FishStage extends Stage {
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.stage_carrot);
-    	
+    	mIsShowReadyInstruction = true;
     	prepareScript();
     	prepareFloorDirectors();
     	prepareStage();
@@ -63,37 +64,40 @@ public class FishStage extends Stage {
     @Override
     protected void onResume() {
     	super.onResume();
-    	mDirector.postDelayed(new Runnable() {//lipat ng onactivity result
-			
-			@Override
-			public void run() {
-				if(mSurfaceHolder.getSurface().isValid()){
-		            Canvas canvas = mSurfaceHolder.lockCanvas();
-		            synchronized (mSurfaceHolder) {
-		                if(canvas != null) {
-		                	canvas.drawColor(0, Mode.CLEAR);//eraser
-		                	canvas.drawRect(0, 0, 1000, 700, white);
-		                	fisher.drawMe(canvas);
-		                    for(Pond pond: ponds) {
-		                    	pond.drawMe(canvas, res);
-		                    }
-		                    //TODO drawFisher
-		                    mSurfaceHolder.unlockCanvasAndPost(canvas);
-		                }
-		            }
-		            mDirector.removeCallbacks(this);
-		        } else {
-		        	mDirector.postDelayed(this, FRAMEDELAY);
-		        }
+    	if(mIsShowReadyInstruction){
+    		showReadyInstruction();
+    	} else {
+	    	mDirector.postDelayed(new Runnable() {//lipat ng onactivity result
 				
-			}
-		}, FRAMEDELAY);
+				@Override
+				public void run() {
+					if(mSurfaceHolder.getSurface().isValid()){
+			            Canvas canvas = mSurfaceHolder.lockCanvas();
+			            synchronized (mSurfaceHolder) {
+			                if(canvas != null) {
+			                	canvas.drawColor(0, Mode.CLEAR);//eraser
+			                	canvas.drawRect(0, 0, 1000, 700, white);
+			                	fisher.drawMe(canvas);
+			                    for(Pond pond: ponds) {
+			                    	pond.drawMe(canvas, res);
+			                    }
+			                    //TODO drawFisher
+			                    mSurfaceHolder.unlockCanvasAndPost(canvas);
+			                }
+			            }
+			            mDirector.removeCallbacks(this);
+			        } else {
+			        	mDirector.postDelayed(this, FRAMEDELAY);
+			        }	
+				}
+			}, FRAMEDELAY);
+    	}
     }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
-    		if(resultCode == RESULT_OK){
+    	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
+    		if(resultCode == RESULT_OK && mIsSurfaceReady){
     			fisher.setState(Fisher.STATE_ON_STANDBY);
     			mSelectedPondIdx = -1;
     		} else {
@@ -254,10 +258,12 @@ public class FishStage extends Stage {
     
     //methods for pop ups
     @Override
-    protected void showReadyInstruction() {
-        // TODO show pop up
-        
-    }
+	protected void showReadyInstruction() {
+		Intent intent = new Intent(this, GBGameTipPopUp.class);
+		intent.putExtra(GBGameTipPopUp.KEY_EXTRA_TIP, res.getString(R.string.tip_fishing));
+		startActivityForResult(intent, REQUEST_CODE_GAME_START);
+		mIsShowReadyInstruction = false;
+	}
 
     @Override
     protected void showInGameMenu() {

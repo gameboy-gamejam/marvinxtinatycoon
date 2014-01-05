@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Carrot;
 import com.gj.gb.stage.common.Stage;
@@ -53,6 +54,7 @@ public class CarrotStage extends Stage {
 	private long mRecordTimeStarted = -1;
 	private long mEstimateTimeFinish;
 	private boolean mIsScriptRunning;
+	private boolean mIsSurfaceReady = false;
 	private Resources res;
 	
 	private int mPointsEarned = 0;
@@ -61,16 +63,24 @@ public class CarrotStage extends Stage {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stage_carrot);
-		
+		mIsShowReadyInstruction = true;
 		prepareScript();
         prepareFloorDirectors();
 		prepareStage();
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if(mIsShowReadyInstruction){
+			showReadyInstruction();
+		}
+	}
+	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
-    		if(resultCode == RESULT_OK){
+		if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
+    		if(resultCode == RESULT_OK && mIsSurfaceReady){
     			//showReadyInstruction();
     			playGame();
     		} else {
@@ -126,7 +136,10 @@ public class CarrotStage extends Stage {
 	//methods called for pop ups
 	@Override
 	protected void showReadyInstruction() {
-	    //TODO show ang instruction instruction with ready animation
+		Intent intent = new Intent(this, GBGameTipPopUp.class);
+		intent.putExtra(GBGameTipPopUp.KEY_EXTRA_TIP, res.getString(R.string.tip_carrot));
+		startActivityForResult(intent, REQUEST_CODE_GAME_START);
+		mIsShowReadyInstruction = false;
 	}
 
 	@Override
@@ -145,7 +158,7 @@ public class CarrotStage extends Stage {
 	//methods for surface view
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		playGame();
+		mIsSurfaceReady = true;
 	}
 
 	@Override

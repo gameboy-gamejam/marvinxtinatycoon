@@ -7,6 +7,10 @@
     <string name="points_earned">Points Earned:</string>
     <string name="score">Score:</string>
     <string name="play_again">Play Again</string>
+    <string name="play">Play</string>
     <string name="return_to_town">Return to Town</string>
+    <string name="tip_carrot">Tip: Tell her to reap it then she will be a true love of mine.</string>
+    <string name="tip_fishing">Tip: Hold on until you reach the sunset.</string>
+    <string name="tip_fruit">Tip: Isaac pushed the tree hard. The tree got angry and threw a ripe apple to his head.</string>
 
 </resources>
