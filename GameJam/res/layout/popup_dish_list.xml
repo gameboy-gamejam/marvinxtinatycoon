@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center" >
+    
 
     <LinearLayout
         android:id="@+id/body"
@@ -20,7 +21,7 @@
                 android:id="@+id/dishlist"
                 android:layout_width="150dp"
                 android:layout_height="170dp"
-                android:background="@drawable/bg_default"
+                android:background="@drawable/bg_default_layer"
                 android:numColumns="3" >
             </GridView>
 
@@ -34,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/bg_default"
+                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
@@ -43,13 +44,13 @@
                         android:layout_height="wrap_content"
                         android:text="Default Name" />
                 </LinearLayout>
-
+                
                 <LinearLayout
                     android:id="@+id/holder_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/bg_default"
+                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
@@ -65,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@id/holder_price"
                     android:layout_below="@id/holder_name"
-                    android:background="@drawable/bg_default"
+                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
@@ -94,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default"
+                android:background="@drawable/bg_default_selector"
                 android:gravity="center"
                 android:text="Close" />
 
@@ -103,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default"
+                android:background="@drawable/bg_default_selector"
                 android:gravity="center"
                 android:text="Prepare" />
         </LinearLayout>
