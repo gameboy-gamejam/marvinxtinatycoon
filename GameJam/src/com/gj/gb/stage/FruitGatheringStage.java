@@ -1,15 +1,20 @@
 package com.gj.gb.stage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Tree;
 import com.gj.gb.stage.common.Stage;
 
@@ -35,6 +40,30 @@ public class FruitGatheringStage extends Stage{
     	prepareStage();
     }
     
+    @Override
+    protected void onPause() {
+    	boolean isScreenOn = ((PowerManager) this.getApplicationContext()
+				.getSystemService(Context.POWER_SERVICE)).isScreenOn();
+		if (!isScreenOn) {
+			mIsScriptRunning = false;
+			mDirector.removeCallbacks(mScript);
+		}
+    	super.onPause();
+    }
+    
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
+    		if(resultCode == RESULT_OK){
+    			//showReadyInstruction();
+    			playGame();
+    		} else {
+    			finish();
+    		}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+    
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
 		playGame();
@@ -47,7 +76,8 @@ public class FruitGatheringStage extends Stage{
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
-		mIsScriptRunning = false;		
+		mIsScriptRunning = false;
+		mDirector.removeCallbacks(mScript);
 	}
 
 	@Override
@@ -56,6 +86,7 @@ public class FruitGatheringStage extends Stage{
 		mIsScriptRunning = true;
 		mPointsEarned = 0;
 		tree.setTimeTreeLived(mRecordTimeStarted);
+		tree.reset();
 		mDirector.postDelayed(mScript, 70);
 	}
 
@@ -66,7 +97,7 @@ public class FruitGatheringStage extends Stage{
 
 	@Override
 	protected void endGame() {
-		mIsScriptRunning = false;
+		//Do nothing
 	}
 	
 	@Override
@@ -94,8 +125,9 @@ public class FruitGatheringStage extends Stage{
 
     @Override
     protected void showPointsAndReward() {
-        // TODO show pop up
-        
+    	Intent intent = new Intent(FruitGatheringStage.this, GBMiniGameRewardPopop.class);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
     }
     
     //other methods
@@ -112,7 +144,7 @@ public class FruitGatheringStage extends Stage{
                         Canvas canvas = mSurfaceHolder.lockCanvas();
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
-                            	canvas.drawColor(R.color.black);
+                            	canvas.drawColor(0, Mode.CLEAR);//eraser
                                 tree.drawMe(canvas, res, inGameCurrentTime);
                                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                             }
@@ -121,6 +153,7 @@ public class FruitGatheringStage extends Stage{
                     mDirector.postDelayed(mScript, 70);
                 } else {
                 	showPointsAndReward();
+                	mDirector.removeCallbacks(mScript);
                 }
             }
         };
@@ -160,7 +193,6 @@ public class FruitGatheringStage extends Stage{
     }
 
     private void prepareStage() {
-    	mDirector = new Handler();
     	mIsScriptRunning = false;
     	res = getResources();
     	tree = new Tree(50, 50, 653, 593);

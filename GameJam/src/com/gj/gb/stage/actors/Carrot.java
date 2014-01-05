@@ -130,6 +130,11 @@ public class Carrot {
 	public void setState(int state) {
 		mState = state;
 	}
+	
+	public void reset(){
+		mState = STATE_EMPTY;
+		mCurrentSkin = null;
+	}
 
 	public int getState() {
 		return mState;

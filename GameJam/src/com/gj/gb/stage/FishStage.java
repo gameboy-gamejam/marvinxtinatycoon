@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -14,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.FishingRodBar;
 import com.gj.gb.stage.actors.Pond;
 import com.gj.gb.stage.common.Stage;
@@ -63,7 +66,7 @@ public class FishStage extends Stage {
 		            Canvas canvas = mSurfaceHolder.lockCanvas();
 		            synchronized (mSurfaceHolder) {
 		                if(canvas != null) {
-		                	canvas.drawColor(R.color.black);//eraser
+		                	canvas.drawColor(0, Mode.CLEAR);//eraser
 		                    for(Pond pond: ponds) {
 		                    	pond.drawMe(canvas, res);
 		                    }
@@ -79,6 +82,43 @@ public class FishStage extends Stage {
 			}
 		}, FRAMEDELAY);
     }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
+    		if(resultCode == RESULT_OK){
+    			//reset canvas
+    			mDirector.post(new Runnable() {
+    				
+    				@Override
+    				public void run() {
+    					if(mSurfaceHolder.getSurface().isValid()){
+    			            Canvas canvas = mSurfaceHolder.lockCanvas();
+    			            synchronized (mSurfaceHolder) {
+    			                if(canvas != null) {
+    			                	canvas.drawColor(R.color.black);//eraser
+    			                    for(Pond pond: ponds) {
+    			                    	pond.drawMe(canvas, res);
+    			                    }
+    			                    //TODO drawFisher
+    			                    mSurfaceHolder.unlockCanvasAndPost(canvas);
+    			                }
+    			            }
+    			            mDirector.removeCallbacks(this);
+    			            showReadyInstruction();
+    			        } else {
+    			        	mDirector.postDelayed(this, FRAMEDELAY);
+    			        }
+    				}
+    			});
+    			
+    		} else {
+    			finish();
+    		}
+    	}
+    	super.onActivityResult(requestCode, resultCode, data);
+    }
+    
     @Override
     protected void playGame() {
     	mFishingRod.adjustDifficulty(mSeeder.nextInt(5), FRAMEDELAY);
@@ -232,7 +272,8 @@ public class FishStage extends Stage {
 
     @Override
     protected void showPointsAndReward() {
-        // TODO show pop up
-        
+    	Intent intent = new Intent(FishStage.this, GBMiniGameRewardPopop.class);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
     }
 }

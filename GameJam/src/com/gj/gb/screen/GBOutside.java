@@ -71,6 +71,9 @@ public class GBOutside extends Activity {
 
 	private void initButtons() {
 		findViewById(R.id.buttonTown).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonGame1).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonGame2).setOnClickListener(buttonListener);
+		findViewById(R.id.buttonGame3).setOnClickListener(buttonListener);
 	}
 
 	protected void toTown() {
