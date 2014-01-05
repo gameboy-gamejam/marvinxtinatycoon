@@ -241,6 +241,7 @@ public class FishStage extends Stage {
     	if(mSelectedPondIdx > -1) {
 	    	mIsGameFinish = true;
 	    	mIsScriptRunning = false;//TODO mag-isip ng cases na dapat nag-end yung game
+	    	mPointsEarned = 0;
 	    	if(mFishingRod.isHit()) {
 	    		Pond pond = ponds.get(mSelectedPondIdx);
 		        mPointsEarned = pond.getScore(mFishingRod.getScore());
