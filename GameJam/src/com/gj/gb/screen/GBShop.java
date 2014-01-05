@@ -14,11 +14,15 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBCustomerFactory;
+import com.gj.gb.gridview.ShopDishGridViewAdapter;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBCounter;
 import com.gj.gb.model.GBCustomer;
@@ -81,7 +85,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		onCounter = new ArrayList<Integer>();
 		onQueue = new ArrayList<Integer>();
 		
-		counter = new GBCounter(this);
+		counter = new GBCounter(this, recipes);
 	}
 
 	private void initAnimations() {
@@ -122,6 +126,27 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 			returnToMain = false;
 			finish();
 		}
+		
+		updateList();
+	}
+
+	private void updateList() {
+		GridView list = (GridView) findViewById(R.id.listReadyDish);
+		list.setAdapter(new ShopDishGridViewAdapter(this, data.getReadyDish()));
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, final int position,
+					long id) {
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+					}
+				});
+			}
+		});
 	}
 
 	@Override
@@ -141,7 +166,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		long currentTime = startTime;
 		
 		while (isRunning) {
-			long elapsedTime = System.currentTimeMillis() - currentTime;
+			final long elapsedTime = System.currentTimeMillis() - currentTime;
 			currentTime += elapsedTime;
 
 			if (!suspend) {
@@ -159,13 +184,13 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		}
 	}
 
-	private void updateGame(int time, long elapse) {
+	private void updateGame(int time, final long elapse) {
 		int n = customers.size();
 
 		for (int i=0; i<n; i++) {
 			GBCustomer customer = customers.get(i);
 			
-			customer.update(time);
+			customer.update(time, elapse);
 			
 			if (customer.hasArrived()) {
 				boolean counter = onCounter.contains(customer.getId());
@@ -174,6 +199,8 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 				if (customer.isDisappointed()) {
 					if (counter) {
 						onCounter.remove(Integer.valueOf(customer.getId()));
+					} else if (queue) {
+						onQueue.remove(Integer.valueOf(customer.getId()));
 					} else {
 						continue;
 					}

@@ -48,6 +48,8 @@ public class GBGameData {
 	protected int nextLevel;
 	
 	private int stamina;
+	
+	private List<GBRecipe> cookedDish = new ArrayList<GBRecipe>();
 
 	public GBDayState getDayState() {
 		return dayState;
@@ -292,5 +294,19 @@ public class GBGameData {
 		return currentMonth == 1 || currentMonth == 3 || currentMonth == 5
 				|| currentMonth == 7 || currentMonth == 8 || currentMonth == 10
 				|| currentMonth == 12;
+	}
+	
+	public void addDish(GBRecipe recipe, int qty) {
+		for (int i=0; i<qty; i++) {
+			cookedDish.add(recipe);
+		}
+	}
+	
+	public void removeDish(GBRecipe recipe) {
+		cookedDish.remove(recipe);
+	}
+	
+	public List<GBRecipe> getReadyDish() {
+		return cookedDish;
 	}
 }

@@ -2,7 +2,7 @@ package com.gj.gb.model;
 
 import java.util.List;
 
-import android.util.SparseIntArray;
+import android.util.Log;
 
 import com.gj.gb.util.Utils;
 
@@ -28,15 +28,18 @@ public class GBCustomer {
 	private boolean hasArrived = false;
 
 	private boolean hasDecided = false;
-	
+
 	private boolean isDisappointed = false;
 
 	private GBOrder order = null;
+	
+	private long timeCounter = 0;
 
 	public GBCustomer(int avatar, String name, String description) {
 		this.avatar = avatar;
 		this.name = name;
 		this.description = description;
+		this.order = new GBOrder();
 	}
 
 	public int getArriveTime() {
@@ -58,13 +61,13 @@ public class GBCustomer {
 	
 	private void setWaitTime() {
 		int min = 10;
-		int max = 15;
+		int max = 12;
 		
 		if (avatar == 3) {
-			min = 15;
-			max = 20;
+			min = 12;
+			max = 14;
 		} else if (avatar == 9) {
-			min = 5;
+			min = 8;
 			max = 10;
 		}
 		
@@ -72,10 +75,15 @@ public class GBCustomer {
 		if (waitTime >= 60) waitTime = 58;
 	}
 
-	public void update(int time) {
+	public void update(int time, long elapse) {
 		hasArrived = (time > arriveTime);
 		hasDecided = (time > decideTime);
 		isDisappointed = (time > waitTime);
+		
+		if (hasDecided) {
+			timeCounter += elapse;
+		}
+//		if (hasDecided && )
 	}
 
 	protected int decideTime;
@@ -137,36 +145,37 @@ public class GBCustomer {
 	}
 
 	public GBOrder getOrder() {
-		if (order == null)
-			order = new GBOrder();
 		return order;
 	}
 
 	public class GBOrder {
 
-		protected SparseIntArray dishList;
+		private int dish = -1;
 
-		public GBOrder() {
-			dishList = new SparseIntArray();
-		}
-
+		protected int quantity = -1;
+		
 		public void addDish(int dish, int quantity) {
-			dishList.put(dish, quantity);
+			this.dish = dish;
+			this.quantity = quantity;
 		}
 
-		public void consume() {
-			dishList.clear();
-			dishList = null;
+		public int getDish() {
+			return dish;
+		}
+
+		public int getQuantity() {
+			return quantity;
 		}
 	}
 
 	public void decide(List<GBRecipe> recipes) {
 		int n = recipes.size();
+		Log.w("test", "Recipe Size: " + recipes.size());
 		switch (avatar) {
 		case 1:
 		case 2:
 			int id = recipes.get(Utils.RANDOM.nextInt(n)).getId();
-			getOrder().addDish(id, Utils.RANDOM.nextInt(2)+1);
+			order.addDish(id, Utils.RANDOM.nextInt(2)+1);
 			hasDecided = true;
 			break;
 		case 3:
@@ -193,5 +202,13 @@ public class GBCustomer {
 
 	public int getWaitTime() {
 		return waitTime;
+	}
+	
+	public int getWaitTimeRaw() {
+		return waitTime - decideTime;
+	}
+	
+	public long getWaitElapse() {
+		return timeCounter;
 	}
 }

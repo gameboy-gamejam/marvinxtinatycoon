@@ -104,16 +104,16 @@ public class GBCustomerFactory {
 		switch (avatar) {
 		case 1:
 		case 2:
-			return Utils.RANDOM.nextInt(2);
+			return Utils.RANDOM.nextInt(2) + 1;
 		case 3:
 		case 4:
-			return Utils.RANDOM.nextInt(4) + 2;
+			return Utils.RANDOM.nextInt(4) + 3;
 		case 5:
 		case 6:
 		case 7:
 		case 8:
 		case 9:
-			return Utils.RANDOM.nextInt(3);
+			return Utils.RANDOM.nextInt(3) + 1;
 		}
 		return 0;
 	}

@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/buttonDummy"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="75dp"
             android:layout_toRightOf="@id/imageCustomerSlot1"
             android:src="@drawable/ic_launcher"
             android:visibility="invisible" />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/buttonDummy"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="75dp"
             android:layout_toRightOf="@id/imageCustomerSlot2"
             android:src="@drawable/ic_launcher"
             android:visibility="invisible" />
@@ -87,15 +87,13 @@
             android:layout_above="@+id/imageCustomerSlot1"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@id/imageRegister"
-            android:background="@drawable/btn_up"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="invisible" >
 
             <ImageView
                 android:id="@+id/imageOrderIcon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
 
             <TextView
                 android:id="@+id/textOrderQty"
@@ -116,17 +114,15 @@
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/imageCustomerSlot2"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="75dp"
             android:layout_toRightOf="@id/imageCustomerSlot1"
-            android:background="@drawable/btn_up"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="invisible" >
 
             <ImageView
                 android:id="@+id/imageOrderIcon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
 
             <TextView
                 android:id="@+id/textOrderQty"
@@ -147,17 +143,15 @@
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/imageCustomerSlot3"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="75dp"
             android:layout_toRightOf="@id/imageCustomerSlot2"
-            android:background="@drawable/btn_up"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="invisible" >
 
             <ImageView
                 android:id="@+id/imageOrderIcon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
 
             <TextView
                 android:id="@+id/textOrderQty"
@@ -247,14 +241,15 @@
             android:enabled="false"
             android:text="Kitchen" />
 
-        <ListView
+        <GridView
             android:id="@+id/listReadyDish"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/buttonKitchen"
             android:layout_below="@id/buttonMenu"
-            android:layout_margin="5dp" >
-        </ListView>
+            android:layout_margin="5dp"
+            android:numColumns="1" >
+        </GridView>
 
         <RelativeLayout
             android:id="@+id/filter2"
