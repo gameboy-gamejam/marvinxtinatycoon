@@ -72,7 +72,8 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		customers = GBCustomerFactory.getCustomerList(40 + data.getLevel(), GBEconomics.getDayCustomerCount(data.getCurrentRating()));
 		for (int i=0; i<customers.size(); i++) {
 			GBCustomer customer = customers.get(i);
-			Log.w("test", "Customer Info: " + i + " Arrive Time: " + customer.getArriveTime() + ", Decide Time: " + customer.getDecideTime());
+			Log.w("test", "Customer Info: " + i + " Arrive Time: " + customer.getArriveTime() + ", Decide Time: " + customer.getDecideTime()
+					+ ", Wait Time: " + customer.getWaitTime());
 		}
 		recipes = data.getRecipes();
 		

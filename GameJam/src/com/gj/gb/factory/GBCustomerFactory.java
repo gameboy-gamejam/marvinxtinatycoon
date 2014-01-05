@@ -75,7 +75,7 @@ public class GBCustomerFactory {
 	public static List<GBCustomer> getCustomerList(int max, int n) {
 		List<GBCustomer> customers = new ArrayList<GBCustomer>();
 		
-		int arriveTime = 10;
+		int arriveTime = 5;
 		
 		for (int i=0; i<n; i++) {
 			GBCustomer customer = getCustomerById(Utils.RANDOM.nextInt(max));

@@ -190,4 +190,8 @@ public class GBCustomer {
 	public boolean isDisappointed() {
 		return isDisappointed;
 	}
+
+	public int getWaitTime() {
+		return waitTime;
+	}
 }

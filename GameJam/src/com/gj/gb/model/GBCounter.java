@@ -2,6 +2,7 @@ package com.gj.gb.model;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
