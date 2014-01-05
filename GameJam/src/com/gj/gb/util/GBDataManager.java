@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.widget.Toast;
 
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.GBEconomics;
@@ -46,7 +45,6 @@ public class GBDataManager {
 
 	public static void clearGamePrefs() {
 		PREFS.edit().clear().commit();
-		Toast.makeText(CONTEXT_REF, "CLEARED: " + PREFS.getAll().size(), Toast.LENGTH_SHORT).show();
 	}
 	
 	public static void createData() {

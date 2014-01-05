@@ -22,11 +22,14 @@ import android.widget.TextView;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBCustomerFactory;
+import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.gridview.ShopDishGridViewAdapter;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBCounter;
 import com.gj.gb.model.GBCustomer;
 import com.gj.gb.model.GBGameData;
+import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
@@ -44,6 +47,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 	protected boolean isRunning = false;
 
 	protected List<GBCustomer> customers;
+	protected List<GBNewCustomer> customers2;
 	protected List<GBRecipe> recipes;
 	protected GBGameData data;
 	
@@ -75,11 +79,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		data = GBDataManager.getGameData();
 		
 		customers = GBCustomerFactory.getCustomerList(40 + data.getLevel(), GBEconomics.getDayCustomerCount(data.getCurrentRating()));
-		for (int i=0; i<customers.size(); i++) {
-			GBCustomer customer = customers.get(i);
-			Log.w("test", "Customer Info: " + i + " Arrive Time: " + customer.getArriveTime() + ", Decide Time: " + customer.getDecideTime()
-					+ ", Wait Time: " + customer.getWaitTime());
-		}
+		customers2 = GBNewCustomerFactory.getRandomCustomers(10);
 		recipes = data.getRecipes();
 		
 		onCounter = new ArrayList<Integer>();
@@ -184,56 +184,82 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		}
 	}
 
-	private void updateGame(int time, final long elapse) {
-		int n = customers.size();
+	private void updateGame(int time, long elapse) {
+		int n = customers2.size();
 
 		for (int i=0; i<n; i++) {
-			GBCustomer customer = customers.get(i);
+			GBNewCustomer customer = customers2.get(i);
 			
-			customer.update(time, elapse);
+			customer.update(elapse);
 			
-			if (customer.hasArrived()) {
+			if (customer.getState() == GBCustomerState.ARRIVED) {
 				boolean counter = onCounter.contains(customer.getId());
 				boolean queue = onQueue.contains(customer.getId());
 				
-				if (customer.isDisappointed()) {
-					if (counter) {
-						onCounter.remove(Integer.valueOf(customer.getId()));
-					} else if (queue) {
-						onQueue.remove(Integer.valueOf(customer.getId()));
-					} else {
-						continue;
-					}
-				}
-				
-				// kapag yung customer ay wala sa counter
 				if (!counter) {
-					// kapag may free sa counter
 					if (onCounter.size() < 3) {
-						addToCounter(customer);
-						if (queue) {
-							onQueue.remove(Integer.valueOf(customer.getId()));
-							runOnUiThread(new Runnable() {
-								
-								@Override
-								public void run() {
-									if (onQueue.size() <= 0) {
-										((TextView) findViewById(R.id.textPendingCustomer)).setVisibility(View.INVISIBLE);
-									} else {
-										((TextView) findViewById(R.id.textPendingCustomer)).setText(onQueue.size() + " customer(s) are waiting...");
-									}
-								}
-							});
-						}
+						customer.setState(GBCustomerState.DECIDING);
+						 addToCounter(customer);
+						 if (queue) {
+							 onQueue.remove(Integer.valueOf(customer.getId()));
+						 }
 					} else {
-						// kapag wala sa queue
 						if (!queue) {
+							customer.setState(GBCustomerState.IN_QUEUE);
 							addToQueue(customer);
 						}
 					}
 				}
 			}
-
+			if (customer.getState() == GBCustomerState.IN_QUEUE) {
+				if (counter.hasFree()) {
+					customer.setState(GBCustomerState.DECIDING);
+					onQueue.remove(Integer.valueOf(customer.getId()));
+					addToCounter(customer);
+				}
+			}
+//			if (customer.getState() == GBCustomerState.ARRIVED) {
+//				boolean counter = onCounter.contains(customer.getId());
+//				boolean queue = onQueue.contains(customer.getId());
+//				// kapag yung customer ay wala sa counter
+//				if (!counter) {
+//					// kapag may free sa counter
+//					if (onCounter.size() < 3) {
+//						addToCounter(customer);
+//						if (queue) {
+//							onQueue.remove(Integer.valueOf(customer.getId()));
+//							runOnUiThread(new Runnable() {
+//								
+//								@Override
+//								public void run() {
+//									if (onQueue.size() <= 0) {
+//										((TextView) findViewById(R.id.textPendingCustomer)).setVisibility(View.INVISIBLE);
+//									} else {
+//										((TextView) findViewById(R.id.textPendingCustomer)).setText(onQueue.size() + " customer(s) are waiting...");
+//									}
+//								}
+//							});
+//						}
+//					} else {
+//						// kapag wala sa queue
+//						if (!queue) {
+//							addToQueue(customer);
+//						}
+//					}
+//				}
+//			} else if (customer.getState() == GBCustomerState.RAGE_QUIT) {
+//				boolean counter = onCounter.contains(customer.getId());
+//				boolean queue = onQueue.contains(customer.getId());
+//				
+//				if (counter) {
+//					onCounter.remove(Integer.valueOf(customer.getId()));
+//				} else if (queue) {
+//					onQueue.remove(Integer.valueOf(customer.getId()));
+//				} else {
+//					continue;
+//				}
+//			}
+			
 			runOnUiThread(new Runnable() {
 				
 				@Override
@@ -244,7 +270,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		}
 	}
 
-	private void addToQueue(final GBCustomer customer) {
+	private void addToQueue(final GBNewCustomer customer) {
 		onQueue.add(customer.getId());
 		Log.w("test", "Customer " + customer.getId() + " is waiting for the counter to be cleared.");
 		runOnUiThread(new Runnable() {
@@ -257,7 +283,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		});
 	}
 
-	private void addToCounter(final GBCustomer customer) {
+	private void addToCounter(final GBNewCustomer customer) {
 		onCounter.add(customer.getId());
 		Log.w("test", "Customer " + customer.getId() + " is on the counter.");
 		runOnUiThread(new Runnable() {

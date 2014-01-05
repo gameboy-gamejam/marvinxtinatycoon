@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.util.GBDataManager;
@@ -20,7 +19,6 @@ public class GBSystemMenu extends Activity {
 		setContentView(R.layout.scene_system_menu);
 
 		from = getIntent().getStringExtra("from");
-		Toast.makeText(this, "FROM: " + from, Toast.LENGTH_SHORT).show();
 		
 		if (from.equals("shop") || from.compareTo("shop") == 0) {
 			findViewById(R.id.buttonSave).setEnabled(false);

@@ -1,5 +1,6 @@
 package com.gj.gb.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,16 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gj.gb.R;
-import com.gj.gb.model.GBCustomer.GBOrder;
+import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.util.ImageCache;
 
 public class GBCounter {
 
 	protected Activity activity;
 
-	protected GBCustomer slot1 = null;
-	protected GBCustomer slot2 = null;
-	protected GBCustomer slot3 = null;
+	protected GBNewCustomer slot1 = null;
+	protected GBNewCustomer slot2 = null;
+	protected GBNewCustomer slot3 = null;
 
 	protected ImageView avatar1, avatar2, avatar3;
 
@@ -29,6 +30,9 @@ public class GBCounter {
 	
 	protected List<GBRecipe> recipes;
 
+	private List<GBNewCustomer> queue;	
+	private List<GBNewCustomer> left;
+
 	public GBCounter(Activity activity, List<GBRecipe> recipes) {
 		this.activity = activity;
 		this.recipes = recipes;
@@ -36,14 +40,17 @@ public class GBCounter {
 		avatar1 = (ImageView) activity.findViewById(R.id.imageCustomerSlot1);
 		avatar2 = (ImageView) activity.findViewById(R.id.imageCustomerSlot2);
 		avatar3 = (ImageView) activity.findViewById(R.id.imageCustomerSlot3);
-//
-//		cloud1 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud1);
-//		cloud2 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud2);
-//		cloud3 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud3);
-//		
+
+		cloud1 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud1);
+		cloud2 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud2);
+		cloud3 = (LinearLayout) activity.findViewById(R.id.imageCustomerCloud3);
+		
 		decide1 = false;
 		decide2 = false;
 		decide3 = false;
+
+		queue = new ArrayList<GBNewCustomer>();
+		left = new ArrayList<GBNewCustomer>();
 	}
 
 	public boolean hasFree() {
@@ -56,46 +63,30 @@ public class GBCounter {
 		return false;
 	}
 
-	public void addCustomer(GBCustomer customer) {
+	public void addCustomer(GBNewCustomer customer) {
 		if (slot1 == null) {
 			slot1 = customer;
 			avatar1.setVisibility(View.VISIBLE);
 			cloud1.setVisibility(View.VISIBLE);
-			if (customer.hasDecided()) {
-				decide1 = true;
-				slot1.decide(recipes);
-				setDecide(customer, cloud1);
-			}
 		} else if (slot2 == null) {
 			slot2 = customer;
 			avatar2.setVisibility(View.VISIBLE);
 			cloud2.setVisibility(View.VISIBLE);
-			if (customer.hasDecided()) {
-				decide2 = true;
-				slot2.decide(recipes);
-				setDecide(customer, cloud2);
-			}
 		} else if (slot3 == null) {
 			slot3 = customer;
 			avatar3.setVisibility(View.VISIBLE);
 			cloud3.setVisibility(View.VISIBLE);
-			if (customer.hasDecided()) {
-				decide3 = true;
-				slot3.decide(recipes);
-				setDecide(customer, cloud3);
-			}
 		}
 	}
 
 	public void check() {
 		if (slot1 != null) {
-			if (slot1.hasDecided() && !decide1) {
+			if (slot1.getState() == GBCustomerState.WAITING  && !decide1) {
 				decide1 = true;
-				slot1.decide(recipes);
 				setDecide(slot1, cloud1);
 			}
 			
-			if (slot1.isDisappointed()) {
+			if (slot1.getState() == GBCustomerState.LEAVING) {
 				Log.w("test", "Customer " + slot1.getId()
 						+ " left the restaurant");
 				slot1 = null;
@@ -107,13 +98,12 @@ public class GBCounter {
 		}
 
 		if (slot2 != null) {
-			if (slot2.hasDecided() && !decide2) {
+			if (slot2.getState() == GBCustomerState.WAITING  && !decide2) {
 				decide2 = true;
-				slot2.decide(recipes);
 				setDecide(slot2, cloud2);
 			}
 			
-			if (slot2.isDisappointed()) {
+			if (slot2.getState() == GBCustomerState.LEAVING) {
 				Log.w("test", "Customer " + slot2.getId()
 						+ " left the restaurant");
 				slot2 = null;
@@ -125,13 +115,12 @@ public class GBCounter {
 		}
 
 		if (slot3 != null) {
-			if (slot3.hasDecided() && !decide3) {
+			if (slot3.getState() == GBCustomerState.WAITING  && !decide3) {
 				decide3 = true;
-				slot3.decide(recipes);
 				setDecide(slot3, cloud3);
 			}
 			
-			if (slot3.isDisappointed()) {
+			if (slot3.getState() == GBCustomerState.LEAVING) {
 				Log.w("test", "Customer " + slot3.getId()
 						+ " left the restaurant");
 				slot3 = null;
@@ -149,14 +138,10 @@ public class GBCounter {
 		((TextView) cloud.findViewById(R.id.textOrderQty)).setText("....");
 	}
 
-	private void setDecide(GBCustomer customer, LinearLayout cloud) {
-		GBOrder order = customer.getOrder();
-		Log.w("test", "Customer " + customer.getId() + " orders " + order.getQuantity() + "x " + order.getDish());
-		
+	private void setDecide(GBNewCustomer customer, LinearLayout cloud) {
 		((ImageView) cloud.findViewById(R.id.imageOrderIcon))
 				.setImageBitmap(ImageCache.getBitmap(activity, "recipe_"
-						+ order.getDish()));
-		((TextView) cloud.findViewById(R.id.textOrderQty)).setText("I want "
-				+ order.getQuantity() + " of this.");
+						+ customer.getOrder().getId()));
+		((TextView) cloud.findViewById(R.id.textOrderQty)).setText("I want 1 of this.");
 	}
 }

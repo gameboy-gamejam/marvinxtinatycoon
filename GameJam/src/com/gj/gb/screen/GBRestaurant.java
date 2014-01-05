@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.gridview.ShopDishGridViewAdapter;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
@@ -182,9 +183,13 @@ public class GBRestaurant extends Activity implements Runnable,
 					final int position, long id) {
 				List<GBRecipe> ready = gameData.getReadyDish();
 				GBRecipe recipe = ready.get(position);
-				if(queueManager.serve(recipe)) {
-					ready.remove(position);
-					refreshDishList();
+				synchronized (queueManager) {
+					if(queueManager.serve(recipe)) {
+						goldEarned += GBEconomics.getRecipePrice(recipe);
+						ready.remove(position);
+						refreshDishList();
+						((TextView) findViewById(R.id.textGoldEarn)).setText(goldEarned + "G");
+					}
 				}
 			}
 		});
