@@ -47,6 +47,11 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 	
 	protected GBCounter counter;
 	
+	protected int totalAmountEarned = 0;
+	protected int totalCustomerServed = 0;
+	protected int experienceEarned = 0;
+	protected int totalRatingsEarned = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -376,12 +381,26 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					enableBack = true;
+					toClosePopup();
 				}
 			});
 			text3.startAnimation(fadeInAnim);
+			findViewById(R.id.buttonMenu).setEnabled(false);
+			findViewById(R.id.buttonKitchen).setEnabled(false);
+
 		}
 
 		return true;
+	}
+
+	protected void toClosePopup() {
+		Intent intent = new Intent(this, GBShopPopClose.class);
+		intent.putExtra("gold_earned", totalAmountEarned);
+		intent.putExtra("total_customer", customers.size());
+		intent.putExtra("customer_served", totalCustomerServed);
+		intent.putExtra("experience_gained", experienceEarned);
+		intent.putExtra("ratings_earned", totalRatingsEarned);
+		startActivityForResult(intent, 1000);
 	}
 
 	private void startGame() {
@@ -390,4 +409,12 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		thread.start();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == 1000 && resultCode == RESULT_OK) {
+			finish();
+		}
+	}
 }
