@@ -20,12 +20,13 @@ public class GBTown extends Activity {
 	public static boolean returnToMain = false;
   
 	protected GBGameData data;
+	public static boolean shopFlag;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scene_town);
-
+        shopFlag = false;
         int id = getIntent().getIntExtra("button_id", R.id.buttonNewGame);
         initData(id);
         initButtons();
@@ -147,7 +148,13 @@ public class GBTown extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		//oh no its a cheat
+		if(shopFlag){
+			shopFlag = false;
+			this.data.update();
+			updateData();
+		}
+
 		/* CHEAT! */
 		if (returnToMain) {
 			GBTown.returnToMain = false;

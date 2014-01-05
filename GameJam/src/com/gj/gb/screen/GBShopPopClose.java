@@ -52,6 +52,12 @@ public class GBShopPopClose extends Activity {
 
 	@Override
 	public void onBackPressed() {
+//		GBTown.shopFlag = true;
+		Intent intent = new Intent(GBShopPopClose.this, GBTown.class);
+		intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+		
 		setResult(RESULT_OK);
 		finish();
 	}

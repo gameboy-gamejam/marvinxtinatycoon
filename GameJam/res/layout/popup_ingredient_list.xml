@@ -8,7 +8,7 @@
         android:id="@+id/holder_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_default"
+        android:background="@drawable/bg_default_layer"
         android:gravity="center"
         android:orientation="vertical" >
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/holder_name"
         android:layout_centerInParent="true"
-        android:background="@drawable/bg_default"
+        android:background="@drawable/bg_default_layer"
         android:paddingBottom="@dimen/dp_10"
         android:orientation="vertical" >
 
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/holder_ingredients"
-        android:background="@drawable/bg_default" >
+        android:background="@drawable/bg_default_layer" >
 
         <LinearLayout
             android:id="@+id/holder_count_info"
@@ -211,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_default"
+            android:background="@drawable/bg_default_selector"
             android:gravity="center"
             android:text="Close" />
 
@@ -220,7 +220,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_default"
+            android:background="@drawable/bg_default_selector"
             android:gravity="center"
             android:text="Cook" />
     </LinearLayout>
