@@ -52,6 +52,8 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 	protected int experienceEarned = 0;
 	protected int totalRatingsEarned = 0;
 	
+	protected boolean suspend = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,9 +102,10 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 
 			@Override
 			public void onClick(View v) {
+				suspend = true;
 				Intent intent = new Intent(GBShop.this, GBInGameMenu.class);
 				intent.putExtra("from", "shop");
-				startActivity(intent);
+				startActivityForResult(intent, 2000);
 			}
 		});
 	}
@@ -138,15 +141,17 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 			long elapsedTime = System.currentTimeMillis() - currentTime;
 			currentTime += elapsedTime;
 
-			int timeProgress = timer.getProgress();
-			updateGame(60 - (timeProgress/1000), elapsedTime);
-			
-			timeProgress -= elapsedTime;
-			
-			timer.setProgress(timeProgress);
-			
-			if (timeProgress <= 0) {
-				stopGame();
+			if (!suspend) {
+				int timeProgress = timer.getProgress();
+				updateGame(60 - (timeProgress/1000), elapsedTime);
+				
+				timeProgress -= elapsedTime;
+				
+				timer.setProgress(timeProgress);
+				
+				if (timeProgress <= 0) {
+					stopGame();
+				}
 			}
 		}
 	}
@@ -415,6 +420,8 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		
 		if (requestCode == 1000 && resultCode == RESULT_OK) {
 			finish();
+		} else if (requestCode == 2000) {
+			suspend = false;
 		}
 	}
 }
