@@ -9,7 +9,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="25dp"
-        android:background="#E9E1D8" >
+        android:background="@drawable/bg_default_layer" >
 
         <Button
             android:id="@+id/buttonClose"
@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="CLOSE" />
+            android:background="@drawable/btn_close"
+            />
 
         <TextView
             android:id="@+id/labelGold"
@@ -125,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/labelRating"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_default_selector"
             android:layout_marginTop="15dp"
             android:text="CONTINUE" />
         

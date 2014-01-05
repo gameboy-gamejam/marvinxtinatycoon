@@ -36,7 +36,7 @@
             android:name="com.gj.gb.screen.GBPopConfirm"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@style/GBTheme.Dialog">
+            android:theme="@style/ThemePop">
         </activity>
         <activity 
             android:name="com.gj.gb.screen.GBInGameMenu"
@@ -109,7 +109,7 @@
             android:name="com.gj.gb.popup.GBMiniGameRewardPopop"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
-            android:theme="@style/GBTheme.Dialog">
+            android:theme="@style/ThemePop">
        </activity>
        <activity  
             android:name="com.gj.gb.screen.GBShopPopClose"
