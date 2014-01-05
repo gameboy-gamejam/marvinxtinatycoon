@@ -1,5 +1,7 @@
 package com.gj.gb.screen;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBGameData;
+import com.gj.gb.model.GBRecipe;
+import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBRestaurant extends Activity implements Runnable, Handler.Callback {
@@ -34,6 +39,9 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	protected Animation fadeInAnim, fadeOutAnim;
 	private boolean enableBack = false;
 	private boolean isSuspended = false;
+	
+	private GBGameData gameData;
+	private List<GBRecipe> availableRecipe;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +100,9 @@ public class GBRestaurant extends Activity implements Runnable, Handler.Callback
 	}
 
 	private void initializeData() {
+		gameData = GBDataManager.getGameData();
 		
+		availableRecipe = gameData.getRecipes();
 	}
 
 	@Override
