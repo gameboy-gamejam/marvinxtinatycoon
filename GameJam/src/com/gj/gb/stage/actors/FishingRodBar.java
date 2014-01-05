@@ -55,7 +55,7 @@ public class FishingRodBar {
     
     public FishingRodBar(Resources res) {
         mBarBorder = new Paint();
-        mBarBorder.setColor(res.getColor(R.color.white));
+        mBarBorder.setColor(res.getColor(R.color.black));
         mBarBorder.setStyle(Style.FILL);
         mFreeBarSpaceBackground = new Paint();
         mFreeBarSpaceBackground.setColor(res.getColor(R.color.pale_green));

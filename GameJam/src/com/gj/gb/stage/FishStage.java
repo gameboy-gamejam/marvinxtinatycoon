@@ -7,6 +7,8 @@ import java.util.Random;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,7 @@ import android.view.View;
 
 import com.gj.gb.R;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
+import com.gj.gb.stage.actors.Fisher;
 import com.gj.gb.stage.actors.FishingRodBar;
 import com.gj.gb.stage.actors.Pond;
 import com.gj.gb.stage.common.Stage;
@@ -38,12 +41,14 @@ public class FishStage extends Stage {
     private List<Pond> ponds;
     private int mSelectedPondIdx;
     private FishingRodBar mFishingRod;
+    private Fisher fisher;
     
     private boolean mIsScriptRunning;
     private boolean mIsSurfaceReady;
     private Resources res;
     
     private int mPointsEarned = 0;
+    private Paint white; 
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,8 @@ public class FishStage extends Stage {
 		            synchronized (mSurfaceHolder) {
 		                if(canvas != null) {
 		                	canvas.drawColor(0, Mode.CLEAR);//eraser
+		                	canvas.drawRect(0, 0, 1000, 700, white);
+		                	fisher.drawMe(canvas);
 		                    for(Pond pond: ponds) {
 		                    	pond.drawMe(canvas, res);
 		                    }
@@ -87,31 +94,8 @@ public class FishStage extends Stage {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
     		if(resultCode == RESULT_OK){
-    			//reset canvas
-    			mDirector.post(new Runnable() {
-    				
-    				@Override
-    				public void run() {
-    					if(mSurfaceHolder.getSurface().isValid()){
-    			            Canvas canvas = mSurfaceHolder.lockCanvas();
-    			            synchronized (mSurfaceHolder) {
-    			                if(canvas != null) {
-    			                	canvas.drawColor(R.color.black);//eraser
-    			                    for(Pond pond: ponds) {
-    			                    	pond.drawMe(canvas, res);
-    			                    }
-    			                    //TODO drawFisher
-    			                    mSurfaceHolder.unlockCanvasAndPost(canvas);
-    			                }
-    			            }
-    			            mDirector.removeCallbacks(this);
-    			            showReadyInstruction();
-    			        } else {
-    			        	mDirector.postDelayed(this, FRAMEDELAY);
-    			        }
-    				}
-    			});
-    			
+    			fisher.setState(Fisher.STATE_ON_STANDBY);
+    			mSelectedPondIdx = -1;
     		} else {
     			finish();
     		}
@@ -125,6 +109,7 @@ public class FishStage extends Stage {
     	mFishingRod.setCatchBarPosX(mSeeder.nextInt((int) mFishingRod.getMovableDistanceWidth()));
     	mFishingRod.setIsLakeWithFish(mSeeder.nextBoolean());
     	mFishingRod.setRarityOfFish(mSeeder.nextInt(FishingRodBar.RARITY_OF_FISH_MAX_PT));
+    	fisher.setState(Fisher.STATE_IS_FISHING);
     	mIsScriptRunning = true;
     	mDirector.postDelayed(mScript, FRAMEDELAY);
     }
@@ -138,7 +123,9 @@ public class FishStage extends Stage {
                         Canvas canvas = mSurfaceHolder.lockCanvas();
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
+                            	canvas.drawPaint(white);
                                 mFishingRod.drawMe(canvas);
+                                fisher.drawMe(canvas);
                                 for(Pond pond: ponds) {
                                 	pond.drawMe(canvas, res);
                                 }
@@ -176,8 +163,10 @@ public class FishStage extends Stage {
                     	return true;
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
-                    	endGame();
-                    	showPointsAndReward();
+                    	if(mSelectedPondIdx != -1){
+	                    	endGame();
+	                    	showPointsAndReward();
+                    	}
                     	break;
                 }
                 return false;
@@ -207,10 +196,14 @@ public class FishStage extends Stage {
     	pond = new Pond(452, 381, 632, 552);
     	pond.setFishRarity(2);
     	ponds.add(pond);
+    	fisher = new Fisher(640, 164, 940, 552, res);
     	mLeftBorderCanvasPos	= 50;
     	mTopBorderCanvasPos 	= 200;
     	mRightBorderCanvasPos	= 632;
     	mBottomBorderCanvasPos	= 552;
+    	white = new Paint(); 
+    	white.setStyle(Paint.Style.FILL);
+    	white.setColor(Color.WHITE); 
     }
     
     @Override

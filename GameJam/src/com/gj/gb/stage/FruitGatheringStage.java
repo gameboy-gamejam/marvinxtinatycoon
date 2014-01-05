@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +32,8 @@ public class FruitGatheringStage extends Stage{
     
     private int mPointsEarned = 0;
     private long mRecordTimeStarted = -1;
+    
+    private Paint white;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +149,7 @@ public class FruitGatheringStage extends Stage{
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
                             	canvas.drawColor(0, Mode.CLEAR);//eraser
+                            	canvas.drawRect(0, 0, 1000, 700, white);
                                 tree.drawMe(canvas, res, inGameCurrentTime);
                                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                             }
@@ -195,6 +200,9 @@ public class FruitGatheringStage extends Stage{
     private void prepareStage() {
     	mIsScriptRunning = false;
     	res = getResources();
-    	tree = new Tree(50, 50, 653, 593);
+    	tree = new Tree(200, 50, 803, 593);
+    	white = new Paint(); 
+    	white.setStyle(Paint.Style.FILL);
+    	white.setColor(Color.WHITE);
     }
 }
