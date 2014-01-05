@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBRecipe;
+import com.gj.gb.util.ImageCache;
 
 public class RecipeGridViewAdapter extends ArrayAdapter<GBRecipe> {
 
@@ -34,7 +35,7 @@ public class RecipeGridViewAdapter extends ArrayAdapter<GBRecipe> {
 			convertView = inflater.inflate(R.layout.part_ingredient_item, parent, false);
 			
 			holder = new IngredientHolder();
-			holder.imageIcon = (ImageView) convertView.findViewById(R.id.item_image);
+			holder.imageIcon = (ImageView) convertView.findViewById(R.id.imageIngredientIcon);
 			
 			convertView.setTag(holder);
 		} else {
@@ -42,9 +43,9 @@ public class RecipeGridViewAdapter extends ArrayAdapter<GBRecipe> {
 		}
 		
 		GBRecipe recipe = getItem(position);
-//
-//		holder.imageIcon.setImageBitmap();
-//		
+
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "recipe_" + recipe.getId()));
+		
 		return super.getView(position, convertView, parent);
 	}
 	
