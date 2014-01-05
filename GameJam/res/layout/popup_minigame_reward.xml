@@ -2,58 +2,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_overlay">
-    
+    android:background="@color/gray_overlay" >
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#556677"
+        android:background="@drawable/bg_default_layer"
         android:padding="5dp" >
+
         <TextView
             android:id="@+id/pointsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp_12"
-            android:text="@string/points_earned"/>
-        <TextView 
+            android:text="@string/points_earned"
+            android:textSize="@dimen/dp_12" />
+
+        <TextView
             android:id="@+id/points"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/dp_12"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/pointsLabel"
+            android:layout_toRightOf="@id/pointsLabel"
             android:paddingLeft="@dimen/dp_5"
-   			android:layout_alignBottom="@id/pointsLabel"
-   			android:layout_toRightOf="@id/pointsLabel"/>
+            android:textSize="@dimen/dp_12"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:id="@+id/rewards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_below="@id/pointsLabel"
+            android:background="@drawable/bg_default_layer"
             android:gravity="center"
-            android:layout_below="@id/pointsLabel"/>
+            android:orientation="horizontal" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dp_15"
+            android:layout_below="@id/rewards"
+            android:gravity="top"
             android:paddingBottom="@dimen/dp_15"
-            android:gravity="center"
-            android:layout_below="@id/rewards">
-            
-            <Button 
+             >
+
+            <TextView
                 android:id="@+id/returnTown"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dp_12"
-                android:text="@string/return_to_town"/>
-            
-            <Button 
+                android:layout_weight="1"
+                android:background="@drawable/bg_default_selector"
+                android:gravity="center"
+                android:text="@string/return_to_town"
+                android:textSize="@dimen/dp_12" />
+
+            <TextView
                 android:id="@+id/playAgain"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default_selector"
+                android:gravity="center"
                 android:paddingLeft="@dimen/dp_10"
-                android:textSize="@dimen/dp_12"
-                android:text="@string/play_again"/>
+                android:text="@string/play_again"
+                android:textSize="@dimen/dp_12" />
         </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>
