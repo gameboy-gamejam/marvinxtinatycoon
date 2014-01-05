@@ -159,6 +159,17 @@ public class GBGameData {
 		this.ingredients.add(ingredient);
 	}
 	
+	public int getIngredientQty(int id) {
+		int n = ingredients.size();
+		for (int i=0; i<n; i++) {
+			GBIngredient ingredient = ingredients.get(i);
+			if (ingredient.getId() == id) {
+				return ingredient.getQuantity();
+			}
+		}
+		return 0;
+	}
+	
 	public void removeIngredient(int id) {
 		int n = this.ingredients.size();
 		for (int i=0; i<n; i++) {

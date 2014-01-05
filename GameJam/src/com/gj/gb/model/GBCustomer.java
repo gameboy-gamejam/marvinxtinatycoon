@@ -69,6 +69,7 @@ public class GBCustomer {
 		}
 		
 		waitTime = decideTime + Utils.RANDOM.nextInt(max) + min;
+		if (waitTime >= 60) waitTime = 58;
 	}
 
 	public void update(int time) {

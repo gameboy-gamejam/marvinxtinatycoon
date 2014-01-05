@@ -12,10 +12,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
-import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.gameview.GBDishListAdapter;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.screen.GBKitchen;
+import com.gj.gb.util.GBDataManager;
 
 public class GBDishListPopup extends Activity {
 	private GridView gridView;
@@ -26,6 +27,8 @@ public class GBDishListPopup extends Activity {
 	public static final int RESULT_CODE_INGREDIENT = 20001;
 	
 	private int mStoveNo;
+	
+	private GBGameData data;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class GBDishListPopup extends Activity {
 	}
 
 	private void init() {
+		data = GBDataManager.getGameData();
+		
 		mDishListAdapter = new GBDishListAdapter(this);
 		gridView = (GridView) findViewById(R.id.dishlist);
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
@@ -73,16 +78,18 @@ public class GBDishListPopup extends Activity {
 	}
 
 	private void generateDishes() {
-		//lagay nyo dito yung mga bagong dish
-		for (int i = 0; i < 3; i++) {
-			mDishList.add(GBRecipeFactory.getRecipeById(i));
-		}
-		for (int i = 0; i < 3; i++) {
-			mDishList.add(GBRecipeFactory.getRecipeById(i));
-		}
-		for (int i = 0; i < 3; i++) {
-			mDishList.add(GBRecipeFactory.getRecipeById(i));
-		}
+		mDishList.clear();
+		mDishList.addAll(data.getRecipes());
+//		//lagay nyo dito yung mga bagong dish
+//		for (int i = 0; i < 3; i++) {
+//			mDishList.add(GBRecipeFactory.getRecipeById(i));
+//		}
+//		for (int i = 0; i < 3; i++) {
+//			mDishList.add(GBRecipeFactory.getRecipeById(i));
+//		}
+//		for (int i = 0; i < 3; i++) {
+//			mDishList.add(GBRecipeFactory.getRecipeById(i));
+//		}
 	}
 
 	@Override

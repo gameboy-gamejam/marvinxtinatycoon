@@ -124,6 +124,7 @@ public class GBCommonGridList extends Activity {
 			((TextView) findViewById(R.id.textRecipeName)).setText(recipe.getName());
 			((TextView) findViewById(R.id.textRecipeDescription)).setText(recipe.getDescription());
 			((TextView) findViewById(R.id.textRecipePrice)).setText(GBEconomics.getRecipePrice(recipe) + "G");
+			((ImageView) findViewById(R.id.imageRecipeIcon)).setImageBitmap(ImageCache.getBitmap(this, "recipe_" + recipe.getId()));
 		}
 	}
 

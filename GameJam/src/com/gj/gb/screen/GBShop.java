@@ -65,7 +65,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 		customers = GBCustomerFactory.getCustomerList(40 + data.getLevel(), GBEconomics.getDayCustomerCount(data.getCurrentRating()));
 		for (int i=0; i<customers.size(); i++) {
 			GBCustomer customer = customers.get(i);
-			Log.w("test", "Customer Info: " + i + " Arrive Time: " + customer.getArriveTime() + ", Decide Time" + customer.getDecideTime());
+			Log.w("test", "Customer Info: " + i + " Arrive Time: " + customer.getArriveTime() + ", Decide Time: " + customer.getDecideTime());
 		}
 		recipes = data.getRecipes();
 		
@@ -87,7 +87,7 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 
 					@Override
 					public void onClick(View v) {
-
+						startActivity(new Intent(GBShop.this, GBKitchen.class));
 					}
 				});
 
@@ -173,6 +173,17 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 						addToCounter(customer);
 						if (queue) {
 							onQueue.remove(Integer.valueOf(customer.getId()));
+							runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									if (onQueue.size() <= 0) {
+										((TextView) findViewById(R.id.textPendingCustomer)).setVisibility(View.INVISIBLE);
+									} else {
+										((TextView) findViewById(R.id.textPendingCustomer)).setText(onQueue.size() + " customer(s) are waiting...");
+									}
+								}
+							});
 						}
 					} else {
 						// kapag wala sa queue
@@ -196,6 +207,14 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 	private void addToQueue(final GBCustomer customer) {
 		onQueue.add(customer.getId());
 		Log.w("test", "Customer " + customer.getId() + " is waiting for the counter to be cleared.");
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				((TextView) findViewById(R.id.textPendingCustomer)).setText(onQueue.size() + " customer(s) are waiting...");
+				((TextView) findViewById(R.id.textPendingCustomer)).setVisibility(View.VISIBLE);
+			}
+		});
 	}
 
 	private void addToCounter(final GBCustomer customer) {

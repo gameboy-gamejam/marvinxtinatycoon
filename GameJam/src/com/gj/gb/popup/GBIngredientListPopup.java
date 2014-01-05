@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,8 +12,10 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.model.GBRecipe;
+import com.gj.gb.util.GBDataManager;
 
 public class GBIngredientListPopup extends Activity {
 	private int mDishId;
@@ -33,17 +34,14 @@ public class GBIngredientListPopup extends Activity {
 	private int[] mCurrentIdList = new int[] { R.id.current_ingredient_1,
 			R.id.current_ingredient_2, R.id.current_ingredient_3 };
 
-	SharedPreferences mIngredientCountPref;
 	List<Integer> mIngredientList;
 
+	GBGameData data;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popup_ingredient_list);
-
-		// get saved ingredient count
-		mIngredientCountPref = getSharedPreferences("IngredientCounts",
-				MODE_PRIVATE);
 
 		// get intent
 		Intent intent = getIntent();
@@ -52,6 +50,8 @@ public class GBIngredientListPopup extends Activity {
 		GBRecipe mRecipe = GBRecipeFactory.getRecipeById(mDishId);
 		mIngredientList = mRecipe.getIngredients();
 
+		data = GBDataManager.getGameData();
+		
 		((TextView) findViewById(R.id.name)).setText(mRecipe.getName());
 		((TextView) findViewById(R.id.max_value)).setText(MAX_OVEN_CAPACITY
 				+ "");
@@ -71,8 +71,7 @@ public class GBIngredientListPopup extends Activity {
 					.getName());
 
 			((TextView) findViewById(mMaxIdList[i]))
-					.setText(mIngredientCountPref.getInt("ingredient_"
-							+ ingredient.getId(), -1)
+					.setText(data.getIngredientQty(ingredient.getId())
 							+ "");
 
 		}
@@ -115,18 +114,15 @@ public class GBIngredientListPopup extends Activity {
 	public void cook(){
 		for (int i = 0; i < mIngredientList.size(); i++) {
 			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
-			int count = mIngredientCountPref.getInt("ingredient_"+ ingredient.getId(), -1);
+			int count = data.getIngredientQty(ingredient.getId());
 			if(mCount > count || mCount == 0) return;
 		}
 		
 		//deduct the ingredients from the shared pref
-		SharedPreferences.Editor editor = mIngredientCountPref.edit();
 		for (int i = 0; i < mIngredientList.size(); i++) {
 			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
-			int count = mIngredientCountPref.getInt("ingredient_"+ ingredient.getId(), -1);
-			editor.putInt("ingredient_"+ingredient.getId(), count - mCount);
+			data.updateIngredient(ingredient.getId(), -1 * mCount);
 		}
-		editor.commit();
 		Intent intent = getIntent();
 		intent.putExtra("DishId", mDishId);
 		intent.putExtra("cook_count", mCount);
