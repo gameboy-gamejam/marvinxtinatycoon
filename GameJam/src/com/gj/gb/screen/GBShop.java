@@ -25,6 +25,7 @@ import com.gj.gb.model.GBCustomer;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
+import com.gj.gb.util.Utils;
 
 public class GBShop extends Activity implements Runnable, Handler.Callback {
 
@@ -95,7 +96,8 @@ public class GBShop extends Activity implements Runnable, Handler.Callback {
 
 					@Override
 					public void onClick(View v) {
-						startActivity(new Intent(GBShop.this, GBKitchen.class));
+						Intent intent = Utils.getIntent(GBShop.this, GBKitchen.class);
+						startActivity(intent);
 					}
 				});
 

@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -48,5 +49,11 @@ public class Utils {
 		case 12: return "Dec";
 		}
 		return null;
+	}
+	
+	public static Intent getIntent(Context context, Class<?> cls) {
+	    Intent intent = new Intent(context, cls);
+	    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+	    return intent;
 	}
 }
