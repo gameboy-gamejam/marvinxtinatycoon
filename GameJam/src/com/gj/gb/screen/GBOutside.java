@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.stage.CarrotStage;
+import com.gj.gb.stage.FishStage;
+import com.gj.gb.stage.FruitGatheringStage;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
@@ -50,9 +53,18 @@ public class GBOutside extends Activity {
 			int id = v.getId();
 			
 			switch (id) {
-			case R.id.buttonTown:
-				toTown();
-				break;
+				case R.id.buttonTown:
+					toTown();
+					break;
+				case R.id.buttonGame1:
+					startActivity(new Intent(GBOutside.this, CarrotStage.class));
+					break;
+				case R.id.buttonGame2:
+					startActivity(new Intent(GBOutside.this, FishStage.class));
+					break;
+				case R.id.buttonGame3:
+					startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
+					break;
 			}
 		}
 	};

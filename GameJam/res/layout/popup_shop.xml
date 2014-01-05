@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="25dp"
+        android:background="#E9E1D8" >
+
+        <Button
+            android:id="@+id/buttonClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="CLOSE" />
+
+        <TextView
+            android:id="@+id/labelGold"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonClose"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:text="GOLD"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/labelCustomer"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/labelGold"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:text="CUSTOMER"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/labelExperience"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/labelCustomer"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:text="EXP."
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/labelRating"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/labelExperience"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_horizontal"
+            android:text="RATING"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textGold"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonClose"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/labelGold"
+            android:text="150"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textCustomer"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/labelGold"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/labelGold"
+            android:text="8/10"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textExperience"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/labelCustomer"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/labelGold"
+            android:text="+50"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textRating"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/labelExperience"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_toRightOf="@id/labelGold"
+            android:text="0/1000"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelRating"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="CONTINUE" />
+        
+    </RelativeLayout>
+
+</RelativeLayout>
