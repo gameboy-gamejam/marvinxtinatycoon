@@ -16,6 +16,10 @@ public class GBSplash extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_splash);
 		
+		if(getIntent().getBooleanExtra("ExitMe", false)){
+            finish();
+        }
+		
 		Handler handler = new Handler(new Callback() {
 			
 			@Override

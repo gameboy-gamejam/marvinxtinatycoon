@@ -17,9 +17,11 @@
     <color name="textLabel">@color/cream</color>
     <color name="textValue">@color/white</color>
     <color name="btnBrown">@color/gold</color>
+    <color name="pale_green">#7ccd7c</color>
     <color name="popTitle">@color/white</color>
     <color name="popMessage">@color/white</color>
     <color name="popButton">@color/white</color>
+    <color name="purple">#800080</color>
     <color name="guideText">@color/white</color>
     <color name="topEventTimeText">#f00</color>
     <color name="imgHolderBg">#6000</color>
