@@ -12,13 +12,14 @@ import android.widget.ImageView;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBCustomer;
+import com.gj.gb.model.GBNewCustomer;
 
-public class CustomerGridViewAdapter extends ArrayAdapter<GBCustomer> {
+public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 
 	Context context;
-	List<GBCustomer> data;
+	List<GBNewCustomer> data;
 	
-	public CustomerGridViewAdapter(Context context, List<GBCustomer> objects) {
+	public CustomerGridViewAdapter(Context context, List<GBNewCustomer> objects) {
 		super(context, R.layout.part_gridview, R.id.textDummy, objects);
 		
 		this.context = context;
@@ -41,7 +42,7 @@ public class CustomerGridViewAdapter extends ArrayAdapter<GBCustomer> {
 			holder = (IngredientHolder) convertView.getTag();
 		}
 		
-		GBCustomer customer = getItem(position);
+		GBNewCustomer customer = getItem(position);
 
 //		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "ingredient_"+(ingredient.getId()+1)));
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.util.Utils;
 
 public class GBNewCustomerFactory {
@@ -50,6 +51,20 @@ public class GBNewCustomerFactory {
 			
 			customers.add(customer);
 		}
+		
+		return customers;
+	}
+	
+
+	public static List<GBNewCustomer> getAllCustomerType() {
+		List<GBNewCustomer> customers = new ArrayList<GBNewCustomer>();
+		
+		customers.add(getCustomer(5));
+		customers.add(getCustomer(0));
+		customers.add(getCustomer(1));
+		customers.add(getCustomer(2));
+		customers.add(getCustomer(3));
+		customers.add(getCustomer(4));
 		
 		return customers;
 	}
