@@ -80,35 +80,38 @@
             android:src="@drawable/ic_launcher"
             android:visibility="invisible" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/imageCustomerCloud1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/imageCustomerSlot1"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@id/imageRegister"
-            android:src="@drawable/btn_up"
-            android:visibility="invisible" />
+            android:background="@drawable/btn_up"
+            android:visibility="invisible"
+            android:orientation="horizontal" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/imageCustomerCloud2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/imageCustomerSlot2"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@id/imageCustomerSlot1"
-            android:src="@drawable/btn_up"
-            android:visibility="invisible" />
+            android:background="@drawable/btn_up"
+            android:visibility="invisible"
+            android:orientation="horizontal" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/imageCustomerCloud3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/imageCustomerSlot3"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@id/imageCustomerSlot2"
-            android:src="@drawable/btn_up"
-            android:visibility="invisible" />
+            android:background="@drawable/btn_up"
+            android:visibility="invisible"
+            android:orientation="horizontal" />
 
         <TextView
             android:id="@+id/textPendingCustomer"
