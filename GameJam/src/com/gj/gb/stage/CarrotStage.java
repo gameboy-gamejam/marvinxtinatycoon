@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -17,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Carrot;
 import com.gj.gb.stage.common.Stage;
 import com.gj.gb.stage.common.StageHelper;
@@ -25,7 +27,7 @@ public class CarrotStage extends Stage {
 
     private static final int CARROT_NUMBER_OF_SOIL = 9;
     private static final int POINTS_EARNED_PER_CARROT = 10; //FIXME Pau dagdagan mo na lang kung kulang yung points... basta dagdag lang sya ng dagdag
-	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 90000;
+	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 20000;
 	private static final int DEFAULT_SWIPE_DISTANCE_PX = 100;
 	private static final int INITIAL_HEIGHT_RED_TIMER = 482;
 	
@@ -66,6 +68,25 @@ public class CarrotStage extends Stage {
 	}
 	
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
+    		if(resultCode == RESULT_OK){
+    			//showReadyInstruction();
+    			playGame();
+    		} else {
+    			finish();
+    		}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mIsScriptRunning = false;
+	}
+	
+	@Override
 	protected void playGame() {
 		mRecordTimeStarted = System.currentTimeMillis();
 		mEstimateTimeFinish = mRecordTimeStarted + DEFAULT_CARROT_GAME_TIMER_MS;
@@ -73,7 +94,7 @@ public class CarrotStage extends Stage {
 		mPointsEarned = 0;
 		touchPoints = new SparseArray<Carrot>();
 		for(Carrot carrot: carrots){
-			carrot.setState(Carrot.STATE_EMPTY);
+			carrot.reset();
 		}
 		mDirector.postDelayed(mScript, FRAMEDELAY);
 	}
@@ -114,9 +135,11 @@ public class CarrotStage extends Stage {
 	}
 
 	@Override
-	protected void showPointsAndReward() {
-	    //TODO send yung points then show pop up
-	}
+    protected void showPointsAndReward() {
+    	Intent intent = new Intent(CarrotStage.this, GBMiniGameRewardPopop.class);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
+    }
 	
 	
 	//methods for surface view
@@ -140,17 +163,15 @@ public class CarrotStage extends Stage {
         mScript = new Runnable() {
             @Override
             public void run() {
+            	long currentTime = System.currentTimeMillis();
+                if(mEstimateTimeFinish < currentTime) {
+                    mIsScriptRunning = false;
+                }
                 if(mIsScriptRunning) {
                     if(mSurfaceHolder.getSurface().isValid()){
                         Canvas canvas = mSurfaceHolder.lockCanvas();
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
-                                long currentTime = System.currentTimeMillis();
-                                if(mEstimateTimeFinish < currentTime) {
-                                    mIsScriptRunning = false;
-                                    mDirector.post(mScript);
-                                    return;
-                                }
                                 float timerRate = (float) ((currentTime - mRecordTimeStarted)/(DEFAULT_CARROT_GAME_TIMER_MS*1.0));
                                 float currentHeightTimer = INITIAL_HEIGHT_RED_TIMER*timerRate;
                                 canvas.drawRect(653, 50, 900, 100, mTimerLabelBackground);
@@ -176,6 +197,7 @@ public class CarrotStage extends Stage {
                     mDirector.postDelayed(mScript, FRAMEDELAY);
                 } else {
                 	showPointsAndReward();
+                	mDirector.removeCallbacks(mScript);
                 }
             }
         };

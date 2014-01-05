@@ -65,43 +65,26 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE_GAME_START) {
-			if (resultCode == RESULT_OK) {
-				playGame();
-			} else if (resultCode == RESULT_CANCELED) {
-				finish();
-			}
-		} if (requestCode == REQUEST_CODE_SHOW_EXIT_MENU) {
-            if (resultCode == RESULT_OK) {
-                finish();
-            } else if (resultCode == RESULT_CANCELED) {
-                resumeGame();
-            }
-        }  
-	}
-
-	@Override
 	protected void onPause() {
 		super.onPause();
 		if (isFinishing()) {
 			releaseResources();
 		} else {
-			boolean isScreenOn = ((PowerManager) this.getApplicationContext()
+			/*boolean isScreenOn = ((PowerManager) this.getApplicationContext()
 					.getSystemService(Context.POWER_SERVICE)).isScreenOn();
 			if (!isScreenOn) {
 				disruptAndExitGame();
-			}
+				isScreenOn = true;
+			}*/
 		}
 	}
 
-	@Override
+	/*@Override
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
 		releaseResources();
 		finish();
-	}
+	}*/
 
 	@Override
 	protected void onDestroy() {

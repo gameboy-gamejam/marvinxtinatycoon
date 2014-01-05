@@ -4,6 +4,9 @@
     <string name="app_name">GameJam</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="points_earned">Points Earned:</string>
     <string name="score">Score:</string>
+    <string name="play_again">Play Again</string>
+    <string name="return_to_town">Return to Town</string>
 
 </resources>

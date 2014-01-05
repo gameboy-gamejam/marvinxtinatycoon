@@ -20,6 +20,7 @@ public class Tree {
 	public static final int AGE_DIED_MS				= 20000;
 	
 	private static final int MAX_SHAKE_TREE = 3;
+	private static final int MAX_HEALTH = 5;
 	
 	private int health = 5;
 	
@@ -99,6 +100,7 @@ public class Tree {
 	
 	public void reset(){
 		mState = -1;
+		health = MAX_HEALTH;
 		mIsShaking = false;
 		mShakingIdx = 0;
 	}
