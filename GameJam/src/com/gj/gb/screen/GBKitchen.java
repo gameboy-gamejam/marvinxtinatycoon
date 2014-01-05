@@ -12,6 +12,7 @@ import com.gj.gb.R;
 import com.gj.gb.model.GBStove;
 import com.gj.gb.model.GBStove.OvenStatus;
 import com.gj.gb.popup.GBDishListPopup;
+import com.gj.gb.util.Utils;
 
 public class GBKitchen extends Activity {
 
@@ -23,7 +24,13 @@ public class GBKitchen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_kitchen);
+		init();
 		
+	
+
+	}
+	
+	private void init(){
 		stove1 = new GBStove(this, R.id.progressBar1);
 		stove2 = new GBStove(this, R.id.progressBar2);
 		stove3 = new GBStove(this, R.id.progressBar3);
@@ -91,7 +98,14 @@ public class GBKitchen extends Activity {
 				}
 			}
 		});
-
+		
+		findViewById(R.id.back).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = Utils.getIntent(GBKitchen.this, GBShop.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void toDishList(int stove_no) {

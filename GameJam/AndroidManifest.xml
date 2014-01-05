@@ -100,12 +100,18 @@
             android:screenOrientation="landscape"
             android:theme="@style/ThemePop">
         </activity>
-        <activity 
+        <activity
             android:name="com.gj.gb.popup.GBMiniGameRewardPopop"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Dialog">
        </activity>
+       <activity  
+            android:name="com.gj.gb.screen.GBShopPopClose"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Transparent">
+        </activity>
         
         <!-- Mini Games -->
         <activity
