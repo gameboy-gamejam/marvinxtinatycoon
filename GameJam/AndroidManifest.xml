@@ -94,6 +94,12 @@
             android:screenOrientation="landscape">
         </activity>
         <activity 
+            android:name="com.gj.gb.popup.GBAcknowledgementPopup"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/ThemePop">
+        </activity>
+        <activity 
             android:name="com.gj.gb.popup.GBDishListPopup"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.popup.GBAcknowledgementPopup;
 import com.gj.gb.stage.CarrotStage;
 import com.gj.gb.stage.FishStage;
 import com.gj.gb.stage.FruitGatheringStage;
@@ -51,23 +52,44 @@ public class GBOutside extends Activity {
 		@Override
 		public void onClick(View v) {
 			int id = v.getId();
-			
+			GBGameData gbData = GBDataManager.getGameData();
 			switch (id) {
 				case R.id.buttonTown:
 					toTown();
 					break;
 				case R.id.buttonGame1:
-					startActivity(new Intent(GBOutside.this, CarrotStage.class));
+					if(gbData.getStamina() > 0){
+						gbData.useStamina();
+						startActivity(new Intent(GBOutside.this, CarrotStage.class));
+					} else {
+						showNotEnoughStaminaPopup();
+					}
 					break;
 				case R.id.buttonGame2:
-					startActivity(new Intent(GBOutside.this, FishStage.class));
+					if(gbData.getStamina() > 0){
+						gbData.useStamina();
+						startActivity(new Intent(GBOutside.this, FishStage.class));
+					} else {
+						showNotEnoughStaminaPopup();
+					}
 					break;
 				case R.id.buttonGame3:
-					startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
+					if(gbData.getStamina() > 0){
+						gbData.useStamina();
+						startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
+					} else {
+						showNotEnoughStaminaPopup();
+					}
 					break;
 			}
 		}
 	};
+	
+	private void showNotEnoughStaminaPopup(){
+		Intent intent = new Intent(GBOutside.this, GBAcknowledgementPopup.class);
+		intent.putExtra(GBAcknowledgementPopup.KEY_EXTRA_MESSAGE, getResources().getString(R.string.not_enough_stamina));
+		startActivity(intent);
+	}
 
 	private void initButtons() {
 		findViewById(R.id.buttonTown).setOnClickListener(buttonListener);

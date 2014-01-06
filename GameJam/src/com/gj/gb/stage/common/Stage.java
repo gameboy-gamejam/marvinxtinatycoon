@@ -7,11 +7,14 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View.OnTouchListener;
 
+import com.gj.gb.R;
+import com.gj.gb.popup.GBAcknowledgementPopup;
 import com.gj.gb.screen.GBSplash;
 
 public abstract class Stage extends Activity implements SurfaceHolder.Callback {
-	public static final int REQUEST_CODE_GAME_START = 11000;
-	public static final int REQUEST_CODE_SHOW_EXIT_MENU = 11001;
+	public static final int REQUEST_CODE_GAME_START 		= 11000;
+	public static final int REQUEST_CODE_SHOW_EXIT_MENU 	= 11001;
+	public static final int REQUEST_CODE_NOT_ENOUGH_STAMINA = 11002; 
 	protected static final int FRAMEDELAY = 100;
 	
 	protected boolean mIsGameFinish = false;
@@ -39,6 +42,12 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
         startActivity(intent);
         finish();
     }
+	
+	protected void showNotEnoughStaminaPopup(){
+		Intent intent = new Intent(Stage.this, GBAcknowledgementPopup.class);
+		intent.putExtra(GBAcknowledgementPopup.KEY_EXTRA_MESSAGE, getResources().getString(R.string.not_enough_stamina));
+		startActivityForResult(intent, REQUEST_CODE_NOT_ENOUGH_STAMINA);
+	}
 
 	//TODO baka pedeng iakyat
 	@Override

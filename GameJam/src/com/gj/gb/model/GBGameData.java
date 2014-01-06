@@ -245,6 +245,10 @@ public class GBGameData {
 	public void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
+	
+	public void useStamina(){
+		stamina--;
+	}
 
 	public void update() {
 		updateDayState();

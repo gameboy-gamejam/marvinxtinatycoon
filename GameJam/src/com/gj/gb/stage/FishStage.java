@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient.IngredientCategory;
 import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
@@ -26,6 +27,7 @@ import com.gj.gb.stage.actors.FishingRodBar;
 import com.gj.gb.stage.actors.Pond;
 import com.gj.gb.stage.common.Stage;
 import com.gj.gb.stage.common.StageHelper;
+import com.gj.gb.util.GBDataManager;
 
 public class FishStage extends Stage {
     
@@ -98,13 +100,24 @@ public class FishStage extends Stage {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
+    		
     		if(resultCode == RESULT_OK && mIsSurfaceReady){
-    			fisher.setState(Fisher.STATE_ON_STANDBY);
-    			mSelectedPondIdx = -1;
+    			GBGameData gbData = GBDataManager.getGameData();
+    			if(gbData.getStamina() > 0){
+    				gbData.useStamina();
+    				fisher.setState(Fisher.STATE_ON_STANDBY);
+	    			mSelectedPondIdx = -1;
+    			} else {
+    				showNotEnoughStaminaPopup();
+    			}
     		} else {
     			finish();
     		}
-    	}
+    	} else if(requestCode == REQUEST_CODE_NOT_ENOUGH_STAMINA){
+			if(resultCode == RESULT_OK){
+				finish();
+			}
+		}
     	super.onActivityResult(requestCode, resultCode, data);
     }
     

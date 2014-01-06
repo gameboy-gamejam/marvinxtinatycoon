@@ -16,11 +16,13 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient.IngredientCategory;
 import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Tree;
 import com.gj.gb.stage.common.Stage;
+import com.gj.gb.util.GBDataManager;
 
 public class FruitGatheringStage extends Stage{
 	
@@ -71,11 +73,20 @@ public class FruitGatheringStage extends Stage{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
     		if(resultCode == RESULT_OK && mIsSurfaceReady){
-    			//showReadyInstruction();
-    			playGame();
+    			GBGameData gbData = GBDataManager.getGameData();
+    			if(gbData.getStamina() > 0){
+    				gbData.useStamina();
+    				playGame();
+    			} else {
+    				showNotEnoughStaminaPopup();
+    			}
     		} else {
     			finish();
     		}
+		} else if(requestCode == REQUEST_CODE_NOT_ENOUGH_STAMINA){
+			if(resultCode == RESULT_OK){
+				finish();
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
