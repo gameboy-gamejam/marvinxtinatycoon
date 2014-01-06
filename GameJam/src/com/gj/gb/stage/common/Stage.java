@@ -1,10 +1,8 @@
 package com.gj.gb.stage.common;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View.OnTouchListener;
@@ -33,12 +31,6 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	protected abstract void showPointsAndReward();
 
 	protected abstract void releaseResources();
-
-	private void disruptAndExitGame() {
-		mIsGameFinish = true;
-		endGame();
-		showPointsAndReward();
-	}
 	
 	protected void closeAllExceptSplash(){
         Intent intent = new Intent(this, GBSplash.class);

@@ -19,23 +19,23 @@ public class FishingRodBar {
     public static final int RARITY_OF_FISH_MAX_PT = 500;//FIXME pau kaw na bahala magcheck nito
     
     private static final int BAR_WIDTH = 390;
-    private static final int POINTER_WIDTH = 10;
+    private static final int POINTER_WIDTH = 5;
 
     private static final float DISTANCE_CATCH_BAR_RT_EASY = 0.25f;
     private static final float DISTANCE_CATCH_BAR_RT_NORMAL = 0.125f;
     private static final float DISTANCE_CATCH_BAR_RT_HARD = 0.0625f;
 
-    private static final int TOTAL_TIME_MS_BAR_REACH_END_EASY = 7000;
-    private static final int TOTAL_TIME_MS_BAR_REACH_END_NORMAL = 5000;
-    private static final int TOTAL_TIME_MS_BAR_REACH_END_HARD = 3000;
+    private static final int TOTAL_TIME_MS_BAR_REACH_END_EASY = 5000;
+    private static final int TOTAL_TIME_MS_BAR_REACH_END_NORMAL = 3000;
+    private static final int TOTAL_TIME_MS_BAR_REACH_END_HARD = 2000;
     
-    private static final int SCORE_RT_NOVICE   = 20;//FIXME pau kaw na bahala magcheck nito
-    private static final int SCORE_RT_EASY     = 30;
-    private static final int SCORE_RT_NORMAL   = 60;
-    private static final int SCORE_RT_HARD     = 80;
-    private static final int SCORE_RT_EXPERT   = 100;
+    private static final float SCORE_RT_NOVICE   = 0.2f;//FIXME pau kaw na bahala magcheck nito
+    private static final float SCORE_RT_EASY     = 0.3f;
+    private static final float SCORE_RT_NORMAL   = 0.6f;
+    private static final float SCORE_RT_HARD     = 0.8f;
+    private static final float SCORE_RT_EXPERT   = 1;
     
-    private static final int BAR_START_X = 205;
+    private static final int BAR_START_X = 400;
 
     private boolean mIsLakeWithFish;// TODO add ng points for rarity per lake 3 rarity option
     private int mRarityOfFish;// TODO add ng rarity ng lake
@@ -98,22 +98,22 @@ public class FishingRodBar {
     }
     
     public void drawMe(Canvas canvas) {
-        canvas.drawRect(BAR_START_X - 10, 50, BAR_WIDTH + BAR_START_X + 10, 150, mBarBorder);
-        canvas.drawRect(BAR_START_X, 60, BAR_WIDTH + BAR_START_X, 140, mFreeBarSpaceBackground);
-        canvas.drawRect(mCatchBarPosX, 60, mCatchBarPosX + mCatchBarWidth, 140, mCatchBarBackground);
-        canvas.drawRect(mRodPointerPosX, 60, mRodPointerPosX + POINTER_WIDTH, 140, mRodPointerBackground);
         if((mMovementRate > 0 && BAR_START_X + BAR_WIDTH - POINTER_WIDTH <= mRodPointerPosX + mMovementRate)||
-        		(mMovementRate < 0 && BAR_START_X >= mRodPointerPosX + mMovementRate)) {
+                (mMovementRate < 0 && BAR_START_X >= mRodPointerPosX + mMovementRate)) {
             mMovementRate *= -1;
         }
         mRodPointerPosX += mMovementRate;
+        canvas.drawRect(BAR_START_X - 10, 150, BAR_WIDTH + BAR_START_X + 10, 200, mBarBorder);
+        canvas.drawRect(BAR_START_X, 160, BAR_WIDTH + BAR_START_X, 190, mFreeBarSpaceBackground);
+        canvas.drawRect(mCatchBarPosX, 160, mCatchBarPosX + mCatchBarWidth, 190, mCatchBarBackground);
+        canvas.drawRect(mRodPointerPosX, 160, mRodPointerPosX + POINTER_WIDTH, 190, mRodPointerBackground);
     }
     
     public int getScore() {
-        return mRarityOfFish * getScoreRt(); 
+        return  (int) (mRarityOfFish * getScoreRt()); 
     }
     
-    private int getScoreRt() {
+    private float getScoreRt() {
         if (mDifficulty == DIFFICULTY_EASY) {
             return SCORE_RT_EASY;
         } else if (mDifficulty == DIFFICULTY_NORMAL) {
@@ -127,7 +127,7 @@ public class FishingRodBar {
     }
     
     public boolean isHit() {
-        return StageHelper.isWithinBorders(mCatchBarPosX, mCatchBarPosX+mCatchBarWidth, 1, 1, mRodPointerPosX, 1);
+        return StageHelper.isWithinBorders(mCatchBarPosX, mCatchBarPosX+mCatchBarWidth, 10, 20, mRodPointerPosX, 15);
     }
     
     

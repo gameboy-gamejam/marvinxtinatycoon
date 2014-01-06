@@ -28,7 +28,7 @@ public class CarrotStage extends Stage {
 
     private static final int CARROT_NUMBER_OF_SOIL = 9;
     private static final int POINTS_EARNED_PER_CARROT = 10; //FIXME Pau dagdagan mo na lang kung kulang yung points... basta dagdag lang sya ng dagdag
-	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 20000;
+	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 30000;
 	private static final int DEFAULT_SWIPE_DISTANCE_PX = 100;
 	private static final int INITIAL_HEIGHT_RED_TIMER = 482;
 	

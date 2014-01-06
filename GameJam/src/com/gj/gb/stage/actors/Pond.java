@@ -14,9 +14,9 @@ public class Pond {
     public static final int FISH_RARITY_MEDIUM  = 3001;
     public static final int FISH_RARITY_BIG     = 3002;
     
-    private static final int SCORE_RT_SMALL     = 30;
-    private static final int SCORE_RT_MEDIUM    = 60;
-    private static final int SCORE_RT_BIG       = 100;
+    private static final float SCORE_RT_SMALL     = 0.3f;
+    private static final float SCORE_RT_MEDIUM    = 0.6f;
+    private static final float SCORE_RT_BIG       = 1;
     
     private int mFishRarity;
     
@@ -68,10 +68,10 @@ public class Pond {
     }
     
     public int getScore(int rarityOfFish){
-        return rarityOfFish * getScoreRt();
+        return (int) (rarityOfFish * getScoreRt());
     }
     
-    private int getScoreRt() {
+    private float getScoreRt() {
         if(mFishRarity == FISH_RARITY_MEDIUM){
             return SCORE_RT_MEDIUM;
         } else if(mFishRarity == FISH_RARITY_BIG) {
