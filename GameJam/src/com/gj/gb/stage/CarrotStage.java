@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBIngredient.IngredientCategory;
 import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Carrot;
@@ -27,8 +28,8 @@ import com.gj.gb.stage.common.StageHelper;
 public class CarrotStage extends Stage {
 
     private static final int CARROT_NUMBER_OF_SOIL = 9;
-    private static final int POINTS_EARNED_PER_CARROT = 10; //FIXME Pau dagdagan mo na lang kung kulang yung points... basta dagdag lang sya ng dagdag
-	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 30000;
+    private static final int POINTS_EARNED_PER_CARROT = 15;
+	private static final int DEFAULT_CARROT_GAME_TIMER_MS = 40000;
 	private static final int DEFAULT_SWIPE_DISTANCE_PX = 100;
 	private static final int INITIAL_HEIGHT_RED_TIMER = 482;
 	
@@ -151,6 +152,7 @@ public class CarrotStage extends Stage {
     protected void showPointsAndReward() {
     	Intent intent = new Intent(CarrotStage.this, GBMiniGameRewardPopop.class);
     	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_CATEGORY, IngredientCategory.CROPS);
     	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
     }
 	

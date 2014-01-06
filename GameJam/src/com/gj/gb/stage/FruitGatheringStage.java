@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBIngredient.IngredientCategory;
 import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Tree;
@@ -144,6 +145,7 @@ public class FruitGatheringStage extends Stage{
     protected void showPointsAndReward() {
     	Intent intent = new Intent(FruitGatheringStage.this, GBMiniGameRewardPopop.class);
     	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_CATEGORY, IngredientCategory.FRUIT);
     	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
     }
     
@@ -193,9 +195,9 @@ public class FruitGatheringStage extends Stage{
 	                    	if(tree.getState() == Tree.STATE_YOUNG){
 	                    		tree.abuseHealth();
 	                    	} else if(tree.getState() == Tree.STATE_BEARING){
-	                    		mPointsEarned+=3;
+	                    		mPointsEarned+=15;
 	                    	} else if(tree.getState() == Tree.STATE_OLD){
-	                    		mPointsEarned++;
+	                    		mPointsEarned+=5;
 	                    	}
 	                    }
 	                	break;

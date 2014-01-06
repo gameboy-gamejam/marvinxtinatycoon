@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBIngredient.IngredientCategory;
 import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Fisher;
@@ -275,6 +276,7 @@ public class FishStage extends Stage {
     protected void showPointsAndReward() {
     	Intent intent = new Intent(FishStage.this, GBMiniGameRewardPopop.class);
     	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
+    	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_CATEGORY, IngredientCategory.FISH);
     	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
     }
 }

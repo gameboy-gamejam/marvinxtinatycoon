@@ -16,7 +16,7 @@ public class FishingRodBar {
     public static final int DIFFICULTY_NORMAL = 2002;
     public static final int DIFFICULTY_HARD = 2003;
     public static final int DIFFICULTY_EXPERT = 2004;
-    public static final int RARITY_OF_FISH_MAX_PT = 500;//FIXME pau kaw na bahala magcheck nito
+    public static final int RARITY_OF_FISH_MAX_PT = 950;
     
     private static final int BAR_WIDTH = 390;
     private static final int POINTER_WIDTH = 5;
@@ -29,7 +29,7 @@ public class FishingRodBar {
     private static final int TOTAL_TIME_MS_BAR_REACH_END_NORMAL = 3000;
     private static final int TOTAL_TIME_MS_BAR_REACH_END_HARD = 2000;
     
-    private static final float SCORE_RT_NOVICE   = 0.2f;//FIXME pau kaw na bahala magcheck nito
+    private static final float SCORE_RT_NOVICE   = 0.2f;
     private static final float SCORE_RT_EASY     = 0.3f;
     private static final float SCORE_RT_NORMAL   = 0.6f;
     private static final float SCORE_RT_HARD     = 0.8f;

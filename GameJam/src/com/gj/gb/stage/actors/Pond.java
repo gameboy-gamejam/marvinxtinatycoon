@@ -14,8 +14,8 @@ public class Pond {
     public static final int FISH_RARITY_MEDIUM  = 3001;
     public static final int FISH_RARITY_BIG     = 3002;
     
-    private static final float SCORE_RT_SMALL     = 0.3f;
-    private static final float SCORE_RT_MEDIUM    = 0.6f;
+    private static final float SCORE_RT_SMALL     = 1;
+    private static final float SCORE_RT_MEDIUM    = 1;
     private static final float SCORE_RT_BIG       = 1;
     
     private int mFishRarity;

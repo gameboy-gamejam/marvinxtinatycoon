@@ -1,17 +1,29 @@
 package com.gj.gb.popup;
 
-import com.gj.gb.R;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.gj.gb.R;
+import com.gj.gb.factory.GBIngredientsFactory;
+import com.gj.gb.logic.RewardSystem;
+import com.gj.gb.model.GBIngredient;
+import com.gj.gb.model.GBIngredient.IngredientCategory;
 
 public class GBMiniGameRewardPopop extends Activity {
 	
-	public static final String KEY_EXTRA_POINTS = "points";
-	public static final int REQUEST_CODE_REWARD = 13000;
+	public static final String KEY_EXTRA_POINTS    = "points";
+	public static final String KEY_EXTRA_CATEGORY  = "category";
+	public static final int REQUEST_CODE_REWARD    = 13000;
 	
 	private OnClickListener mOnClickListener = new OnClickListener() {
 		
@@ -37,16 +49,25 @@ public class GBMiniGameRewardPopop extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popup_minigame_reward);
 		
-		int points = getIntent().getExtras().getInt(KEY_EXTRA_POINTS);
-		
-		((TextView) findViewById(R.id.points)).setText(String.valueOf(points));
 		findViewById(R.id.returnTown).setOnClickListener(mOnClickListener);
 		findViewById(R.id.playAgain).setOnClickListener(mOnClickListener);
-	}
-	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+		
+		Bundle extra = getIntent().getExtras();
+		int points = extra.getInt(KEY_EXTRA_POINTS);
+		IngredientCategory category = (IngredientCategory) extra.getSerializable(KEY_EXTRA_CATEGORY);
+		
+		int rarityLvl = RewardSystem.getRarityLevelFromScore(points);		
+		List<GBIngredient> rewardsAvailable = GBIngredientsFactory.
+		        findIngredientByCategoryAndLessThanEqualRarity(category, rarityLvl);
+		List<Bitmap> rewards = RewardSystem.getRewards(this, rewardsAvailable);
+		LinearLayout rewardsHolder = (LinearLayout) findViewById(R.id.rewards);
+		Resources res = getResources();
+		for(Bitmap reward: rewards){
+		    ImageView rewardImageView = new ImageView(this);
+	        rewardImageView.setImageBitmap(reward);
+		    rewardImageView.setLayoutParams(new LayoutParams(res.getDimensionPixelSize(R.dimen.dp_75), res.getDimensionPixelSize(R.dimen.dp_75)));
+		    rewardsHolder.addView(rewardImageView);
+		}
+		((TextView) findViewById(R.id.taunt)).setText(RewardSystem.getTaunt(res, rarityLvl));
 	}
 }
