@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.gj.gb.R;
-import com.gj.gb.model.GBCustomer;
 import com.gj.gb.model.GBNewCustomer;
 
 public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {

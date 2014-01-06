@@ -53,8 +53,6 @@ public class GBNewCustomer {
 	
 	private String name;
 	private String description;
-	
-	private List<GBRecipe> selection;
 
 	private long offset = 0;
 	

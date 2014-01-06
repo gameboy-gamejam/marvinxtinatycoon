@@ -42,6 +42,8 @@ public class GBRestaurant extends Activity implements Runnable,
 
 	public static final int REQUEST_CLOSE = 1000;
 	public static final int REQUEST_MENU = 1001;
+	
+	public static boolean returnToMain = false;
 
 	private Thread thread = null;
 	private Handler handler = null;
@@ -168,6 +170,12 @@ public class GBRestaurant extends Activity implements Runnable,
 		super.onResume();
 
 		isSuspended = false;
+
+		/* CHEAT! */
+		if (returnToMain) {
+			GBRestaurant.returnToMain = false;
+			finish();
+		}
 
 		refreshDishList();
 	}

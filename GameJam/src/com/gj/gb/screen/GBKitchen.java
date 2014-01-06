@@ -113,7 +113,7 @@ public class GBKitchen extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		Intent intent = Utils.getIntent(GBKitchen.this, GBShop.class);
+		Intent intent = Utils.getIntent(GBKitchen.this, GBRestaurant.class);
 		startActivity(intent);
 	}
 

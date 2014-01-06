@@ -167,7 +167,7 @@ public class GBTown extends Activity {
 		} else if (requestCode == 101 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBOutside.class), 202);
 		} else if (requestCode == 102 && resultCode == RESULT_OK) {
-			startActivityForResult(new Intent(this, GBShop.class), 203);
+			startActivityForResult(new Intent(this, GBRestaurant.class), 203);
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {

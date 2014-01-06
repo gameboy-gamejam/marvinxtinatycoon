@@ -88,7 +88,7 @@ public class GBSystemMenu extends Activity {
 			if (from.equals("town") || from.compareTo("town") == 0) {
 				GBTown.returnToMain = true; /* CHEATERS */
 			} else if (from.equals("shop") || from.compareTo("shop") == 0) {
-				GBShop.returnToMain = true;
+				GBRestaurant.returnToMain = true;
 				GBTown.returnToMain = true; /* CHEATERS */
 			}
 			finish();

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.util.Log;
-
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBEconomics;
@@ -266,7 +264,6 @@ public class GBGameData {
 
 	private void updateDay() {
 		totalDay++;
-		Log.w("called", "Day: " + totalDay);
 		
 		currentDay++;
 		
