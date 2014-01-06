@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.util.ImageCache;
 
 public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 
@@ -43,7 +44,7 @@ public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 		
 		GBNewCustomer customer = getItem(position);
 
-//		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "ingredient_"+(ingredient.getId()+1)));
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "customer_"+(customer.getAvatar()-1)));
 		
 		return super.getView(position, convertView, parent);
 	}

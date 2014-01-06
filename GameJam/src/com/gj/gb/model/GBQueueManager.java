@@ -3,6 +3,7 @@ package com.gj.gb.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
@@ -17,7 +18,7 @@ public class GBQueueManager {
 	private GBNewCustomer slot2 = null;
 	private GBNewCustomer slot3 = null;
 
-	public GBQueueManager() {
+	public GBQueueManager(Activity activity) {
 		queue = new ArrayList<GBNewCustomer>();
 		left = new ArrayList<GBNewCustomer>();
 	}

@@ -105,6 +105,7 @@ public class GBCommonGridList extends Activity {
 		
 		((TextView) findViewById(R.id.textCustomerName)).setText(customer.getName());
 		((TextView) findViewById(R.id.textCustomerDescription)).setText(customer.getDescription());
+		((ImageView) findViewById(R.id.imageCustomerIcon)).setImageBitmap(ImageCache.getBitmap(this, "customer_" + (customer.getAvatar()-1)));
 	}
 
 	protected void updateRecipeInfo(int position) {

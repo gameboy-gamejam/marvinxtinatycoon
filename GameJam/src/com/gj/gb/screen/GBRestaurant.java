@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -31,7 +34,7 @@ import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBRestaurant extends Activity implements Runnable,
-		Handler.Callback {
+		Handler.Callback, SurfaceHolder.Callback {
 
 	public static final int HANDLE_MESSAGE_START_SHOP = 500;
 	public static final int HANDLE_MESSAGE_SHOP_READY = 501;
@@ -62,6 +65,8 @@ public class GBRestaurant extends Activity implements Runnable,
 	private int ratingsEarned = 0;
 	private int customerServed = 0;
 	private int totalCustomer = 0;
+	
+	private SurfaceView shopSurface;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +76,7 @@ public class GBRestaurant extends Activity implements Runnable,
 		gameData = GBDataManager.getGameData();
 
 		initAnimations();
-		initButton();
+		initViews();
 
 		handler = new Handler(this);
 		handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
@@ -156,11 +161,18 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 
 		queueManager.update(elapsedTime);
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+			}
+		});
 	}
 
 	private void initializeData() {
 		customerList = GBNewCustomerFactory.getRandomCustomers(10);
-		queueManager = new GBQueueManager();
+		queueManager = new GBQueueManager(this);
 
 		totalCustomer = customerList.size();
 	}
@@ -380,7 +392,9 @@ public class GBRestaurant extends Activity implements Runnable,
 	}
 
 	/* initialize buttons */
-	private void initButton() {
+	private void initViews() {
+		shopSurface = (SurfaceView) findViewById(R.id.surfaceCanvas);
+		
 		findViewById(R.id.buttonKitchen).setOnClickListener(
 				new OnClickListener() {
 
@@ -414,5 +428,21 @@ public class GBRestaurant extends Activity implements Runnable,
 		intent.putExtra("experience_gained", experienceEarned);
 		intent.putExtra("ratings_earned", ratingsEarned);
 		startActivityForResult(intent, REQUEST_CLOSE);
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+		Log.w("test", "Changed!");
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		Log.w("test", "Created!");
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		Log.w("test", "Destroyed!");
 	}
 }

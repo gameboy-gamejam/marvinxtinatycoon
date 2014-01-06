@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gj.gb.model.GBNewCustomer;
-import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.util.Utils;
 
 public class GBNewCustomerFactory {
