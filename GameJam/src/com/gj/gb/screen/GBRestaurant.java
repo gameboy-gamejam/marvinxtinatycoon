@@ -4,6 +4,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +37,7 @@ import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.model.GBQueueManager;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
+import com.gj.gb.util.ImageCache;
 import com.gj.gb.util.Utils;
 
 public class GBRestaurant extends Activity implements Runnable,
@@ -67,6 +74,7 @@ public class GBRestaurant extends Activity implements Runnable,
 	private int totalCustomer = 0;
 	
 	private SurfaceView shopSurface;
+	private SurfaceHolder shopSurfaceHolder;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +111,8 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 	}
 
+	Bitmap bitmap = null;
+	
 	/* Thread */
 	@Override
 	public void run() {
@@ -114,6 +124,8 @@ public class GBRestaurant extends Activity implements Runnable,
 		long startTime = System.currentTimeMillis();
 		long currentTime = startTime;
 
+		bitmap = ImageCache.getBitmap(this, "ic_launcher");
+		
 		while (isRunning) {
 			final long elapsedTime = System.currentTimeMillis() - currentTime;
 			currentTime += elapsedTime;
@@ -122,6 +134,10 @@ public class GBRestaurant extends Activity implements Runnable,
 				int timeProgress = timer.getProgress();
 
 				updateData(elapsedTime);
+				
+				Canvas canvas = shopSurfaceHolder.lockCanvas();
+				render(canvas);
+				shopSurfaceHolder.unlockCanvasAndPost(canvas);
 
 				timeProgress -= elapsedTime;
 
@@ -130,6 +146,23 @@ public class GBRestaurant extends Activity implements Runnable,
 				if (timeProgress <= 0) {
 					stopGame();
 				}
+			}
+		}
+	}
+
+	int x=0, y=0;
+	
+	private void render(Canvas canvas) {
+		if (canvas != null) {
+			canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+			Paint paint = new Paint();
+			paint.setColor(Color.BLACK);
+			canvas.drawBitmap(bitmap, x, y, paint);
+			if (x < canvas.getWidth()) {
+				x+=5;
+			}
+			if (y < canvas.getHeight()) {
+				y+=5;
 			}
 		}
 	}
@@ -394,6 +427,10 @@ public class GBRestaurant extends Activity implements Runnable,
 	/* initialize buttons */
 	private void initViews() {
 		shopSurface = (SurfaceView) findViewById(R.id.surfaceCanvas);
+		shopSurface.setZOrderOnTop(true);
+		shopSurfaceHolder = shopSurface.getHolder();
+		shopSurfaceHolder.addCallback(this);
+		shopSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
 		
 		findViewById(R.id.buttonKitchen).setOnClickListener(
 				new OnClickListener() {
