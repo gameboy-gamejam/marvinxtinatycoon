@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.gj.gb.R;
+import com.gj.gb.popup.GBGameTipPopUp;
 import com.gj.gb.popup.GBMiniGameRewardPopop;
 import com.gj.gb.stage.actors.Tree;
 import com.gj.gb.stage.common.Stage;
@@ -30,15 +33,27 @@ public class FruitGatheringStage extends Stage{
     
     private int mPointsEarned = 0;
     private long mRecordTimeStarted = -1;
+    private boolean mIsSurfaceReady = false;
+    
+    private Paint white;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.stage_carrot);
+    	mIsShowReadyInstruction = true;
     	prepareScript();
     	prepareFloorDirectors();
     	prepareStage();
     }
+    
+    @Override
+	protected void onResume() {
+		super.onResume();
+		if(mIsShowReadyInstruction){
+			showReadyInstruction();
+		}
+	}
     
     @Override
     protected void onPause() {
@@ -53,8 +68,8 @@ public class FruitGatheringStage extends Stage{
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD){
-    		if(resultCode == RESULT_OK){
+    	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
+    		if(resultCode == RESULT_OK && mIsSurfaceReady){
     			//showReadyInstruction();
     			playGame();
     		} else {
@@ -66,7 +81,7 @@ public class FruitGatheringStage extends Stage{
     
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-		playGame();
+		mIsSurfaceReady = true;
 	}
 
 	@Override
@@ -112,11 +127,13 @@ public class FruitGatheringStage extends Stage{
 	}
 
 	//methods for pop ups
-    @Override
-    protected void showReadyInstruction() {
-        // TODO show pop up
-        
-    }
+	@Override
+	protected void showReadyInstruction() {
+		Intent intent = new Intent(this, GBGameTipPopUp.class);
+		intent.putExtra(GBGameTipPopUp.KEY_EXTRA_TIP, res.getString(R.string.tip_fruit));
+		startActivityForResult(intent, REQUEST_CODE_GAME_START);
+		mIsShowReadyInstruction = false;
+	}
 
     @Override
     protected void showInGameMenu() {
@@ -145,6 +162,7 @@ public class FruitGatheringStage extends Stage{
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
                             	canvas.drawColor(0, Mode.CLEAR);//eraser
+                            	canvas.drawRect(0, 0, 1000, 700, white);
                                 tree.drawMe(canvas, res, inGameCurrentTime);
                                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                             }
@@ -195,6 +213,9 @@ public class FruitGatheringStage extends Stage{
     private void prepareStage() {
     	mIsScriptRunning = false;
     	res = getResources();
-    	tree = new Tree(50, 50, 653, 593);
+    	tree = new Tree(200, 50, 803, 593);
+    	white = new Paint(); 
+    	white.setStyle(Paint.Style.FILL);
+    	white.setColor(Color.WHITE);
     }
 }

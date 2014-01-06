@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:background="@drawable/village">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -61,55 +62,56 @@
         android:text="Menu" />
 
     <Button
-        android:id="@+id/buttonShop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Shop" />
-
-    <Button
         android:id="@+id/buttonOutside"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/relativeLayout1"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:text="Outside" />
-
-    <Button
-        android:id="@+id/buttonMarket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/buttonShop"
-        android:layout_marginRight="15dp"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/buttonShop"
-        android:text="Market" />
-
-    <Button
-        android:id="@+id/buttonBulletin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonOutside"
-        android:layout_toRightOf="@+id/buttonShop"
-        android:text="Bulletin" />
-
-    <Button
-        android:id="@+id/buttonMayor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_above="@id/buttonMarket"
-        android:text="Mayor" />
 
     <Button
         android:id="@+id/buttonGuild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/buttonMenu"
-        android:layout_above="@+id/buttonShop"
         android:text="Guild" />
+
+    <Button
+        android:id="@+id/buttonMarket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonOutside"
+        android:layout_marginBottom="24dp"
+        android:layout_toRightOf="@+id/buttonMayor"
+        android:text="Market" />
+
+    <Button
+        android:id="@+id/buttonShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonOutside"
+        android:layout_marginLeft="52dp"
+        android:layout_toRightOf="@+id/buttonOutside"
+        android:text="Shop" />
+
+    <Button
+        android:id="@+id/buttonMayor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonGuild"
+        android:layout_marginLeft="109dp"
+        android:layout_toRightOf="@+id/imageDayState"
+        android:text="Mayor" />
+
+    <Button
+        android:id="@+id/buttonBulletin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonGuild"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="21dp"
+        android:layout_toRightOf="@+id/buttonShop"
+        android:text="Bulletin" />
 
 </RelativeLayout>
