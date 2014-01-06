@@ -153,11 +153,10 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 	}
 
-	int x=0, y=0;
-	
 	private void render(Canvas canvas) {
 		if (canvas != null) {
 			canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+			queueManager.render(canvas);
 		}
 	}
 
