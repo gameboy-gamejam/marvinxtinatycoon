@@ -9,6 +9,13 @@
         android:layout_weight="0.75"
         android:background="#f46ca0" >
 
+        <SurfaceView
+            android:id="@+id/surfaceCanvas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
         <TextView
             android:id="@+id/textGoldEarn"
             android:layout_width="100dp"
@@ -17,7 +24,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:text="0 G"
             android:gravity="right"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -32,86 +38,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/textGoldEarn"
-            android:max="60000"
-            android:progress="60000" />
-
-        <Button
-            android:id="@+id/buttonDummy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <ImageView
-            android:id="@+id/imageRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/imageCustomerSlot1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/buttonDummy"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageRegister"
-            android:src="@drawable/ic_launcher"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/imageCustomerSlot2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/buttonDummy"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageCustomerSlot1"
-            android:src="@drawable/ic_launcher"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/imageCustomerSlot3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/buttonDummy"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageCustomerSlot2"
-            android:src="@drawable/ic_launcher"
-            android:visibility="invisible" />
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot1"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageRegister"
-            android:background="@drawable/btn_up"
-            android:visibility="invisible"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot2"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageCustomerSlot1"
-            android:background="@drawable/btn_up"
-            android:visibility="invisible"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/imageCustomerCloud3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageCustomerSlot3"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/imageCustomerSlot2"
-            android:background="@drawable/btn_up"
-            android:visibility="invisible"
-            android:orientation="horizontal" />
+            android:max="90000"
+            android:progress="90000" />
 
         <TextView
             android:id="@+id/textPendingCustomer"
@@ -187,14 +115,15 @@
             android:enabled="false"
             android:text="Kitchen" />
 
-        <ListView
+        <GridView
             android:id="@+id/listReadyDish"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/buttonKitchen"
             android:layout_below="@id/buttonMenu"
-            android:layout_margin="5dp" >
-        </ListView>
+            android:layout_margin="5dp"
+            android:numColumns="1" >
+        </GridView>
 
         <RelativeLayout
             android:id="@+id/filter2"

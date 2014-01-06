@@ -84,6 +84,11 @@
             android:screenOrientation="landscape">
         </activity>
         <activity 
+            android:name="com.gj.gb.screen.GBRestaurant"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity 
             android:name="com.gj.gb.screen.GBKitchen"
             android:launchMode="singleTop"
             android:screenOrientation="landscape">

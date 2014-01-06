@@ -1,6 +1,8 @@
 package com.gj.gb.util;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,6 +23,15 @@ public class ImageCache {
 	}
 	
 	public static void cleanup() {
+		int n = cache.size();
+		Set<String> keys = cache.keySet();
+		Iterator<String> iterator = keys.iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			if (key != null) {
+				cache.get(key).recycle();
+			}
+		}
 		cache.clear();
 		cache = null;
 	}

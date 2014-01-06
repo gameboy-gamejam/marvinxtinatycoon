@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
@@ -83,7 +82,6 @@ public class GBMain extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 100 && resultCode == RESULT_OK) {
-			Toast.makeText(this, "Go To New Game", Toast.LENGTH_SHORT).show();
 			GBDataManager.clearGamePrefs();
 			toGameScreen(R.id.buttonNewGame);
 		}

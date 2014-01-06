@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import android.util.Log;
-
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBEconomics;
@@ -48,6 +46,8 @@ public class GBGameData {
 	protected int nextLevel;
 	
 	private int stamina;
+	
+	private List<GBRecipe> cookedDish = new ArrayList<GBRecipe>();
 
 	public GBDayState getDayState() {
 		return dayState;
@@ -264,7 +264,6 @@ public class GBGameData {
 
 	private void updateDay() {
 		totalDay++;
-		Log.w("called", "Day: " + totalDay);
 		
 		currentDay++;
 		
@@ -292,5 +291,19 @@ public class GBGameData {
 		return currentMonth == 1 || currentMonth == 3 || currentMonth == 5
 				|| currentMonth == 7 || currentMonth == 8 || currentMonth == 10
 				|| currentMonth == 12;
+	}
+	
+	public void addDish(GBRecipe recipe, int qty) {
+		for (int i=0; i<qty; i++) {
+			cookedDish.add(recipe);
+		}
+	}
+	
+	public void removeDish(GBRecipe recipe) {
+		cookedDish.remove(recipe);
+	}
+	
+	public List<GBRecipe> getReadyDish() {
+		return cookedDish;
 	}
 }

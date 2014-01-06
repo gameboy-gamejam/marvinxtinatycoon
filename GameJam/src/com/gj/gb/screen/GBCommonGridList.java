@@ -12,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
-import com.gj.gb.factory.GBCustomerFactory;
+import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.gridview.CustomerGridViewAdapter;
 import com.gj.gb.gridview.IngredientGridViewAdapter;
 import com.gj.gb.gridview.RecipeGridViewAdapter;
 import com.gj.gb.logic.GBEconomics;
-import com.gj.gb.model.GBCustomer;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
+import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.ImageCache;
@@ -84,7 +84,7 @@ public class GBCommonGridList extends Activity {
 		case R.id.buttonCustomer:
 			setContentView(R.layout.scene_customer_grid);
 			grid = (GridView) findViewById(R.id.gridList);
-			grid.setAdapter(new CustomerGridViewAdapter(this, GBCustomerFactory.getAllCustomerType()));
+			grid.setAdapter(new CustomerGridViewAdapter(this, GBNewCustomerFactory.getAllCustomerType()));
 			grid.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -101,10 +101,11 @@ public class GBCommonGridList extends Activity {
 	}
 
 	protected void updateCustomerInfo(int position) {
-		GBCustomer customer = GBCustomerFactory.getAllCustomerType().get(position);
+		GBNewCustomer customer = GBNewCustomerFactory.getAllCustomerType().get(position);
 		
 		((TextView) findViewById(R.id.textCustomerName)).setText(customer.getName());
 		((TextView) findViewById(R.id.textCustomerDescription)).setText(customer.getDescription());
+		((ImageView) findViewById(R.id.imageCustomerIcon)).setImageBitmap(ImageCache.getBitmap(this, "customer_" + (customer.getAvatar()-1)));
 	}
 
 	protected void updateRecipeInfo(int position) {

@@ -11,15 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.gj.gb.R;
-import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.ImageCache;
 
-public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
+public class ShopDishGridViewAdapter extends ArrayAdapter<GBRecipe> {
 
 	Context context;
-	List<GBNewCustomer> data;
+	List<GBRecipe> data;
 	
-	public CustomerGridViewAdapter(Context context, List<GBNewCustomer> objects) {
+	public ShopDishGridViewAdapter(Context context, List<GBRecipe> objects) {
 		super(context, R.layout.part_gridview, R.id.textDummy, objects);
 		
 		this.context = context;
@@ -42,9 +42,9 @@ public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 			holder = (IngredientHolder) convertView.getTag();
 		}
 		
-		GBNewCustomer customer = getItem(position);
+		GBRecipe recipe = getItem(position);
 
-		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "customer_"+(customer.getAvatar()-1)));
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "recipe_" + recipe.getId()));
 		
 		return super.getView(position, convertView, parent);
 	}

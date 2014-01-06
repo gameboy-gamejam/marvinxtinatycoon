@@ -12,6 +12,8 @@ public class GBRecipe {
 	protected String description;
 	
 	protected List<Integer> ingredients;
+	
+	private int quantity;
 
 	public GBRecipe(int id, String name, String description, int... ingredient) {
 		super();
@@ -55,5 +57,13 @@ public class GBRecipe {
 
 	public void setIngredients(List<Integer> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }

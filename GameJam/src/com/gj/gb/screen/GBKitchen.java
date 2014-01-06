@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.gj.gb.R;
+import com.gj.gb.factory.GBRecipeFactory;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBStove;
 import com.gj.gb.model.GBStove.OvenStatus;
 import com.gj.gb.popup.GBDishListPopup;
+import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBKitchen extends Activity {
@@ -20,17 +23,18 @@ public class GBKitchen extends Activity {
 	public static final int RESULT_CODE_DISH = 20001;
 	GBStove stove1, stove2, stove3, stove4;
 
+	GBGameData data;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_kitchen);
 		init();
-		
-	
-
 	}
 	
 	private void init(){
+		data = GBDataManager.getGameData();
+		
 		stove1 = new GBStove(this, R.id.progressBar1);
 		stove2 = new GBStove(this, R.id.progressBar2);
 		stove3 = new GBStove(this, R.id.progressBar3);
@@ -102,10 +106,15 @@ public class GBKitchen extends Activity {
 		findViewById(R.id.back).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = Utils.getIntent(GBKitchen.this, GBShop.class);
-				startActivity(intent);
+				onBackPressed();
 			}
 		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent intent = Utils.getIntent(GBKitchen.this, GBRestaurant.class);
+		startActivity(intent);
 	}
 
 	private void toDishList(int stove_no) {
@@ -124,6 +133,7 @@ public class GBKitchen extends Activity {
 		editorDish.putInt("dish_"+stove.getDishId(), mDishCountPref.getInt("dish_"+stove.getDishId(), 0)+ stove.getCount());
 		editorDish.commit();
 		Log.d("Marvin_Debug", "dishCount:  "+mDishCountPref.getInt("dish_"+stove.getDishId(), 0));
+		data.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()), stove.getCount());
 	}
 
 	@Override

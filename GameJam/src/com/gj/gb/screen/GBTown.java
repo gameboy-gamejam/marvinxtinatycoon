@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
@@ -113,18 +112,15 @@ public class GBTown extends Activity {
 
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
-			Toast.makeText(this, "New Game", Toast.LENGTH_SHORT).show();
 			GBDataManager.createData();
 			data = GBDataManager.getGameData();
 			updateData();
 		} else if (id == R.id.buttonContinue) {
-			Toast.makeText(this, "Continue", Toast.LENGTH_SHORT).show();
 			// do nothing
 			GBDataManager.loadData();
 			data = GBDataManager.getGameData();
 			updateData();
 		} else {
-			Toast.makeText(this, "FATAL!", Toast.LENGTH_SHORT).show();
 			// fatal error
 		}
 	}
@@ -171,7 +167,7 @@ public class GBTown extends Activity {
 		} else if (requestCode == 101 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBOutside.class), 202);
 		} else if (requestCode == 102 && resultCode == RESULT_OK) {
-			startActivityForResult(new Intent(this, GBShop.class), 203);
+			startActivityForResult(new Intent(this, GBRestaurant.class), 203);
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
