@@ -1,60 +1,106 @@
 package com.gj.gb.factory;
 
+import java.util.List;
+
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.model.GBIngredient.IngredientCategory;
 
-public class GBIngredientsFactory {
+
+public enum GBIngredientsFactory {
+    APPLE(      0,  "APPLE",        IngredientCategory.FRUIT,   15,     1),
+    BACON (     1,  "BACON",        IngredientCategory.MEAT,    50,     2),
+    BANANA(     2,  "BANANA",       IngredientCategory.FRUIT,   10,     1),
+    BASIL(      3,  "BASIL",        IngredientCategory.OTHERS,  25,     3),
+    BAYLEAF(    4,  "BAYLEAF",      IngredientCategory.OTHERS,  5,      1),
+    BEANS(      5,  "BEANS",        IngredientCategory.CROPS,   12,     1),
+    BEEF(       6,  "BEEF",         IngredientCategory.MEAT,    70,     2),
+    BREAD(      7,  "BREAD",        IngredientCategory.OTHERS,  8,      1),
+    BUTTER(     8,  "BUTTER",       IngredientCategory.OTHERS,  20,     1),
+    CABBAGE(    9,  "CABBAGE",      IngredientCategory.CROPS,   12,     1),
+    CARROT(     10, "CARROT",       IngredientCategory.CROPS,   8,      1),
+    CHEESE(     11, "CHEESE",       IngredientCategory.OTHERS,  20,     1),
+    CHICKEN(    12, "CHICKEN",      IngredientCategory.MEAT,    50,     2),
+    CHILI(      13, "CHILI",        IngredientCategory.CROPS,   5,      1),
+    CHOCOLATE(  14, "CHOCOLATE",    IngredientCategory.OTHERS,  30,     3),
+    CRAB(       15, "CRAB",         IngredientCategory.FISH,    40,     3),
+    EGG(        16, "EGG",          IngredientCategory.OTHERS,  5,      1),
+    GARLIC(     17, "GARLIC",       IngredientCategory.CROPS,   5,      1),
+    GINGER(     18, "GINGER",       IngredientCategory.CROPS,   8,      1),
+    ICECREAM(   19, "ICE CREAM",    IngredientCategory.OTHERS,  25,     2),
+    LAMB(       20, "LAMB",         IngredientCategory.MEAT,    85,     4),
+    LEEK(       21, "LEEK",         IngredientCategory.OTHERS,  4,      1),
+    LEMON(      22, "LEMON",        IngredientCategory.FRUIT,   20,     2),
+    LIME(       23, "LIME",         IngredientCategory.FRUIT,   20,     2),
+    LOBSTER(    24, "LOBSTER",      IngredientCategory.FISH,    90,     4),
+    MILK(       25, "MILK",         IngredientCategory.OTHERS,  15,     1),
+    MUSHROOM(   26, "MUSHROOM",     IngredientCategory.CROPS,   18,     2),
+    NOODLES(    27, "NOODLES",      IngredientCategory.OTHERS,  20,     2),
+    ONION(      28, "ONION",        IngredientCategory.CROPS,   5,      1),
+    PASTA(      29, "PASTA",        IngredientCategory.OTHERS,  35,     2),
+    PEAS(       30, "PEAS",         IngredientCategory.OTHERS,  5,      1),
+    PEPPERONI(  31, "PEPPERONI",    IngredientCategory.OTHERS,  55,     3),
+    PORK(       32, "PORK",         IngredientCategory.MEAT,    50,     2),
+    POTATO(     33, "POTATO",       IngredientCategory.CROPS,   5,      1),
+    PRAWN(      34, "PRAWN",        IngredientCategory.FISH,    20,     1),
+    PUMPKIN(    35, "PUMPKIN",      IngredientCategory.CROPS,   30,     3),
+    RICE(       36, "RICE",         IngredientCategory.OTHERS,  20,     1),
+    SAFFRON(    37, "SAFFRON",      IngredientCategory.CROPS,   50,     4),
+    SALAD(      38, "SALAD",        IngredientCategory.OTHERS,  15,     1),
+    SALMON(     39, "SALMON",       IngredientCategory.FISH,    100,    4),
+    SEAWEED(    40, "SEAWEED",      IngredientCategory.FISH,    10,     1),
+    STRAWBERRY( 41, "STRAWBERRY",   IngredientCategory.FRUIT,   20,     3),
+    SWEETCORN(  42, "SWEETCORN",    IngredientCategory.OTHERS,  18,     2),
+    TOFU(       43, "TOFU",         IngredientCategory.OTHERS,  10,     1),
+    TOMATO(     44, "TOMATO",       IngredientCategory.CROPS,   5,      1),
+    TUNA(       45, "TUNA",         IngredientCategory.FISH,    115,    4),
+    WASABI(     46, "WASABI",       IngredientCategory.OTHERS,  30,     3);
+    
+    private int id;
+    private String name;
+    private IngredientCategory category;
+    private int price;
+    private int rarityLevel;
+    
+    private GBIngredientsFactory(int id, String name, IngredientCategory category, int price, int rarityLevel){
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.rarityLevel = rarityLevel;
+    }
 
 	public static final GBIngredient getIngredientById(int id) {
-		switch (id) {
-		case 0: return new GBIngredient(id, "APPLE", IngredientCategory.FRUIT, 15, 1);
-		case 1: return new GBIngredient(id, "BACON", IngredientCategory.MEAT, 50, 2);
-		case 2: return new GBIngredient(id, "BANANA", IngredientCategory.FRUIT, 10, 1);
-		case 3: return new GBIngredient(id, "BASIL", IngredientCategory.OTHERS, 25, 3);
-		case 4: return new GBIngredient(id, "BAYLEAF", IngredientCategory.OTHERS, 5, 1);
-		case 5: return new GBIngredient(id, "BEANS", IngredientCategory.CROPS, 12, 1);
-		case 6: return new GBIngredient(id, "BEEF", IngredientCategory.MEAT, 70, 2);
-		case 7: return new GBIngredient(id, "BREAD", IngredientCategory.OTHERS, 8, 1);
-		case 8: return new GBIngredient(id, "BUTTER", IngredientCategory.OTHERS, 20, 1);
-		case 9: return new GBIngredient(id, "CABBAGE", IngredientCategory.CROPS, 12, 1);
-		case 10: return new GBIngredient(id, "CARROT", IngredientCategory.CROPS, 8, 1);
-		case 11: return new GBIngredient(id, "CHEESE", IngredientCategory.OTHERS, 20, 1);
-		case 12: return new GBIngredient(id, "CHICKEN", IngredientCategory.MEAT, 50, 2);
-		case 13: return new GBIngredient(id, "CHILI", IngredientCategory.CROPS, 5, 1);
-		case 14: return new GBIngredient(id, "CHOCOLATE", IngredientCategory.OTHERS, 30, 3);
-		case 15: return new GBIngredient(id, "CRAB", IngredientCategory.FISH, 40, 3);
-		case 16: return new GBIngredient(id, "EGG", IngredientCategory.OTHERS, 5, 1);
-		case 17: return new GBIngredient(id, "GARLIC", IngredientCategory.CROPS, 5, 1);
-		case 18: return new GBIngredient(id, "GINGER", IngredientCategory.CROPS, 8, 1);
-		case 19: return new GBIngredient(id, "ICE CREAM", IngredientCategory.OTHERS, 25, 2);
-		case 20: return new GBIngredient(id, "LAMB", IngredientCategory.MEAT, 85, 4);
-		case 21: return new GBIngredient(id, "LEEK", IngredientCategory.OTHERS, 4, 1);
-		case 22: return new GBIngredient(id, "LEMON", IngredientCategory.FRUIT, 20, 2);
-		case 23: return new GBIngredient(id, "LIME", IngredientCategory.FRUIT, 20, 2);
-		case 24: return new GBIngredient(id, "LOBSTER", IngredientCategory.FISH, 90, 4);
-		case 25: return new GBIngredient(id, "MILK", IngredientCategory.OTHERS, 15, 1);
-		case 26: return new GBIngredient(id, "MUSHROOM", IngredientCategory.CROPS, 18, 2);
-		case 27: return new GBIngredient(id, "NOODLES", IngredientCategory.OTHERS, 20, 2);
-		case 28: return new GBIngredient(id, "ONION", IngredientCategory.CROPS, 5, 1);
-		case 29: return new GBIngredient(id, "PASTA", IngredientCategory.OTHERS, 35, 2);
-		case 30: return new GBIngredient(id, "PEAS", IngredientCategory.OTHERS, 5, 1);
-		case 31: return new GBIngredient(id, "PEPPERONI", IngredientCategory.OTHERS, 55, 3);
-		case 32: return new GBIngredient(id, "PORK", IngredientCategory.MEAT, 50, 2);
-		case 33: return new GBIngredient(id, "POTATO", IngredientCategory.CROPS, 5, 1);
-		case 34: return new GBIngredient(id, "PRAWN", IngredientCategory.FISH, 20, 1);
-		case 35: return new GBIngredient(id, "PUMPKIN", IngredientCategory.CROPS, 30, 3);
-		case 36: return new GBIngredient(id, "RICE", IngredientCategory.OTHERS, 20, 1);
-		case 37: return new GBIngredient(id, "SAFFRON", IngredientCategory.CROPS, 50, 4);
-		case 38: return new GBIngredient(id, "SALAD", IngredientCategory.OTHERS, 15, 1);
-		case 39: return new GBIngredient(id, "SALMON", IngredientCategory.FISH, 100, 4);
-		case 40: return new GBIngredient(id, "SEAWEED", IngredientCategory.FISH, 10, 1);
-		case 41: return new GBIngredient(id, "STRAWBERRY", IngredientCategory.FRUIT, 20, 3);
-		case 42: return new GBIngredient(id, "SWEETCORN", IngredientCategory.OTHERS, 18, 2);
-		case 43: return new GBIngredient(id, "TOFU", IngredientCategory.OTHERS, 10, 1);
-		case 44: return new GBIngredient(id, "TOMATO", IngredientCategory.CROPS, 5, 1);
-		case 45: return new GBIngredient(id, "TUNA", IngredientCategory.FISH, 115, 4);
-		case 46: return new GBIngredient(id, "WASABI", IngredientCategory.OTHERS, 30, 3);
-		default: return null;
-		}
+	    for(GBIngredientsFactory ingredient : values()){
+	        if(ingredient.id == id){
+	            return new GBIngredient(ingredient);
+	        }
+	    }
+	    return null;
 	}
+	
+	public static final List<GBIngredient> findIngredientByCategoryAndRarity(IngredientCategory category, int rarity){
+	    return null;
+	}
+	
+	
+	//getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getRarityLevel() {
+        return rarityLevel;
+    }
+
+    public IngredientCategory getCategory() {
+        return category;
+    }
 }
