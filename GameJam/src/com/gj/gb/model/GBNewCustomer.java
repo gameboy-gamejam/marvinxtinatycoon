@@ -187,4 +187,8 @@ public class GBNewCustomer {
 	public String toString() {
 		return "[A="+arrivalTime+":"+"Q="+queueTime+":D="+decideTime+":W="+waitTime+"]";
 	}
+
+	public int getTip() {
+		return tip;
+	}
 }

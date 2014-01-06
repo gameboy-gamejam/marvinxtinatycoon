@@ -135,9 +135,13 @@ public class GBRestaurant extends Activity implements Runnable,
 
 				updateData(elapsedTime);
 				
-				Canvas canvas = shopSurfaceHolder.lockCanvas();
-				render(canvas);
-				shopSurfaceHolder.unlockCanvasAndPost(canvas);
+				try {
+					Canvas canvas = shopSurfaceHolder.lockCanvas();
+					render(canvas);
+					shopSurfaceHolder.unlockCanvasAndPost(canvas);
+				} catch (IllegalArgumentException e) {
+					
+				}
 
 				timeProgress -= elapsedTime;
 
