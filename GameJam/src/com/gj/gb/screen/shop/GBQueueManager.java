@@ -1,4 +1,4 @@
-package com.gj.gb.model;
+package com.gj.gb.screen.shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.Activity;
 import android.util.Log;
 
+import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBRecipe;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 
 public class GBQueueManager {
@@ -13,19 +15,18 @@ public class GBQueueManager {
 	private List<GBNewCustomer> queue;
 	
 	private List<GBNewCustomer> left;
-
+	
 	private GBNewCustomer slot1 = null;
 	private GBNewCustomer slot2 = null;
 	private GBNewCustomer slot3 = null;
 
 	public GBQueueManager(Activity activity) {
-		queue = new ArrayList<GBNewCustomer>();
-		left = new ArrayList<GBNewCustomer>();
+		this.queue = new ArrayList<GBNewCustomer>();
+		this.left = new ArrayList<GBNewCustomer>();
 	}
 
 	public void addNewCustomer(GBNewCustomer customer) {
 		int slot = getFreeSlot();
-
 		if (slot >= 0) {
 			setCustomer(slot, customer);
 		} else {
@@ -107,12 +108,13 @@ public class GBQueueManager {
 	public void update(long elapse) {
 		int slot = getFreeSlot();
 		while (slot >= 0) {
-			slot = getFreeSlot();
-			if (queue.size() == 0) {
+			if (queue.size() == 0 || slot == -1) {
 				break;
 			}
 			GBNewCustomer customer = queue.remove(0);
+			Log.w("test", "Customer " + customer.getId() + " was transferred from queue to #" + (slot+1));
 			setCustomer(slot, customer);
+			slot = getFreeSlot();
 		}
 	}
 
@@ -127,21 +129,21 @@ public class GBQueueManager {
 	public boolean serve(GBRecipe recipe) {
 		int id = recipe.getId();
 		if (slot1 != null) {
-			if (slot1.getOrder() != null && slot1.getOrder().id == id) {
+			if (slot1.getOrder() != null && slot1.getOrder().getId() == id) {
 				Log.w("test", "Customer " + slot1.getId() + " got served.");
 				slot1.setState(GBCustomerState.SERVED);
 				slot1 = null;
 				return true;
 			}
 		} else if (slot2 != null) {
-			if (slot2.getOrder() != null && slot2.getOrder().id == id) {
+			if (slot2.getOrder() != null && slot2.getOrder().getId() == id) {
 				Log.w("test", "Customer " + slot2.getId() + " got served.");
 				slot2.setState(GBCustomerState.SERVED);
 				slot2 = null;
 				return true;
 			}
 		} else if (slot3 != null) {
-			if (slot3.getOrder() != null && slot3.getOrder().id == id) {
+			if (slot3.getOrder() != null && slot3.getOrder().getId() == id) {
 				Log.w("test", "Customer " + slot3.getId() + " got served.");
 				slot3.setState(GBCustomerState.SERVED);
 				slot3 = null;

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -34,8 +33,8 @@ import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
-import com.gj.gb.model.GBQueueManager;
 import com.gj.gb.model.GBRecipe;
+import com.gj.gb.screen.shop.GBQueueManager;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.ImageCache;
 import com.gj.gb.util.Utils;
@@ -159,15 +158,6 @@ public class GBRestaurant extends Activity implements Runnable,
 	private void render(Canvas canvas) {
 		if (canvas != null) {
 			canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-			Paint paint = new Paint();
-			paint.setColor(Color.BLACK);
-			canvas.drawBitmap(bitmap, x, y, paint);
-			if (x < canvas.getWidth()) {
-				x+=5;
-			}
-			if (y < canvas.getHeight()) {
-				y+=5;
-			}
 		}
 	}
 
@@ -198,13 +188,6 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 
 		queueManager.update(elapsedTime);
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-			}
-		});
 	}
 
 	private void initializeData() {
