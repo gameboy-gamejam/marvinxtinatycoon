@@ -109,7 +109,7 @@ public class GBNewCustomer {
 			case WAITING:
 				long waitPlus = offset + arrivalTime + decideTime;
 				if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
-					Log.w("test", "Customer " + id + " is very angry...");
+//					Log.w("test", "Customer " + id + " is very angry...");
 					angryAtWaiting = true;
 					state = GBCustomerState.LEAVING;
 				}
@@ -137,7 +137,7 @@ public class GBNewCustomer {
 		int index = Utils.RANDOM.nextInt(n);
 		
 		order = recipes.get(index);
-		Log.w("test", "Customer " + id + " decided to order " + order.getName());
+//		Log.w("test", "Customer " + id + " decided to order " + order.getName());
 	}
 
 	public void setState(GBCustomerState state) {
