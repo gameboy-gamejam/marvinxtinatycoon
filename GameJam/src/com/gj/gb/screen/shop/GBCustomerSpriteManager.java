@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.screen.shop.GBCustomerSprite.GBSpriteVisibility;
@@ -26,7 +27,7 @@ public class GBCustomerSpriteManager {
 	public void createSpriteFromCustomer(GBNewCustomer customer) {
 		Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));
 		
-		sprites.add(new GBCustomerSprite(customer.getId(), bitmap, 0, 0));
+		sprites.add(new GBCustomerSprite(customer, bitmap, 0, 0));
 	}
 	
 	public void update(long elapse) {
@@ -85,5 +86,14 @@ public class GBCustomerSpriteManager {
 				break;
 			}
 		}
+	}
+
+	public boolean onTouch(MotionEvent event) {
+		int n = sprites.size();
+		
+		for (int i=0; i<n; i++) {
+			sprites.get(i).onTouch(event);
+		}
+		return true;
 	}
 }

@@ -1,8 +1,15 @@
 package com.gj.gb.screen.shop;
 
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
+import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
+
+import com.gj.gb.model.GBNewCustomer;
+import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 
 public class GBCustomerSprite {
 
@@ -22,28 +29,45 @@ public class GBCustomerSprite {
 
 	private GBSpriteVisibility visibility = GBSpriteVisibility.INVISIBLE;
 
-	private int id;
+	private GBNewCustomer customer;
 	
-	public GBCustomerSprite(int id, Bitmap bitmap, float x, float y) {
-		this.setId(id);
+	private String order;
+	
+	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap, float x, float y) {
+		this.customer = customer;
 		this.x = x;
 		this.y = y;
 		
 		this.bitmap = bitmap;
 		this.paint = new Paint();
+		this.paint.setTextSize(50.0f);
 	}
 
 	public void update(long elapse) {
-		switch (visibility) {
-		case VISIBLE:
-		case INVISIBLE:
-		case GONE:
+		GBCustomerState state = customer.getState();
+
+		if (state == GBCustomerState.DECIDING) {
+			order = "...";
+		} else if (state == GBCustomerState.WAITING) {
+			order = customer.getOrder().getName();
+		} else {
+			order = "";
 		}
 	}
 
 	public void render(Canvas canvas) {
 		if (visibility == GBSpriteVisibility.VISIBLE) {
+			/* glow effect */
+			Bitmap bitmap2 = bitmap.extractAlpha();
+			Paint paint2 = new Paint();
+					int glowColor = Color.rgb(0, 192, 255);
+					paint2.setColor(glowColor);
+					int glowRadius = 16;
+					paint2.setMaskFilter(new BlurMaskFilter(glowRadius, Blur.OUTER));
+					canvas.drawBitmap(bitmap2, x, y, paint2);
+					/* */
 			canvas.drawBitmap(bitmap, x, y, paint);
+			canvas.drawText(order, x, y - 100, paint);
 		}
 	}
 
@@ -72,10 +96,32 @@ public class GBCustomerSprite {
 	}
 
 	public int getId() {
-		return id;
+		return customer.getId();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	// issue all visible sprites are removed
+	public void onTouch(MotionEvent event) {
+		if (visibility == GBSpriteVisibility.VISIBLE && customer.getState() == GBCustomerState.WAITING) {
+			int action = event.getAction();
+			float eventX = event.getX();
+			float eventY = event.getY();
+			int width = bitmap.getWidth();
+			int height = bitmap.getHeight();
+			
+			if (action == MotionEvent.ACTION_DOWN) {
+				
+				// touch event is outside range
+				if (eventX <= (x+5) || eventY <= (y+5) || eventX >= (x+width-5) || eventY >= (y+height-5)) {
+					return;
+				}
+			} else if (action == MotionEvent.ACTION_UP) {
+
+				if (eventX <= (x+5) || eventY <= (y+5) || eventX >= (x+width-5) || eventY >= (y+height-5)) {
+					return;
+				}
+				
+				customer.setState(GBCustomerState.SERVED);
+			}
+		}
 	}
 }

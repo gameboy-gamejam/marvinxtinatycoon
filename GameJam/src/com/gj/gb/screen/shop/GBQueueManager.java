@@ -6,10 +6,13 @@ import java.util.List;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.model.GBRecipe;
+import com.gj.gb.util.GBDataManager;
 
 public class GBQueueManager {
 
@@ -24,10 +27,14 @@ public class GBQueueManager {
 
 	private GBCustomerSpriteManager spriteManager;
 	
+	private GBGameData gameData;
+	
 	public GBQueueManager(Activity activity) {
 		this.queue = new ArrayList<GBNewCustomer>();
 		this.left = new ArrayList<GBNewCustomer>();
 		this.spriteManager = new GBCustomerSpriteManager(activity);
+		this.gameData = GBDataManager.getGameData();
+		
 	}
 
 	public void addNewCustomer(GBNewCustomer customer) {
@@ -67,7 +74,7 @@ public class GBQueueManager {
 		if (slot2 != null) {
 			if (slot2.getId() == id) {
 				slot2 = null;
-				return;
+				return; 
 			}
 		}
 		if (slot3 != null) {
@@ -142,7 +149,7 @@ public class GBQueueManager {
 		}
 		spriteManager.update(elapse);
 	}
-	
+
 	public void render(Canvas canvas) {
 		spriteManager.render(canvas);
 	}
@@ -156,6 +163,7 @@ public class GBQueueManager {
 	}
 
 	public boolean serve(GBRecipe recipe) {
+		Log.w("test", "Serving " + recipe.getName());
 		int id = recipe.getId();
 		if (slot1 != null) {
 			if (slot1.getOrder() != null && slot1.getOrder().getId() == id) {
@@ -187,5 +195,9 @@ public class GBQueueManager {
 			}
 		}
 		return false;
+	}
+
+	public boolean onTouch(MotionEvent event) {
+		return spriteManager.onTouch(event);
 	}
 }
