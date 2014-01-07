@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.gj.gb.model.GBNewCustomer;
@@ -25,12 +24,16 @@ public class GBQueueManager {
 
 	private GBCustomerSpriteManager spriteManager;
 	
-	public GBQueueManager(Activity activity) {
+	public GBQueueManager(Activity activity, int width, int height) {
 		this.queue = new ArrayList<GBNewCustomer>();
 		this.left = new ArrayList<GBNewCustomer>();
-		this.spriteManager = new GBCustomerSpriteManager(activity);
+		this.spriteManager = new GBCustomerSpriteManager(activity, width, height);
 	}
 
+	public void setRestaurantListener(GBRestaurantDataListener listener) {
+		this.spriteManager.setRestaurantListener(listener);
+	}
+	
 	public void addNewCustomer(GBNewCustomer customer) {
 		int slot = getFreeSlot();
 		this.spriteManager.createSpriteFromCustomer(customer);

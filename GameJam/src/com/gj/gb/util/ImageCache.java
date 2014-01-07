@@ -22,6 +22,19 @@ public class ImageCache {
 		return retVal;
 	}
 	
+	public static void putBitmap(Bitmap bitmap, String id) {
+		if (!cache.containsKey(id)) {
+			cache.put(id, bitmap);
+		}
+	}
+	
+	public static Bitmap getBitmap(String id) {
+		if (cache.containsKey(id)) {
+			return cache.get(id);
+		}
+		return null;
+	}
+	
 	public static void cleanup() {
 		Set<String> keys = cache.keySet();
 		Iterator<String> iterator = keys.iterator();

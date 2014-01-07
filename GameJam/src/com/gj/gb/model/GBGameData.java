@@ -299,12 +299,29 @@ public class GBGameData {
 		}
 	}
 	
-	public void removeDish(GBRecipe recipe) {
-		cookedDish.remove(recipe);
+	public void removeDish(int id) {
+		int n = cookedDish.size();
+		for (int i=0; i<n; i++) {
+			GBRecipe temp = cookedDish.get(i);
+			if (temp.getId() == id) {
+				cookedDish.remove(temp);
+				break;
+			}
+		}
 	}
 	
 	public List<GBRecipe> getReadyDish() {
 		return cookedDish;
+	}
+	
+	public boolean hasDish(int id) {
+		int n = cookedDish.size();
+		for (int i=0; i<n; i++) {
+			if (cookedDish.get(i).getId() == id) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void clearReadyDish() {

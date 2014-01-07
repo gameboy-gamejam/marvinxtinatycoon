@@ -6,12 +6,12 @@ import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
+import com.gj.gb.util.GBDataManager;
 
 public class GBCustomerSprite {
 
@@ -38,6 +38,7 @@ public class GBCustomerSprite {
 
 	private boolean served = false;
 	private boolean selected = false;
+	private GBRestaurantDataListener listener;
 
 	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap, float x,
 			float y) {
@@ -86,7 +87,6 @@ public class GBCustomerSprite {
 
 	public void render(Canvas canvas) {
 		if (visibility == GBSpriteVisibility.VISIBLE) {
-			if (customer.getId()==0)Log.w("test", "Render SELECTED [Customer-"+customer.getState().toString()+"]");
 			if (selected) {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
@@ -95,12 +95,11 @@ public class GBCustomerSprite {
 		} else if (visibility == GBSpriteVisibility.GONE && served) {
 			// draw points
 			if (pointY >= targetY) {
-				if (customer.getId()==0)Log.w("test", "Render GONE [Customer-"+customer.getId()+"]");
 				int goldEarned = GBEconomics
 						.getRecipePrice(customer.getOrder())
 						+ customer.getTip();
 				canvas.drawText("+" + goldEarned + "G", x, pointY, shadowPaint);
-				pointY -= 5;
+				pointY -= 2;
 			}
 		}
 	}
@@ -145,27 +144,36 @@ public class GBCustomerSprite {
 			int width = bitmap.getWidth();
 			int height = bitmap.getHeight();
 
+			// touch event is outside range
+			if (eventX <= (x + 5) || eventY <= (y + 5)
+					|| eventX >= (x + width - 5)
+					|| eventY >= (y + height - 5)) {
+				selected = false;
+				return;
+			}
+			
 			if (action == MotionEvent.ACTION_DOWN) {
-
-				// touch event is outside range
-				if (eventX <= (x + 5) || eventY <= (y + 5)
-						|| eventX >= (x + width - 5)
-						|| eventY >= (y + height - 5)) {
-					return;
-				}
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
-
-				// touch event is outside range
-				if (eventX <= (x + 5) || eventY <= (y + 5)
-						|| eventX >= (x + width - 5)
-						|| eventY >= (y + height - 5)) {
-					return;
-				}
 				selected = false;
-				served = true;
-				customer.setState(GBCustomerState.SERVED);
+				if (GBDataManager.getGameData().hasDish(customer.getOrder().getId())) {
+					served = true;
+					customer.setState(GBCustomerState.SERVED);
+					listener.onDishServed(customer);
+				}
 			}
 		}
+	}
+	
+	public int getWidth() {
+		return bitmap.getWidth();
+	}
+	
+	public int getHeight() {
+		return bitmap.getHeight();
+	}
+
+	public void setListener(GBRestaurantDataListener listener) {
+		this.listener = listener;
 	}
 }

@@ -2,8 +2,6 @@ package com.gj.gb.model;
 
 import java.util.List;
 
-import android.util.Log;
-
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
