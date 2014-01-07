@@ -310,4 +310,8 @@ public class GBGameData {
 	public List<GBRecipe> getReadyDish() {
 		return cookedDish;
 	}
+	
+	public void clearReadyDish() {
+		this.cookedDish.clear();
+	}
 }

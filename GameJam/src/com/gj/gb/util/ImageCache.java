@@ -23,7 +23,6 @@ public class ImageCache {
 	}
 	
 	public static void cleanup() {
-		int n = cache.size();
 		Set<String> keys = cache.keySet();
 		Iterator<String> iterator = keys.iterator();
 		while (iterator.hasNext()) {

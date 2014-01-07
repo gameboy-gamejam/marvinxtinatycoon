@@ -58,6 +58,8 @@ public class GBNewCustomer {
 	
 	private GBRecipe order = null;
 	
+	private boolean consumed = false;
+	
 	public GBNewCustomer(int avatar, String name, String description) {
 		this.avatar = avatar;
 		this.name = name;
@@ -190,5 +192,13 @@ public class GBNewCustomer {
 
 	public int getTip() {
 		return tip;
+	}
+
+	public boolean isConsumed() {
+		return consumed;
+	}
+
+	public void consumed() {
+		this.consumed = true;
 	}
 }

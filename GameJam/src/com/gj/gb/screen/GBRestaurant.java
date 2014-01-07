@@ -7,17 +7,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -30,12 +31,10 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.gridview.ShopDishGridViewAdapter;
-import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
-import com.gj.gb.model.GBQueueManager;
-import com.gj.gb.model.GBRecipe;
+import com.gj.gb.screen.shop.GBQueueManager;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.ImageCache;
 import com.gj.gb.util.Utils;
@@ -154,20 +153,10 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 	}
 
-	int x=0, y=0;
-	
 	private void render(Canvas canvas) {
 		if (canvas != null) {
 			canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-			Paint paint = new Paint();
-			paint.setColor(Color.BLACK);
-			canvas.drawBitmap(bitmap, x, y, paint);
-			if (x < canvas.getWidth()) {
-				x+=5;
-			}
-			if (y < canvas.getHeight()) {
-				y+=5;
-			}
+			queueManager.render(canvas);
 		}
 	}
 
@@ -198,13 +187,6 @@ public class GBRestaurant extends Activity implements Runnable,
 		}
 
 		queueManager.update(elapsedTime);
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-			}
-		});
 	}
 
 	private void initializeData() {
@@ -238,16 +220,7 @@ public class GBRestaurant extends Activity implements Runnable,
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-				List<GBRecipe> ready = gameData.getReadyDish();
-				GBRecipe recipe = ready.get(position);
-				synchronized (queueManager) {
-					if(queueManager.serve(recipe)) {
-						goldEarned += GBEconomics.getRecipePrice(recipe);
-						ready.remove(position);
-						refreshDishList();
-						((TextView) findViewById(R.id.textGoldEarn)).setText(goldEarned + "G");
-					}
-				}
+
 			}
 		});
 	}
@@ -432,6 +405,13 @@ public class GBRestaurant extends Activity implements Runnable,
 	private void initViews() {
 		shopSurface = (SurfaceView) findViewById(R.id.surfaceCanvas);
 		shopSurface.setZOrderOnTop(true);
+		shopSurface.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return queueManager.onTouch(event);
+			}
+		});
 		shopSurfaceHolder = shopSurface.getHolder();
 		shopSurfaceHolder.addCallback(this);
 		shopSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
