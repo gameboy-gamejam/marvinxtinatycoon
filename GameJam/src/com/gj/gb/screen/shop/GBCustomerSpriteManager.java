@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.gj.gb.model.GBNewCustomer;
@@ -45,13 +44,11 @@ public class GBCustomerSpriteManager {
 	}
 	
 	public void makeCustomerSpriteVisible(int slot, int id) {
-		Log.w("test", "Looking for Customer " + id);
 		int n = sprites.size();
 		
 		for (int i=0; i<n; i++) {
 			GBCustomerSprite sprite = sprites.get(i);
 			if (sprite.getId() == id) {
-				Log.w("test", "Found Customer " + id);
 				sprite.setVisibility(GBSpriteVisibility.VISIBLE);
 				setLocation(sprite, slot);
 				break;
@@ -81,7 +78,6 @@ public class GBCustomerSpriteManager {
 		for (int i=0; i<n; i++) {
 			GBCustomerSprite sprite = sprites.get(i);
 			if (sprite.getId() == id) {
-				Log.w("test", "Found Customer " + id);
 				sprite.setVisibility(GBSpriteVisibility.GONE);
 				break;
 			}

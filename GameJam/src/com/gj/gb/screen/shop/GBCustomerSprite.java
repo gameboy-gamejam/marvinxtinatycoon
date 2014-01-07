@@ -46,6 +46,7 @@ public class GBCustomerSprite {
 	public void update(long elapse) {
 		GBCustomerState state = customer.getState();
 
+		// TODO: gawin tong images
 		if (state == GBCustomerState.DECIDING) {
 			order = "...";
 		} else if (state == GBCustomerState.WAITING) {
@@ -99,7 +100,7 @@ public class GBCustomerSprite {
 		return customer.getId();
 	}
 
-	// issue all visible sprites are removed
+	// issue all visible sprites are removed: FIXED
 	public void onTouch(MotionEvent event) {
 		if (visibility == GBSpriteVisibility.VISIBLE && customer.getState() == GBCustomerState.WAITING) {
 			int action = event.getAction();

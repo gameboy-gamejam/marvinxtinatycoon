@@ -8,11 +8,9 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.model.GBRecipe;
-import com.gj.gb.util.GBDataManager;
 
 public class GBQueueManager {
 
@@ -27,14 +25,10 @@ public class GBQueueManager {
 
 	private GBCustomerSpriteManager spriteManager;
 	
-	private GBGameData gameData;
-	
 	public GBQueueManager(Activity activity) {
 		this.queue = new ArrayList<GBNewCustomer>();
 		this.left = new ArrayList<GBNewCustomer>();
 		this.spriteManager = new GBCustomerSpriteManager(activity);
-		this.gameData = GBDataManager.getGameData();
-		
 	}
 
 	public void addNewCustomer(GBNewCustomer customer) {
