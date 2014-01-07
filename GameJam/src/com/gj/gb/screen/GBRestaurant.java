@@ -12,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -454,16 +453,16 @@ public class GBRestaurant extends Activity implements Runnable,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		Log.w("test", "Changed!");
+		
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.w("test", "Created!");
+		
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.w("test", "Destroyed!");
+		
 	}
 }
