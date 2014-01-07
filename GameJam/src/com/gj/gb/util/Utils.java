@@ -7,6 +7,7 @@ import java.util.Random;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 
 public class Utils {
@@ -55,5 +56,19 @@ public class Utils {
 	    Intent intent = new Intent(context, cls);
 	    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 	    return intent;
+	}
+	
+	public static Bitmap getResizedBitmap(Bitmap bm, float scaleWidth, float scaleHeight) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
 	}
 }

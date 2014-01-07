@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,11 +22,10 @@ import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBNewCustomerFactory;
@@ -34,12 +34,13 @@ import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
 import com.gj.gb.screen.shop.GBQueueManager;
+import com.gj.gb.screen.shop.GBRestaurantDataListener;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.ImageCache;
 import com.gj.gb.util.Utils;
 
 public class GBRestaurant extends Activity implements Runnable,
-		Handler.Callback, SurfaceHolder.Callback {
+		Handler.Callback, SurfaceHolder.Callback, GBRestaurantDataListener {
 
 	public static final int HANDLE_MESSAGE_START_SHOP = 500;
 	public static final int HANDLE_MESSAGE_SHOP_READY = 501;
@@ -60,6 +61,7 @@ public class GBRestaurant extends Activity implements Runnable,
 	protected Animation fadeInAnim, fadeOutAnim;
 	private boolean enableBack = false;
 	private boolean isSuspended = false;
+	private boolean isRenderSuspended = false;
 
 	private GBGameData gameData;
 	private List<GBNewCustomer> customerList;
@@ -73,7 +75,9 @@ public class GBRestaurant extends Activity implements Runnable,
 	
 	private SurfaceView shopSurface;
 	private SurfaceHolder shopSurfaceHolder;
-
+	
+	private int screenWidth, screenHeight;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,12 +137,14 @@ public class GBRestaurant extends Activity implements Runnable,
 
 				updateData(elapsedTime);
 				
-				try {
-					Canvas canvas = shopSurfaceHolder.lockCanvas();
-					render(canvas);
-					shopSurfaceHolder.unlockCanvasAndPost(canvas);
-				} catch (IllegalArgumentException e) {
-					
+				if (!isRenderSuspended) {
+					try {
+						Canvas canvas = shopSurfaceHolder.lockCanvas();
+						render(canvas);
+						shopSurfaceHolder.unlockCanvasAndPost(canvas);
+					} catch (IllegalArgumentException e) {
+						
+					}
 				}
 
 				timeProgress -= elapsedTime;
@@ -190,7 +196,8 @@ public class GBRestaurant extends Activity implements Runnable,
 
 	private void initializeData() {
 		customerList = GBNewCustomerFactory.getRandomCustomers(10);
-		queueManager = new GBQueueManager(this);
+		queueManager = new GBQueueManager(this, screenWidth, screenHeight);
+		queueManager.setRestaurantListener(this);
 
 		totalCustomer = customerList.size();
 	}
@@ -214,14 +221,6 @@ public class GBRestaurant extends Activity implements Runnable,
 		GridView list = (GridView) findViewById(R.id.listReadyDish);
 		list.setAdapter(new ShopDishGridViewAdapter(this, gameData
 				.getReadyDish()));
-		list.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					final int position, long id) {
-
-			}
-		});
 	}
 
 	@Override
@@ -453,16 +452,37 @@ public class GBRestaurant extends Activity implements Runnable,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		
+//		Log.w("test", ")
+		Log.w("test", "dimen=" + width + "x" + height);
+		this.screenWidth = width;
+		this.screenHeight = height;
+//		queueManager.setCanvasSize(width, height);
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		
+		isRenderSuspended = false;
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		isRenderSuspended = true;
+	}
+
+	@Override
+	public void onDishServed(GBNewCustomer customer) {
+		Toast.makeText(this, "YOLO", Toast.LENGTH_SHORT).show();
+		gameData.removeDish(customer.getOrder().getId());
+		refreshDishList();
+	}
+
+	@Override
+	public void onQueueUpdate(GBNewCustomer customer) {
+		
+	}
+
+	@Override
+	public void onCustomerLeft(GBNewCustomer customer) {
 		
 	}
 }
