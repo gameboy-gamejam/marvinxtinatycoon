@@ -25,7 +25,7 @@ public class GBCustomerSprite {
 		GONE
 	}
 
-	private Bitmap bitmap, glowBitmap;
+	private Bitmap bitmap, bitmap1, bitmap2, bitmap3, glowBitmap;
 	private Paint paint, glowPaint, shadowPaint;
 
 	private float x, y;
@@ -35,8 +35,6 @@ public class GBCustomerSprite {
 
 	private GBNewCustomer customer;
 
-	private String order;
-
 	private boolean served = false;
 	private boolean selected = false;
 	private GBRestaurantDataListener listener;
@@ -44,7 +42,7 @@ public class GBCustomerSprite {
 	private Bitmap defaultThought;
 	private Bitmap orderBitmap;
 
-	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap, float x,
+	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, float x,
 			float y) {
 		this.customer = customer;
 		this.x = x;
@@ -53,7 +51,7 @@ public class GBCustomerSprite {
 		this.pointY = y;
 		this.targetY = y - 50;
 
-		this.bitmap = bitmap;
+		this.bitmap = bitmap1;
 		this.paint = new Paint();
 		this.paint.setTextSize(50.0f);
 
@@ -72,19 +70,19 @@ public class GBCustomerSprite {
         shadowPaint.setStrokeWidth(2.0f);
         shadowPaint.setStyle(Paint.Style.STROKE);
         shadowPaint.setShadowLayer(5.0f, 10.0f, 10.0f, Color.BLACK);
+        
+        this.bitmap1 = bitmap1;
+        this.bitmap2 = bitmap2;
+        this.bitmap3 = bitmap3;
 	}
 
 	public void update(long elapse) {
-		GBCustomerState state = customer.getState();
-
-		// TODO: gawin tong images
-		if (state == GBCustomerState.DECIDING) {
-			order = "...";
-		} else if (state == GBCustomerState.WAITING
-				|| state == GBCustomerState.LEAVING) {
-			order = customer.getOrder().getName();
-		} else {
-			order = "";
+		int hit = customer.getHit();
+		
+		if (hit == 1) {
+			this.bitmap = bitmap2;
+		} else if (hit >= 2) {
+			this.bitmap = bitmap3;
 		}
 	}
 	
@@ -95,7 +93,6 @@ public class GBCustomerSprite {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
 			canvas.drawBitmap(bitmap, x, y, paint);
-//			canvas.drawText(order, x, y - 100, paint);
 			canvas.drawBitmap(thoughtCloud, x, y-thoughtCloud.getHeight(), paint);
 			if (customer.getOrder() == null) {
 				canvas.drawBitmap(defaultThought, x, y-thoughtCloud.getHeight(), paint);

@@ -43,15 +43,15 @@ public class GBCustomerSpriteManager {
 	
 	public void createSpriteFromCustomer(GBNewCustomer customer) {
 		
-		Bitmap spriteBitmap = ImageCache.getBitmap("scaled_customer_" + (customer.getAvatar()-1));
+		Bitmap spriteBitmap = ImageCache.getBitmap("scaled_customer_1");
 		if (spriteBitmap == null) {
-			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));
+			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_1");
 			
 			float imageRatio = scaleWidthSample / bitmap.getWidth();
 			
 			spriteBitmap = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
 
-			ImageCache.putBitmap(spriteBitmap, "scaled_customer_" + (customer.getAvatar()-1));
+			ImageCache.putBitmap(spriteBitmap, "scaled_customer_1");
 		}
 		
 		thoughtCloud = ImageCache.getBitmap("scaled_image_thought");
@@ -69,8 +69,24 @@ public class GBCustomerSpriteManager {
 			defaultThought = Utils.getResizedBitmap(defaultThought, imageRatio, imageRatio);
 			ImageCache.putBitmap(defaultThought, "scaled_image_thinking");
 		}
+		
+		Bitmap bitmap2 = ImageCache.getBitmap("scaled_customer_1_2");
+		if (bitmap2 == null) {
+			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));		
+			float imageRatio = scaleWidthSample / bitmap.getWidth();		
+			spriteBitmap = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
+			ImageCache.putBitmap(spriteBitmap, "scaled_customer_" + (customer.getAvatar()-1) + "_2");
+		}
+		
+		Bitmap bitmap3 = ImageCache.getBitmap("scaled_customer_1_3");
+		if (bitmap3 == null) {
+			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));
+			float imageRatio = scaleWidthSample / bitmap.getWidth();
+			spriteBitmap = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
+			ImageCache.putBitmap(spriteBitmap, "scaled_customer_" + (customer.getAvatar()-1) + "_3");
+		}
 	
-		GBCustomerSprite sprite = new GBCustomerSprite(customer, spriteBitmap, 0, 0);
+		GBCustomerSprite sprite = new GBCustomerSprite(customer, spriteBitmap, bitmap2, bitmap3, 0, 0);
 		sprite.setListener(listener);
 		sprite.setThoughtBitmap(thoughtCloud, defaultThought);
 		sprites.add(sprite);
