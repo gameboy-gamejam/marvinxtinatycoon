@@ -81,6 +81,6 @@ public class Tree {
 	}
 	
 	public void addTap(){
-		return mTapIdx++;
+		mTapIdx++;
 	}
 }
