@@ -3,59 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout 
+    <RelativeLayout
         android:id="@+id/panelStart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-        <TextView 
+        android:layout_height="match_parent" >
+
+        <TextView
             android:id="@+id/textTap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Touch to Start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
-        
-        <ImageView 
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Touch to Start" />
+
+        <ImageView
             android:id="@+id/imageLogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_above="@id/textTap"
-            android:scaleType="fitCenter"/>
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter" />
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/panelButtons"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="#55000000" >
+        android:layout_centerInParent="true"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/buttonContinue"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/bg_default_selector"
+            android:enabled="false"
+            android:gravity="center"
             android:text="Continue"
-            android:enabled="false" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/buttonNewGame"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/buttonContinue"
             android:layout_centerHorizontal="true"
-            android:text="New Game" />
+            android:background="@drawable/bg_default_selector"
+            android:gravity="center"
+            android:text="New Game"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/buttonScores"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonContinue"
             android:layout_centerHorizontal="true"
-            android:text="Scores" />
+            android:background="@drawable/bg_default_selector"
+            android:gravity="center"
+            android:text="Scores"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Close" />
+        android:background="@drawable/btn_close" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
