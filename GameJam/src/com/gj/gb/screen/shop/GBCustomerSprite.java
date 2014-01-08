@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
+import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 
 public class GBCustomerSprite {
@@ -39,6 +40,9 @@ public class GBCustomerSprite {
 	private boolean served = false;
 	private boolean selected = false;
 	private GBRestaurantDataListener listener;
+	private Bitmap thoughtCloud;
+	private Bitmap defaultThought;
+	private Bitmap orderBitmap;
 
 	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap, float x,
 			float y) {
@@ -91,7 +95,13 @@ public class GBCustomerSprite {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
 			canvas.drawBitmap(bitmap, x, y, paint);
-			canvas.drawText(order, x, y - 100, paint);
+//			canvas.drawText(order, x, y - 100, paint);
+			canvas.drawBitmap(thoughtCloud, x, y-thoughtCloud.getHeight(), paint);
+			if (customer.getOrder() == null) {
+				canvas.drawBitmap(defaultThought, x, y-thoughtCloud.getHeight(), paint);
+			} else {
+				canvas.drawBitmap(orderBitmap, x, y-thoughtCloud.getHeight(), paint);
+			}
 		} else if (visibility == GBSpriteVisibility.GONE && served) {
 			// draw points
 			if (pointY >= targetY) {
@@ -182,6 +192,11 @@ public class GBCustomerSprite {
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
 				selected = false;
+				if (customer.getState() == GBCustomerState.LEAVING) {
+					served = true;
+					customer.setState(GBCustomerState.SERVED);
+					listener.onDishServed(customer);
+				}
 			}			
 		}
 	}
@@ -196,5 +211,22 @@ public class GBCustomerSprite {
 
 	public void setListener(GBRestaurantDataListener listener) {
 		this.listener = listener;
+	}
+
+	public void setThoughtBitmap(Bitmap thoughtCloud, Bitmap defaultThought) {
+		this.thoughtCloud = thoughtCloud;
+		this.defaultThought = defaultThought;
+	}
+
+	public boolean hasOrder() {
+		return customer.getOrder() != null;
+	}
+
+	public GBRecipe getOrder() {
+		return customer.getOrder();
+	}
+
+	public void setOrderBitmap(Bitmap bm) {
+		this.orderBitmap = bm;
 	}
 }
