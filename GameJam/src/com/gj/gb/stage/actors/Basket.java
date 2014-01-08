@@ -4,17 +4,18 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 import com.gj.gb.R;
 
 public class Basket {
     
-    private static final int BASKET_WIDTH = 200;//TODO check again
-    private static final int BASKET_HEIGHT = 200;
+    private static final int WIDTH = 200;//TODO check again
+    private static final int HEIGHT = 200;
     private static final int MOVEMENT_PER_FRAME = 10;//TODO testing
     
-    private float mBasketPosX;
-    private float mBasketPosY;
+    private int mPosX;
+    private int mPosY;
     private float mRecordedTilt;
     private int mMovement;
     
@@ -23,10 +24,13 @@ public class Basket {
     
     private Bitmap mCurrentSkin;
     
+    private Rect basketSize;
+    
     public Basket(int basketPosX, int basketPosY) {
-        mBasketPosX = basketPosX;
-        mBasketPosY = basketPosY;
+        mPosX = basketPosX;
+        mPosY = basketPosY;
         mMovement = MOVEMENT_PER_FRAME;
+        basketSize = new Rect(mPosX, mPosY, mPosX+WIDTH, mPosY+HEIGHT);
     }
     
     public void setWallBorder(float wallLeftPos, float wallRightPos){
@@ -39,15 +43,19 @@ public class Basket {
             mMovement*=1;
         }
     }
+    
+    public Rect getBasketSize(){
+    	return basketSize;
+    }
 
     public void drawMe(Canvas canvas, Resources res){
         if (mCurrentSkin == null) {
             mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.shoppingbasket);
-            Bitmap.createScaledBitmap(mCurrentSkin, BASKET_WIDTH, BASKET_HEIGHT, false);
+            Bitmap.createScaledBitmap(mCurrentSkin, WIDTH, HEIGHT, false);
         }
-        if((mWallLeftPos < mBasketPosX + mMovement)|| (mWallRightPos > mBasketPosX + mMovement)){
-            mBasketPosX+= mMovement;
+        if((mWallLeftPos < mPosX + mMovement)|| (mWallRightPos > mPosX + mMovement)){
+            mPosX+= mMovement;
         }
-        canvas.drawBitmap(mCurrentSkin, mBasketPosX, mBasketPosY, null);
+        canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
     }
 }

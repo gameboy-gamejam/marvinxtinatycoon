@@ -43,7 +43,7 @@ public class FruitGatheringStage extends Stage{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	setContentView(R.layout.stage_carrot);
+    	setContentView(R.layout.stage);
     	mIsShowReadyInstruction = true;
     	prepareScript();
     	prepareFloorDirectors();

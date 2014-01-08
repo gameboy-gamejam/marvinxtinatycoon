@@ -10,33 +10,21 @@ import com.gj.gb.stage.common.StageHelper;
 
 public class Tree {
 	
-	public static final int STATE_YOUNG		= 4000;
-	public static final int STATE_BEARING	= 4001;
-	public static final int STATE_OLD		= 4002;
-	public static final int STATE_DIED		= 4003;
-	
-	public static final int AGE_BEARING_FRUIT_MS	= 5000;
-	public static final int AGE_OLD_MS				= 15000;
-	public static final int AGE_DIED_MS				= 20000;
+	public static final int MAX_NUMBER_TREE_TAP = 5;
 	
 	private static final int MAX_SHAKE_TREE = 3;
-	private static final int MAX_HEALTH = 5;
 	
-	private int health = 5;
-	
-	private int mState;
 	private float mPosX;
     private float mPosY;
     private float mPosXRightBorder;
     private float mPosYBottomBorder;
     private int mWidth;
     private int mHeight;
+    
     private Bitmap mCurrentSkin;
-    private Bitmap bearingFallBitmap;
-    private Bitmap oldFallBitmap;
-    private long mTimeTreeLived;
     private boolean mIsShaking;
     private int mShakingIdx;
+    private int mTapIdx;
 
 	public Tree(float posX, float posY, float posXRightBorder, float posYBottomBorder) {
         mPosX = posX;
@@ -49,29 +37,9 @@ public class Tree {
     }
     
     public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime){
-    	long age = inGameCurrentTime - mTimeTreeLived;
-    	if(mState == STATE_DIED || age >= AGE_DIED_MS){
+    	if(mCurrentSkin == null){
         	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_died);
             Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
-            mState = STATE_DIED;
-        } else if (age < AGE_BEARING_FRUIT_MS) {
-        	if(mState != STATE_YOUNG){
-	            mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_young);
-	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
-	            mState = STATE_YOUNG;
-        	}
-        } else if(age < AGE_OLD_MS) {
-        	if(mState == STATE_YOUNG) {
-	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_bearing);
-	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
-	            mState = STATE_BEARING;
-        	}
-        } else if(age < AGE_DIED_MS) {
-        	if(mState == STATE_BEARING){
-	        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_old);
-	            Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
-	            mState = STATE_OLD;
-        	}
         }
     	if(mIsShaking){
     		if(mShakingIdx < MAX_SHAKE_TREE){
@@ -81,22 +49,7 @@ public class Tree {
     			mShakingIdx = 0;
     		}
     		if(mShakingIdx%2 != 0){
-    			if(mState == STATE_BEARING){
-    				if(bearingFallBitmap == null){
-    					bearingFallBitmap = BitmapFactory.decodeResource(res, R.drawable.tree_bearing_fall);
-    			        Bitmap.createScaledBitmap(bearingFallBitmap, mWidth, mHeight, false);
-    				}
-    				canvas.drawBitmap(bearingFallBitmap, mPosX+7, mPosY, null);
-    			} else if(mState == STATE_OLD){
-    				if(oldFallBitmap == null){
-    					oldFallBitmap = BitmapFactory.decodeResource(res, R.drawable.tree_old_fall);
-    			        Bitmap.createScaledBitmap(oldFallBitmap, mWidth, mHeight, false);
-    				}
-    				canvas.drawBitmap(oldFallBitmap, mPosX+7, mPosY, null);
-    			} else {
-    				canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
-    			}
-    			return;
+    			canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
     		}
     	}
     	canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
@@ -107,31 +60,27 @@ public class Tree {
                                            mPosYBottomBorder, touchPosX, touchPosY);
     }
 	
-	public void abuseHealth(){
-		health--;
-		if(health == 0){
-			mState = STATE_DIED;
-		}
-	}
-	
 	public void reset(){
-		mState = -1;
-		health = MAX_HEALTH;
 		mIsShaking = false;
 		mShakingIdx = 0;
-	}
-	
-	public void setTimeTreeLived(long timeTreeLived) {
-		mTimeTreeLived = timeTreeLived;
-	}
-
-	public int getState() {
-		return mState;
+		mTapIdx = 0;
 	}
 	
 	public void setShaking(boolean isShaking) {
 		if(!mIsShaking) {
 			mIsShaking = isShaking;
 		}
+	}
+	
+	public boolean isShaking(){
+		return mIsShaking;
+	}
+	
+	public int getTapIDx(){
+		return mTapIdx;
+	}
+	
+	public void addTap(){
+		return mTapIdx++;
 	}
 }
