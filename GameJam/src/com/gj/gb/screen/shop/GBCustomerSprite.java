@@ -162,6 +162,27 @@ public class GBCustomerSprite {
 					listener.onDishServed(customer);
 				}
 			}
+		} else if (customer.getState() == GBCustomerState.LEAVING
+				|| customer.getState() == GBCustomerState.DECIDING) {
+			int action = event.getAction();
+			float eventX = event.getX();
+			float eventY = event.getY();
+			int width = bitmap.getWidth();
+			int height = bitmap.getHeight();
+
+			// touch event is outside range
+			if (eventX <= (x + 5) || eventY <= (y + 5)
+					|| eventX >= (x + width - 5)
+					|| eventY >= (y + height - 5)) {
+				selected = false;
+				return;
+			}
+			
+			if (action == MotionEvent.ACTION_DOWN) {
+				selected = true;
+			} else if (action == MotionEvent.ACTION_UP) {
+				selected = false;
+			}			
 		}
 	}
 	

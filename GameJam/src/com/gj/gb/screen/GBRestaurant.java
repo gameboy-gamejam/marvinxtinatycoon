@@ -23,13 +23,14 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBNewCustomerFactory;
 import com.gj.gb.gridview.ShopDishGridViewAdapter;
+import com.gj.gb.logic.GBStatsHelper;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
@@ -75,6 +76,7 @@ public class GBRestaurant extends Activity implements Runnable,
 	
 	private SurfaceView shopSurface;
 	private SurfaceHolder shopSurfaceHolder;
+	private LinearLayout containerPending;
 	
 	private int screenWidth, screenHeight;
 	
@@ -401,12 +403,14 @@ public class GBRestaurant extends Activity implements Runnable,
 
 	/* initialize buttons */
 	private void initViews() {
+		containerPending = (LinearLayout) findViewById(R.id.pendingCustomers);
 		shopSurface = (SurfaceView) findViewById(R.id.surfaceCanvas);
 		shopSurface.setZOrderOnTop(true);
 		shopSurface.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				if (queueManager == null) return false;
 				return queueManager.onTouch(event);
 			}
 		});
@@ -452,11 +456,8 @@ public class GBRestaurant extends Activity implements Runnable,
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-//		Log.w("test", ")
-		Log.w("test", "dimen=" + width + "x" + height);
 		this.screenWidth = width;
 		this.screenHeight = height;
-//		queueManager.setCanvasSize(width, height);
 	}
 
 	@Override
@@ -471,18 +472,26 @@ public class GBRestaurant extends Activity implements Runnable,
 
 	@Override
 	public void onDishServed(GBNewCustomer customer) {
-		Toast.makeText(this, "YOLO", Toast.LENGTH_SHORT).show();
 		gameData.removeDish(customer.getOrder().getId());
+		experienceEarned += GBStatsHelper.getExperience(customer);
+		ratingsEarned += GBStatsHelper.getRatings(customer);
+		goldEarned += GBStatsHelper.getGoldEarn(customer);
+		((TextView) findViewById(R.id.textGoldEarn)).setText(goldEarned+"G");
 		refreshDishList();
 	}
 
 	@Override
-	public void onQueueUpdate(GBNewCustomer customer) {
-		
+	public void onQueueUpdate(GBNewCustomer customer, int flag) {
+		if (flag == GBRestaurantDataListener.QUEUE_ADDED) {
+			// added
+		} else {
+			// remove
+		}
 	}
 
 	@Override
 	public void onCustomerLeft(GBNewCustomer customer) {
-		
+		ratingsEarned += GBStatsHelper.getRatings(customer);
+//		Log.w("test", "Customer Left:" + GBStatsHelper.getRatings(customer));
 	}
 }

@@ -199,4 +199,13 @@ public class GBNewCustomer {
 	public void consumed() {
 		this.consumed = true;
 	}
+	
+	public int getHit() {
+		int hits = 0;
+		
+		if (angryAtQueue) hits++;
+		if (angryAtWaiting) hits++;
+		
+		return hits;
+	}
 }
