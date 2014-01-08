@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.gj.gb.model.GBNewCustomer;
@@ -24,6 +25,8 @@ public class GBQueueManager {
 
 	private GBCustomerSpriteManager spriteManager;
 	
+	private GBRestaurantDataListener listener;
+	
 	public GBQueueManager(Activity activity, int width, int height) {
 		this.queue = new ArrayList<GBNewCustomer>();
 		this.left = new ArrayList<GBNewCustomer>();
@@ -31,6 +34,7 @@ public class GBQueueManager {
 	}
 
 	public void setRestaurantListener(GBRestaurantDataListener listener) {
+		this.listener = listener;
 		this.spriteManager.setRestaurantListener(listener);
 	}
 	
@@ -48,6 +52,11 @@ public class GBQueueManager {
 
 	public void removeCustomer(GBNewCustomer customer) {
 		left.add(customer);
+//		Log.w("test", "Customer " + customer.getId() + " is " + customer.getState());
+		if (customer.getState() == GBCustomerState.LEAVING || customer.getState() == GBCustomerState.RAGE_QUIT) {
+//			Log.w("test", "Customer " + customer.getId() + " is leaving...");
+			listener.onCustomerLeft(customer);
+		}
 		spriteManager.makeCustomerSpriteInvisible(customer.getId());
 		int id = customer.getId();
 		//Log.w("test", "Customer " + id + " left the shop.");
