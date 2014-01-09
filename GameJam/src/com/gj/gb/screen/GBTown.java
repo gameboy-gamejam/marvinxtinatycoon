@@ -176,6 +176,7 @@ public class GBTown extends Activity {
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
 			this.data.update();
 			updateData();
+			this.data.recoverStamina();
 			if (this.data.hasLevel()) {
 				toLevelUp();
 			}

@@ -264,6 +264,7 @@ public class GBGameData {
 			dayState = GBDayState.MORNING;
 			updateDay();
 			GBEconomics.update();
+			stamina = 10;
 		}
 	}
 
@@ -358,6 +359,12 @@ public class GBGameData {
 				Log.w("test", "Removed!");
 				this.ingredients.remove(toBeRemoved.get(i));
 			}
+		}
+	}
+
+	public void recoverStamina() {
+		if (stamina < 10) {
+			stamina++;
 		}
 	}
 }
