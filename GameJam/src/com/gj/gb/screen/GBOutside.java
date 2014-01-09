@@ -64,6 +64,7 @@ public class GBOutside extends Activity {
 					toTown();
 					break;
 				case R.id.buttonGame1:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, CarrotStage.class));
@@ -72,6 +73,7 @@ public class GBOutside extends Activity {
 					}
 					break;
 				case R.id.buttonGame2:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, FishStage.class));
@@ -80,6 +82,7 @@ public class GBOutside extends Activity {
 					}
 					break;
 				case R.id.buttonGame3:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
