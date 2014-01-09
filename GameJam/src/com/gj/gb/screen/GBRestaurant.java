@@ -81,6 +81,8 @@ public class GBRestaurant extends Activity implements Runnable,
 	
 	private int totalCustomerTime = 0;
 	
+	private boolean started = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,25 +92,15 @@ public class GBRestaurant extends Activity implements Runnable,
 
 		initAnimations();
 		initViews();
-
-		findViewById(R.id.filter1).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				findViewById(R.id.textTapToStart).setVisibility(View.INVISIBLE);
-				handler = new Handler(GBRestaurant.this);
-				handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
-			}
-		});
 	}
 
 	@Override
 	public void onBackPressed() {
 		if (enableBack) {
-			isSuspended = true;
-			Intent intent = new Intent(GBRestaurant.this, GBInGameMenu.class);
-			intent.putExtra("from", "shop");
-			startActivityForResult(intent, 2000);
+//			isSuspended = true;
+//			Intent intent = new Intent(GBRestaurant.this, GBInGameMenu.class);
+//			intent.putExtra("from", "shop");
+//			startActivityForResult(intent, 2000);
 		}
 	}
 
@@ -366,7 +358,6 @@ public class GBRestaurant extends Activity implements Runnable,
 			findViewById(R.id.filter1).setVisibility(View.GONE);
 			findViewById(R.id.filter2).setVisibility(View.GONE);
 
-			findViewById(R.id.buttonMenu).setEnabled(true);
 			findViewById(R.id.buttonKitchen).setEnabled(true);
 
 			enableBack = true;
@@ -399,7 +390,6 @@ public class GBRestaurant extends Activity implements Runnable,
 				}
 			});
 			text3.startAnimation(fadeInAnim);
-			findViewById(R.id.buttonMenu).setEnabled(false);
 			findViewById(R.id.buttonKitchen).setEnabled(false);
 			break;
 		}
@@ -440,11 +430,16 @@ public class GBRestaurant extends Activity implements Runnable,
 					}
 				});
 
-		findViewById(R.id.buttonMenu).setOnClickListener(new OnClickListener() {
-
+		findViewById(R.id.filter1).setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				if (!started) {
+					findViewById(R.id.textTapToStart).setVisibility(View.INVISIBLE);
+					handler = new Handler(GBRestaurant.this);
+					handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
+					started = true;
+				}
 			}
 		});
 	}
