@@ -13,7 +13,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -34,6 +33,7 @@ import com.gj.gb.util.GBDataManager;
 public class AppleCatchingStage extends Stage implements SensorEventListener{
 	
 	private static final int MAX_TIME_FRUIT_FALL_FINISH = 10000;
+	private static final int MAX_APPLE_PER_SCREEN = 2;
 	
 	private SurfaceHolder mSurfaceHolder;
     private Handler mDirector;
@@ -58,8 +58,6 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	private Tree tree;
 	private List<Apple> apples;
 	
-	//TODO reset
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,7 +65,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mSeeder = new Random(System.currentTimeMillis());
 		apples = new ArrayList<Apple>();
-		
+		mIsShowReadyInstruction = true;
 		prepareScript();
 		prepareFloorDirectors();
 		prepareStage();
@@ -75,7 +73,16 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	
 	private void reset(){
 	    tree.reset();
-	    mPointsEarned = 0;
+	    initDrawTree();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(mIsShowReadyInstruction){
+			showReadyInstruction();
+			mIsShowReadyInstruction = false;
+		}
 	}
 	
 	@Override
@@ -126,13 +133,14 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
                                 	}
 	                                basket.drawMe(canvas);
 	                                int seed = mSeeder.nextInt(100);
-	                                if(seed%6 == 0 && inGameCurrentTime <= mEstimatedTimeFinish){
-	                                    apples.add(new Apple(mSeeder.nextInt(553)+50, 50, 593));
+	                                if(apples.size() < MAX_APPLE_PER_SCREEN && seed%6 == 0 
+	                                		&& inGameCurrentTime <= mEstimatedTimeFinish){
+	                                    apples.add(new Apple(mSeeder.nextInt(553)+50, 50, 500));
 	                                }
 	                                List<Apple> spoiledApple = new ArrayList<Apple>();
 	                                for(Apple apple: apples){
-	                                	if(apple.isHitBasket(basket.getBasketSize())){
-	                                		mPointsEarned+=20;
+	                                	if(apple.isHitBasket(basket)){
+	                                		mPointsEarned+=30;
 	                                		spoiledApple.add(apple);
 	                                	} else if(apple.isHitGround()){
 	                                		spoiledApple.add(apple);
@@ -174,11 +182,8 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				int action = event.getAction();
-				float touchPosX = event.getX();
-                float touchPosY = event.getY();
                 if(action == MotionEvent.ACTION_DOWN && !mIsFruitFalling &&
-						!tree.isShaking() /*&& 
-						StageHelper.isWithinBorders(50, 50, 853, 593, touchPosX, touchPosY) */){
+						!tree.isShaking()){
 					playGame();
 				}
 				return true;
@@ -194,8 +199,8 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	private void prepareStage(){
 	    mIsFruitFalling = false;
 	    res = getResources();
-		basket = new Basket(50, 350, res);
-		basket.setWallBorder(50, 553);
+		basket = new Basket(150, 350, res);
+		basket.setWallBorder(100, 553);
 		tree = new Tree(50, 50, 553, 593);
 	}
 
@@ -207,6 +212,9 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
 		mIsSurfaceReady = true;
+	}
+	
+	private void initDrawTree(){
 		if(mSurfaceHolder.getSurface().isValid()){
             Canvas canvas = mSurfaceHolder.lockCanvas();
             synchronized (mSurfaceHolder) {
@@ -262,7 +270,8 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
     	Intent intent = new Intent(AppleCatchingStage.this, GBMiniGameRewardPopop.class);
     	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_POINTS, mPointsEarned);
     	intent.putExtra(GBMiniGameRewardPopop.KEY_EXTRA_CATEGORY, IngredientCategory.FRUIT);
-    	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD); 
+    	startActivityForResult(intent, GBMiniGameRewardPopop.REQUEST_CODE_REWARD);
+    	mPointsEarned = 0;
     }
 
 	@Override

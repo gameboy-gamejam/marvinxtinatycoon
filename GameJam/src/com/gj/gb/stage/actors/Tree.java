@@ -12,7 +12,7 @@ import com.gj.gb.stage.common.StageHelper;
 
 public class Tree {
 	
-	public static final int MAX_NUMBER_TREE_TAP = 5;
+	public static final int MAX_NUMBER_TREE_TAP = 3;
 	
 	private static final int MAX_SHAKE_TREE = 3;
 	
