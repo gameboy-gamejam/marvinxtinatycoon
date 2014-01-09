@@ -82,6 +82,7 @@ public class GBGameData {
 
 	public void setCurrentRating(int currentRating) {
 		this.currentRating = currentRating;
+		if (this.currentRating < 0) this.currentRating = 0;
 	}
 
 	public int getTotalCustomers() {
