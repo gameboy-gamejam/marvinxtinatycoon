@@ -12,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -80,6 +79,8 @@ public class GBRestaurant extends Activity implements Runnable,
 	
 	private int screenWidth, screenHeight;
 	
+	private int totalCustomerTime = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -124,6 +125,8 @@ public class GBRestaurant extends Activity implements Runnable,
 
 		initializeData();
 		ProgressBar timer = (ProgressBar) findViewById(R.id.progressGameTime);
+		timer.setMax(totalCustomerTime + 5000);
+		timer.setProgress(totalCustomerTime + 5000);
 
 		long startTime = System.currentTimeMillis();
 		long currentTime = startTime;
@@ -202,6 +205,7 @@ public class GBRestaurant extends Activity implements Runnable,
 		queueManager.setRestaurantListener(this);
 
 		totalCustomer = customerList.size();
+		totalCustomerTime += customerList.get(totalCustomer-1).getArrivalTime() + customerList.get(totalCustomer-1).getTotalTime() + 2000; 
 	}
 
 	@Override

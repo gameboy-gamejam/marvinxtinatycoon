@@ -106,6 +106,7 @@ public class GBNewCustomer {
 				break;
 			case WAITING:
 				long waitPlus = offset + arrivalTime + decideTime;
+				if (totalStayTime >= ((waitTime/2) + waitPlus)) soemthing = true;
 				if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
 //					Log.w("test", "Customer " + id + " is very angry...");
 					angryAtWaiting = true;
@@ -116,7 +117,7 @@ public class GBNewCustomer {
 				}
 				break;
 			case LEAVING:
-				long leavePlus = offset + arrivalTime + decideTime + waitTime + 2000; // buffer of 2 seconds before leaving
+				long leavePlus = offset + arrivalTime + decideTime + waitTime + 4000; // buffer of 2 seconds before leaving
 				if (totalStayTime >= leavePlus) {
 					state = GBCustomerState.RAGE_QUIT;
 				}
@@ -126,6 +127,11 @@ public class GBNewCustomer {
 			case RAGE_QUIT:
 				break;
 		}
+	}
+	
+	private boolean soemthing = false;
+	public boolean getSomething() {
+		return soemthing;
 	}
 	
 	private void decide() {
@@ -207,5 +213,13 @@ public class GBNewCustomer {
 		if (angryAtWaiting) hits++;
 		
 		return hits;
+	}
+	
+	public long getArrivalTime() {
+		return arrivalTime;
+	}
+	
+	public long getTotalTime() {
+		return queueTime + decideTime + waitTime + 4000; 
 	}
 }

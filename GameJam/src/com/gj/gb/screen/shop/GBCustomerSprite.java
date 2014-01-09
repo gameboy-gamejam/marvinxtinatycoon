@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
+import com.gj.gb.model.GBRecipe;
 import com.gj.gb.util.GBDataManager;
 
 public class GBCustomerSprite {
@@ -24,7 +25,7 @@ public class GBCustomerSprite {
 		GONE
 	}
 
-	private Bitmap bitmap, glowBitmap;
+	private Bitmap bitmap1, bitmap2, bitmap3, glowBitmap;
 	private Paint paint, glowPaint, shadowPaint;
 
 	private float x, y;
@@ -34,13 +35,14 @@ public class GBCustomerSprite {
 
 	private GBNewCustomer customer;
 
-	private String order;
-
 	private boolean served = false;
 	private boolean selected = false;
 	private GBRestaurantDataListener listener;
+	private Bitmap thoughtCloud;
+	private Bitmap defaultThought;
+	private Bitmap orderBitmap;
 
-	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap, float x,
+	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, float x,
 			float y) {
 		this.customer = customer;
 		this.x = x;
@@ -49,11 +51,14 @@ public class GBCustomerSprite {
 		this.pointY = y;
 		this.targetY = y - 50;
 
-		this.bitmap = bitmap;
 		this.paint = new Paint();
 		this.paint.setTextSize(50.0f);
 
-		this.glowBitmap = bitmap.extractAlpha();
+        this.bitmap1 = bitmap1;
+        this.bitmap2 = bitmap2;
+        this.bitmap3 = bitmap3;
+        
+		this.glowBitmap = bitmap1.extractAlpha();
 		this.glowPaint = new Paint();
 
 		int glowColor = Color.rgb(0, 192, 255);
@@ -71,17 +76,7 @@ public class GBCustomerSprite {
 	}
 
 	public void update(long elapse) {
-		GBCustomerState state = customer.getState();
 
-		// TODO: gawin tong images
-		if (state == GBCustomerState.DECIDING) {
-			order = "...";
-		} else if (state == GBCustomerState.WAITING
-				|| state == GBCustomerState.LEAVING) {
-			order = customer.getOrder().getName();
-		} else {
-			order = "";
-		}
 	}
 	
 
@@ -90,8 +85,21 @@ public class GBCustomerSprite {
 			if (selected) {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
-			canvas.drawBitmap(bitmap, x, y, paint);
-			canvas.drawText(order, x, y - 100, paint);
+			GBCustomerState state = customer.getState();
+			
+			if (state == GBCustomerState.LEAVING) {
+				canvas.drawBitmap(bitmap3, x, y, paint);
+			} else if (customer.getSomething()) {
+				canvas.drawBitmap(bitmap2, x, y, paint);
+			} else {
+				canvas.drawBitmap(bitmap1, x, y, paint);
+			}
+			canvas.drawBitmap(thoughtCloud, x, y-thoughtCloud.getHeight(), paint);
+			if (customer.getOrder() == null) {
+				canvas.drawBitmap(defaultThought, x, y-thoughtCloud.getHeight(), paint);
+			} else {
+				canvas.drawBitmap(orderBitmap, x, y-thoughtCloud.getHeight(), paint);
+			}
 		} else if (visibility == GBSpriteVisibility.GONE && served) {
 			// draw points
 			if (pointY >= targetY) {
@@ -141,8 +149,8 @@ public class GBCustomerSprite {
 			int action = event.getAction();
 			float eventX = event.getX();
 			float eventY = event.getY();
-			int width = bitmap.getWidth();
-			int height = bitmap.getHeight();
+			int width = bitmap1.getWidth();
+			int height = bitmap1.getHeight();
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
@@ -167,8 +175,8 @@ public class GBCustomerSprite {
 			int action = event.getAction();
 			float eventX = event.getX();
 			float eventY = event.getY();
-			int width = bitmap.getWidth();
-			int height = bitmap.getHeight();
+			int width = bitmap1.getWidth();
+			int height = bitmap1.getHeight();
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
@@ -182,19 +190,41 @@ public class GBCustomerSprite {
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
 				selected = false;
+				if (customer.getState() == GBCustomerState.LEAVING) {
+					served = true;
+					customer.setState(GBCustomerState.SERVED);
+					listener.onDishServed(customer);
+				}
 			}			
 		}
 	}
 	
 	public int getWidth() {
-		return bitmap.getWidth();
+		return bitmap1.getWidth();
 	}
 	
 	public int getHeight() {
-		return bitmap.getHeight();
+		return bitmap1.getHeight();
 	}
 
 	public void setListener(GBRestaurantDataListener listener) {
 		this.listener = listener;
+	}
+
+	public void setThoughtBitmap(Bitmap thoughtCloud, Bitmap defaultThought) {
+		this.thoughtCloud = thoughtCloud;
+		this.defaultThought = defaultThought;
+	}
+
+	public boolean hasOrder() {
+		return customer.getOrder() != null;
+	}
+
+	public GBRecipe getOrder() {
+		return customer.getOrder();
+	}
+
+	public void setOrderBitmap(Bitmap bm) {
+		this.orderBitmap = bm;
 	}
 }
