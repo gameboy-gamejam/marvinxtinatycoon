@@ -91,8 +91,15 @@ public class GBRestaurant extends Activity implements Runnable,
 		initAnimations();
 		initViews();
 
-		handler = new Handler(this);
-		handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
+		findViewById(R.id.filter1).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				findViewById(R.id.textTapToStart).setVisibility(View.INVISIBLE);
+				handler = new Handler(GBRestaurant.this);
+				handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
+			}
+		});
 	}
 
 	@Override
