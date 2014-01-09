@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <LinearLayout
+        android:id="@+id/info"
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:background="@drawable/bg_default">
 
         <TextView
             android:id="@+id/textMessage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:background="@drawable/bg_default_layer"
             android:gravity="center"
             android:text="This is a sample message."
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -31,8 +33,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default_selector"
                 android:gravity="center"
+                                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:background="@drawable/btn_green"
                 android:text="Yes" />
 
             <TextView
@@ -40,10 +44,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default_selector"
                 android:gravity="center"
+                android:background="@drawable/btn_red"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_10"
                 android:text="No" />
         </LinearLayout>
     </LinearLayout>
-
+    <ImageView android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:background="@drawable/btn_close"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_alignTop="@id/info"
+        android:layout_alignRight="@id/info"/>
 </RelativeLayout>
