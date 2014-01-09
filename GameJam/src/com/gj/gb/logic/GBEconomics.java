@@ -269,9 +269,7 @@ public class GBEconomics {
 		for (int i=0; i<n; i++) {
 			totalPrice += GBIngredientsFactory.getIngredientById(ingredients.get(i)).getPrice();
 		}
-		
-		totalPrice -= 20;
-		
+
 		if (totalPrice < 10) totalPrice = 10;
 		
 		return totalPrice;

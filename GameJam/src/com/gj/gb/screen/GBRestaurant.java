@@ -496,6 +496,5 @@ public class GBRestaurant extends Activity implements Runnable,
 	@Override
 	public void onCustomerLeft(GBNewCustomer customer) {
 		ratingsEarned += GBStatsHelper.getRatings(customer);
-//		Log.w("test", "Customer Left:" + GBStatsHelper.getRatings(customer));
 	}
 }
