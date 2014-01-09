@@ -175,6 +175,7 @@ public class GBTown extends Activity {
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
+			this.data.clearMenu();
 			if(this.data.update()) {
 				// TODO: call day summary first
 				this.data.updateDay();

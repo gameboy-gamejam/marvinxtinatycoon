@@ -9,6 +9,7 @@ import android.util.Log;
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBStatsHelper;
+import com.gj.gb.util.Utils;
 
 public class GBGameData {
 
@@ -207,7 +208,7 @@ public class GBGameData {
 		return ok == n;
 	}
 	
-	public List<GBRecipe> getRecipes() {
+	public List<GBRecipe> getAvailableRecipes() {
 		if (recipes == null || recipes.size() == 0) {
 			recipes = new ArrayList<GBRecipe>();
 			recipes.clear();
@@ -396,5 +397,33 @@ public class GBGameData {
 
 	public void setDayTotalRatings(int dayTotalRatings) {
 		this.dayTotalRatings = dayTotalRatings;
+	}
+
+	List<GBRecipe> available;
+	
+	public List<GBRecipe> getMenu() {
+		if (available == null) {
+			available = new ArrayList<GBRecipe>();
+			List<GBRecipe> recipes = getAvailableRecipes();
+			int n = recipes.size();
+			if (n < 4) {
+				for (int i=0; i<n; i++) {
+					available.add(recipes.get(i));
+				}
+			} else {
+				while (available.size() < 4) {
+					GBRecipe random = recipes.get(Utils.RANDOM.nextInt(n));
+					if (!available.contains(random)) {
+						available.add(random);
+					}
+				}
+			}
+		}
+		return available;
+	}
+	
+	public void clearMenu() {
+		available.clear();
+		available = null;
 	}
 }

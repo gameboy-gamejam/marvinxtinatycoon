@@ -79,7 +79,7 @@ public class GBDishListPopup extends Activity {
 
 	private void generateDishes() {
 		mDishList.clear();
-		mDishList.addAll(data.getRecipes());
+		mDishList.addAll(data.getAvailableRecipes());
 //		//lagay nyo dito yung mga bagong dish
 //		for (int i = 0; i < 3; i++) {
 //			mDishList.add(GBRecipeFactory.getRecipeById(i));
