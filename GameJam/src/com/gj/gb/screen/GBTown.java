@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 

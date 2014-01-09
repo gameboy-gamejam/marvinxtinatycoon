@@ -1,7 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:orientation="vertical" >
+    android:layout_width="70dp"
+    android:layout_height="60dp"
+    android:orientation="vertical" 
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textDummy"
@@ -10,10 +12,19 @@
         android:visibility="gone" />
 
     <ImageView
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_grid" >
+    </ImageView>
+
+    <ImageView
         android:id="@+id/item_image"
-        android:layout_width="@dimen/dp_45"
-        android:layout_height="@dimen/dp_45"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
         android:layout_gravity="center" >
     </ImageView>
 
-</LinearLayout>
+</RelativeLayout>

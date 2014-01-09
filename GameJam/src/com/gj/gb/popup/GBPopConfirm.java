@@ -1,9 +1,10 @@
-package com.gj.gb.screen;
+package com.gj.gb.popup;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
@@ -42,6 +43,15 @@ public class GBPopConfirm extends Activity {
 			}
 		});
 
+		((ImageView) findViewById(R.id.btn_close)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
+				finish();
+			}
+		});
+		
 		((TextView) findViewById(R.id.buttonNegative)).setOnClickListener(new OnClickListener() {
 			
 			@Override

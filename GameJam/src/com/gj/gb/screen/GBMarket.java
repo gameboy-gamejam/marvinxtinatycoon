@@ -16,6 +16,8 @@ import com.gj.gb.gridview.IngredientMarketGridViewAdapter;
 import com.gj.gb.gridview.IngredientMarketGridViewAdapter2;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
+import com.gj.gb.popup.GBMarketPopConfirm;
+import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 

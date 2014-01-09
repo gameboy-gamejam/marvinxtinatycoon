@@ -1,4 +1,4 @@
-package com.gj.gb.screen;
+package com.gj.gb.popup;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,7 @@ import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
+import com.gj.gb.screen.GBMarket;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.ImageCache;
 

@@ -12,6 +12,7 @@ import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.popup.GBAcknowledgementPopup;
+import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.stage.CarrotStage;
 import com.gj.gb.stage.FishStage;
 import com.gj.gb.stage.FruitGatheringStage;

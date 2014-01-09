@@ -33,7 +33,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity 
-            android:name="com.gj.gb.screen.GBPopConfirm"
+            android:name="com.gj.gb.popup.GBPopConfirm"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/ThemePop">
@@ -73,7 +73,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity 
-            android:name="com.gj.gb.screen.GBMarketPopConfirm"
+            android:name="com.gj.gb.popup.GBMarketPopConfirm"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Transparent">

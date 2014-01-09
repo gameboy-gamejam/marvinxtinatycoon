@@ -9,23 +9,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_default"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:layout_marginBottom="@dimen/dp_10">
 
             <GridView
+                android:overScrollMode="never"
                 android:id="@+id/dishlist"
-                android:layout_width="150dp"
-                android:layout_height="170dp"
-                android:background="@drawable/bg_default_layer"
+                android:layout_width="210dp"
+                android:layout_height="180dp"
+                android:layout_marginRight="@dimen/dp_10"
                 android:numColumns="3" >
             </GridView>
 
             <RelativeLayout
-                android:layout_width="250dp"
+                android:layout_width="260dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
 
@@ -34,13 +37,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content" 
+                        android:textSize="@dimen/dp_16"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -48,7 +51,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
@@ -63,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@id/holder_price"
                     android:layout_below="@id/holder_name"
-                    android:background="@drawable/bg_default_layer"
                     android:orientation="vertical" >
 
                     <TextView
@@ -90,8 +91,10 @@
                 android:id="@+id/btn_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_10"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default_selector"
+                android:background="@drawable/btn_red"
                 android:gravity="center"
                 android:text="Close" />
 
@@ -99,8 +102,10 @@
                 android:id="@+id/btn_prepare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_weight="1"
-                android:background="@drawable/bg_default_selector"
+                android:background="@drawable/btn_green"
                 android:gravity="center"
                 android:text="Prepare" />
         </LinearLayout>
