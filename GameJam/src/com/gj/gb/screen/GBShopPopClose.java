@@ -44,7 +44,8 @@ public class GBShopPopClose extends Activity {
 		int experience = intent.getIntExtra("experience_gained", 0);
 		int ratings = intent.getIntExtra("ratings_earned", 0);
 		String rating = "";
-		if (ratings >= 0) rating = "+" + ratings;
+		if (ratings >= 0) rating = "+";
+		rating += ratings;
 		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(gold, "#,###,###"));
 		((TextView) findViewById(R.id.textCustomer)).setText(totalCustomerServed + "/" + totalCustomer);
