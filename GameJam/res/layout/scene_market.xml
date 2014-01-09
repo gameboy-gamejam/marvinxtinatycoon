@@ -32,7 +32,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/btn_red"
+            android:background="@drawable/btn_blue"
             android:gravity="center"
             android:text="Done"
             android:textColor="@color/white" />
