@@ -44,7 +44,7 @@ public class GBGameData {
 	
 	protected int level;
 	
-	protected int experience;
+	protected int gourmetPoints;
 	
 	protected int nextLevel;
 	
@@ -110,11 +110,11 @@ public class GBGameData {
 	}
 
 	public int getExperience() {
-		return experience;
+		return gourmetPoints;
 	}
 
 	public void setExperience(int experience) {
-		this.experience = experience;
+		this.gourmetPoints = experience;
 	}
 
 	public int getNextLevel() {
@@ -340,7 +340,7 @@ public class GBGameData {
 	}
 
 	public boolean hasLevel() {
-		if (experience >= nextLevel) {
+		if (gourmetPoints >= nextLevel) {
 			nextLevel = GBStatsHelper.calculateNextLevel(level, nextLevel);
 			level++;
 			return true;

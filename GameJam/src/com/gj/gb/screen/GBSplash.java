@@ -14,7 +14,7 @@ public class GBSplash extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.scene_splash);
+		setContentView(R.layout.scene_town_alt);
 		
 		if(getIntent().getBooleanExtra("ExitMe", false)){
             finish();
@@ -30,7 +30,7 @@ public class GBSplash extends Activity {
 				return true;
 			}
 		});
-		handler.sendEmptyMessageDelayed(0, 1000);
+		handler.sendEmptyMessageDelayed(0, 10000);
 	}
 
 	protected void initApp() {
