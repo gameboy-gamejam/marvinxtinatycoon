@@ -61,6 +61,8 @@ public class CarrotStage extends Stage {
 	private Resources res;
 	
 	private int mPointsEarned = 0;
+	private int screenWidth;
+	private int screenHeight;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,8 @@ public class CarrotStage extends Stage {
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int frmt, int w, int h) {
 		//Do nothing
+		this.screenWidth = w;
+		this.screenHeight = h;
 	}
 
 	@Override
@@ -200,7 +204,7 @@ public class CarrotStage extends Stage {
                             if(canvas != null) {
                                 float timerRate = (float) ((currentTime - mRecordTimeStarted)/(DEFAULT_CARROT_GAME_TIMER_MS*1.0));
                                 float currentHeightTimer = INITIAL_HEIGHT_RED_TIMER*timerRate;
-                                canvas.drawRect(653, 50, 900, 100, mTimerLabelBackground);
+                                canvas.drawRect(0, 0, screenWidth, screenHeight, mTimerLabelBackground);
                                 canvas.drawText(res.getString(R.string.score)+" "+String.valueOf(mPointsEarned), 703, 80, mTimerLabel);
                                 canvas.drawRect(703, 89, 853, 593, mTimerBackground);
                                 canvas.drawRect(713, 99+currentHeightTimer, 843, 581, mTimer);

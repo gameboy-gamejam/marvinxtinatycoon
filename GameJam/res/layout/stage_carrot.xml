@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/bg_default_layer"
     android:padding="5dp">
 	    <SurfaceView
 	        android:id="@+id/gameCanvas"
-	        android:layout_width="450dp"
-	        android:layout_height="320dp"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
 	        android:layout_centerInParent="true"/>
 </RelativeLayout>
