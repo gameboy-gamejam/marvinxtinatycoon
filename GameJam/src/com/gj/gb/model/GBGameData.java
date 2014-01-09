@@ -423,7 +423,9 @@ public class GBGameData {
 	}
 	
 	public void clearMenu() {
-		available.clear();
-		available = null;
+		if (available != null) {
+			available.clear();
+			available = null;
+		}
 	}
 }
