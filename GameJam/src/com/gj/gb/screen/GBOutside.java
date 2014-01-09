@@ -26,9 +26,14 @@ public class GBOutside extends Activity {
 		setContentView(R.layout.scene_outside);
 	
 		initButtons();
-		updateData();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateData();
+	}
+
 	private void updateData() {
 		GBGameData data = GBDataManager.getGameData();
 		
@@ -36,6 +41,7 @@ public class GBOutside extends Activity {
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
 		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
+		((TextView) findViewById(R.id.textStamina)).setText(String.valueOf(data.getStamina()));
 	}
 
 	private int formatDayState(GBDayState dayState) {
