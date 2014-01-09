@@ -13,6 +13,7 @@ import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.popup.GBLevelUpPop;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
@@ -188,9 +189,13 @@ public class GBTown extends Activity {
 				toLevelUp();
 			}
 		}
+		
+		if (requestCode == 300) {
+			updateData();
+		}
 	}
 
 	private void toLevelUp() {
-		Toast.makeText(this, "Level Up", Toast.LENGTH_SHORT).show();
+		startActivityForResult(new Intent(this, GBLevelUpPop.class), 300);
 	}
 }
