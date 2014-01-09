@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import com.gj.gb.R;
 import com.gj.gb.stage.common.StageHelper;
@@ -25,6 +27,8 @@ public class Tree {
     private boolean mIsShaking;
     private int mShakingIdx;
     private int mTapIdx;
+    
+    private Paint black;
 
 	public Tree(float posX, float posY, float posXRightBorder, float posYBottomBorder) {
         mPosX = posX;
@@ -33,14 +37,18 @@ public class Tree {
         mPosYBottomBorder = posYBottomBorder;
         mHeight = (int) (mPosYBottomBorder - mPosY);
         mWidth = (int) (mPosXRightBorder - mPosX);
+        black = new Paint(); 
+        black.setStyle(Paint.Style.FILL);
+        black.setColor(Color.BLACK);
         reset();
     }
     
-    public void drawMe(Canvas canvas, Resources res, long inGameCurrentTime){
+    public void drawMe(Canvas canvas, Resources res){
     	if(mCurrentSkin == null){
-        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree_died);
+        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree);
             Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
         }
+    	canvas.drawRect(0, 0, 1000, 700, black);
     	if(mIsShaking){
     		if(mShakingIdx < MAX_SHAKE_TREE){
     			mShakingIdx++;
@@ -48,8 +56,9 @@ public class Tree {
     			mIsShaking = false;
     			mShakingIdx = 0;
     		}
-    		if(mShakingIdx%2 != 0){
+    		if(mShakingIdx%2 != 0){    		    
     			canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
+    			return;
     		}
     	}
     	canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);

@@ -112,7 +112,7 @@ public class FruitGatheringStage extends Stage{
 		mRecordTimeStarted = System.currentTimeMillis();
 		mIsScriptRunning = true;
 		mPointsEarned = 0;
-		tree.setTimeTreeLived(mRecordTimeStarted);
+		//tree.setTimeTreeLived(mRecordTimeStarted);
 		tree.reset();
 		mDirector.postDelayed(mScript, 70);
 	}
@@ -166,9 +166,9 @@ public class FruitGatheringStage extends Stage{
             @Override
             public void run() {
                 if(mIsScriptRunning) {
-                	if(tree.getState() == Tree.STATE_DIED){
+                	/*if(tree.getState() == Tree.STATE_DIED){
                 		mIsScriptRunning = false;
-                	}
+                	}*/
                     if(mSurfaceHolder.getSurface().isValid()){
                     	long inGameCurrentTime = System.currentTimeMillis();
                         Canvas canvas = mSurfaceHolder.lockCanvas();
@@ -176,7 +176,7 @@ public class FruitGatheringStage extends Stage{
                             if(canvas != null) {
                             	canvas.drawColor(0, Mode.CLEAR);//eraser
                             	canvas.drawRect(0, 0, 1000, 700, white);
-                                tree.drawMe(canvas, res, inGameCurrentTime);
+                                //tree.drawMe(canvas, res, inGameCurrentTime);
                                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                             }
                         }
@@ -203,13 +203,13 @@ public class FruitGatheringStage extends Stage{
 	                	float touchPosY = event.getY(pointerIdx);
 	                    if(tree.isHit(touchPosX, touchPosY)){
 	                    	tree.setShaking(true);
-	                    	if(tree.getState() == Tree.STATE_YOUNG){
+	                    	/*if(tree.getState() == Tree.STATE_YOUNG){
 	                    		tree.abuseHealth();
 	                    	} else if(tree.getState() == Tree.STATE_BEARING){
 	                    		mPointsEarned+=15;
 	                    	} else if(tree.getState() == Tree.STATE_OLD){
 	                    		mPointsEarned+=5;
-	                    	}
+	                    	}*/
 	                    }
 	                	break;
                 }

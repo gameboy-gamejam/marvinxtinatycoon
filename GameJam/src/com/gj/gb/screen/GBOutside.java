@@ -12,9 +12,9 @@ import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.popup.GBAcknowledgementPopup;
+import com.gj.gb.stage.AppleCatchingStage;
 import com.gj.gb.stage.CarrotStage;
 import com.gj.gb.stage.FishStage;
-import com.gj.gb.stage.FruitGatheringStage;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
@@ -76,7 +76,7 @@ public class GBOutside extends Activity {
 				case R.id.buttonGame3:
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
-						startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
+						startActivity(new Intent(GBOutside.this, AppleCatchingStage.class));
 					} else {
 						showNotEnoughStaminaPopup();
 					}

@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -72,6 +73,11 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 		prepareStage();
 	}
 	
+	private void reset(){
+	    tree.reset();
+	    mPointsEarned = 0;
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if(requestCode == GBMiniGameRewardPopop.REQUEST_CODE_REWARD || requestCode == REQUEST_CODE_GAME_START){
@@ -79,7 +85,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
     			GBGameData gbData = GBDataManager.getGameData();
     			if(gbData.getStamina() > 0){
     				gbData.useStamina();
-    				//TODO reset
+    				reset();
     			} else {
     				showNotEnoughStaminaPopup();
     			}
@@ -112,15 +118,16 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
                         Canvas canvas = mSurfaceHolder.lockCanvas();
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
-                                tree.drawMe(canvas, res, inGameCurrentTime);
+                                tree.drawMe(canvas, res);
                                 if(!tree.isShaking()){
                                 	if(!mIsInitializedSensor){
-                                		
+                                		registerSensorListener();
+                                		mIsInitializedSensor = true;
                                 	}
-	                                basket.drawMe(canvas, res);
+	                                basket.drawMe(canvas);
 	                                int seed = mSeeder.nextInt(100);
-	                                if(seed%5 == 0 && inGameCurrentTime <= mEstimatedTimeFinish){
-	                                	apples.add(new Apple(50, 50, 593));
+	                                if(seed%6 == 0 && inGameCurrentTime <= mEstimatedTimeFinish){
+	                                    apples.add(new Apple(mSeeder.nextInt(553)+50, 50, 593));
 	                                }
 	                                List<Apple> spoiledApple = new ArrayList<Apple>();
 	                                for(Apple apple: apples){
@@ -133,13 +140,16 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	                                	apple.drawMe(canvas, res);
 	                                }
 	                                apples.removeAll(spoiledApple);
-	                                if(apples.size() == 0){
+	                                if(apples.size() == 0 && inGameCurrentTime > mEstimatedTimeFinish){
+	                                    mIsFruitFalling = false;
 	                                	mIsScriptRunning = false;
 	                                	mDirector.removeCallbacks(mScript);
 	                                	mSensorManager.unregisterListener(AppleCatchingStage.this);
 	                                	mIsInitializedSensor = false;
 	                                	if(tree.getTapIDx() >= Tree.MAX_NUMBER_TREE_TAP){
 	                                		showPointsAndReward();
+	                                	} else {
+	                                	    tree.drawMe(canvas, res);
 	                                	}
 	                                }
                                 }
@@ -147,7 +157,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
                             }
                         }
                     }
-                    mDirector.postDelayed(mScript, FRAMEDELAY);
+                    mDirector.postDelayed(mScript, 70);
 				}
 			}
 		};
@@ -164,8 +174,11 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				int action = event.getAction();
-				if(action == MotionEvent.ACTION_DOWN && !mIsFruitFalling &&
-						!tree.isShaking()){
+				float touchPosX = event.getX();
+                float touchPosY = event.getY();
+                if(action == MotionEvent.ACTION_DOWN && !mIsFruitFalling &&
+						!tree.isShaking() /*&& 
+						StageHelper.isWithinBorders(50, 50, 853, 593, touchPosX, touchPosY) */){
 					playGame();
 				}
 				return true;
@@ -179,8 +192,11 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	}
 	
 	private void prepareStage(){
-		basket = new Basket(50, 350);
-		tree = new Tree(50, 50, 853, 593);
+	    mIsFruitFalling = false;
+	    res = getResources();
+		basket = new Basket(50, 350, res);
+		basket.setWallBorder(50, 553);
+		tree = new Tree(50, 50, 553, 593);
 	}
 
 	@Override
@@ -191,6 +207,15 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
 		mIsSurfaceReady = true;
+		if(mSurfaceHolder.getSurface().isValid()){
+            Canvas canvas = mSurfaceHolder.lockCanvas();
+            synchronized (mSurfaceHolder) {
+                if(canvas != null) {
+                    tree.drawMe(canvas, res);
+                    mSurfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+		}
 	}
 
 	@Override
@@ -205,7 +230,8 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 		tree.addTap();
 		mRecordedSeedTime = System.currentTimeMillis();
 		mEstimatedTimeFinish = mRecordedSeedTime + MAX_TIME_FRUIT_FALL_FINISH;
-		mDirector.postDelayed(mScript, FRAMEDELAY);
+		mIsScriptRunning = true;
+		mDirector.postDelayed(mScript, 70);
 	}
 
 	@Override
@@ -259,7 +285,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	public void onSensorChanged(SensorEvent event) {
 		if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
 			float[] values = event.values;
-			basket.setTilt(values[0]);//x
+			basket.setTilt(values[1]);//x
 		}
 	}
 

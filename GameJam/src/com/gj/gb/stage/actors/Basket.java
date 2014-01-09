@@ -10,13 +10,12 @@ import com.gj.gb.R;
 
 public class Basket {
     
-    private static final int WIDTH = 200;//TODO check again
-    private static final int HEIGHT = 200;
-    private static final int MOVEMENT_PER_FRAME = 10;//TODO testing
+    private static final int WIDTH = 400;//TODO check again
+    private static final int HEIGHT = 400;
+    private static final int MOVEMENT_PER_FRAME = 15;//TODO testing
     
     private int mPosX;
     private int mPosY;
-    private float mRecordedTilt;
     private int mMovement;
     
     private float mWallLeftPos;
@@ -26,11 +25,13 @@ public class Basket {
     
     private Rect basketSize;
     
-    public Basket(int basketPosX, int basketPosY) {
+    public Basket(int basketPosX, int basketPosY, Resources res) {
         mPosX = basketPosX;
         mPosY = basketPosY;
         mMovement = MOVEMENT_PER_FRAME;
         basketSize = new Rect(mPosX, mPosY, mPosX+WIDTH, mPosY+HEIGHT);
+        mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.shoppingbasket);
+        Bitmap.createScaledBitmap(mCurrentSkin, WIDTH, HEIGHT, false);
     }
     
     public void setWallBorder(float wallLeftPos, float wallRightPos){
@@ -39,8 +40,8 @@ public class Basket {
     }
     
     public void setTilt(float tilt){
-        if((mRecordedTilt > tilt && mMovement > 0) || (mRecordedTilt < tilt && mMovement < 0)) {
-            mMovement*=1;
+        if((tilt > 0 && mMovement < 0)||(tilt < 0 && mMovement > 0)) {
+            mMovement*=-1;
         }
     }
     
@@ -48,12 +49,8 @@ public class Basket {
     	return basketSize;
     }
 
-    public void drawMe(Canvas canvas, Resources res){
-        if (mCurrentSkin == null) {
-            mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.shoppingbasket);
-            Bitmap.createScaledBitmap(mCurrentSkin, WIDTH, HEIGHT, false);
-        }
-        if((mWallLeftPos < mPosX + mMovement)|| (mWallRightPos > mPosX + mMovement)){
+    public void drawMe(Canvas canvas){
+        if((mWallLeftPos < mPosX + mMovement) && (mWallRightPos > mPosX + mMovement)){
             mPosX+= mMovement;
         }
         canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
