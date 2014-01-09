@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gj.gb.R;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.util.GBDataManager;
@@ -174,9 +175,14 @@ public class GBTown extends Activity {
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
-			this.data.update();
+			if(this.data.update()) {
+				// TODO: call day summary first
+				this.data.updateDay();
+				this.data.recoverStamina(5);
+				GBEconomics.update();
+			}
 			updateData();
-			this.data.recoverStamina();
+			this.data.recoverStamina(1);
 			if (this.data.hasLevel()) {
 				toLevelUp();
 			}

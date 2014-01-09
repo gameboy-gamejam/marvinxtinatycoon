@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
-import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.logic.GBStatsHelper;
 
 public class GBGameData {
@@ -251,24 +250,22 @@ public class GBGameData {
 		stamina--;
 	}
 
-	public void update() {
-		updateDayState();
+	public boolean update() {
+		return updateDayState();
 	}
 
-	private void updateDayState() {
+	private boolean updateDayState() {
 		if (dayState == GBDayState.MORNING) {
 			dayState = GBDayState.AFTERNOON;
 		} else if (dayState == GBDayState.AFTERNOON) {
 			dayState = GBDayState.EVENING;
 		} else if (dayState == GBDayState.EVENING) {
-			dayState = GBDayState.MORNING;
-			updateDay();
-			GBEconomics.update();
-			stamina = 10;
+			return true;
 		}
+		return false;
 	}
 
-	private void updateDay() {
+	public void updateDay() {
 		totalDay++;
 		
 		currentDay++;
@@ -362,9 +359,10 @@ public class GBGameData {
 		}
 	}
 
-	public void recoverStamina() {
-		if (stamina < 10) {
-			stamina++;
+	public void recoverStamina(int i) {
+		stamina += i;
+		if (stamina > 10) {
+			stamina = 10;
 		}
 	}
 }
