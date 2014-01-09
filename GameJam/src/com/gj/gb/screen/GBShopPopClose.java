@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.model.GBGameData;
+import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBShopPopClose extends Activity {
@@ -46,6 +48,12 @@ public class GBShopPopClose extends Activity {
 		String rating = "";
 		if (ratings >= 0) rating = "+";
 		rating += ratings;
+		
+		GBGameData data = GBDataManager.getGameData();
+		data.setCurrentGold(data.getCurrentGold() + gold);
+		data.setTotalCustomers(data.getTotalCustomers() + totalCustomer);
+		data.setExperience(data.getExperience() + experience);
+		data.setCurrentRating(data.getCurrentRating() + ratings);
 		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(gold, "#,###,###"));
 		((TextView) findViewById(R.id.textCustomer)).setText(totalCustomerServed + "/" + totalCustomer);

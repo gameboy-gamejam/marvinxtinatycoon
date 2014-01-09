@@ -74,8 +74,6 @@ public class GBGameData {
 	}
 
 	public int getCurrentRating() {
-		// update rating value
-		currentRating = totalCustomers / currentDay;
 		return currentRating;
 	}
 
