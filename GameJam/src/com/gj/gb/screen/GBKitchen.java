@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBRecipeFactory;
@@ -18,7 +14,6 @@ import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBStove;
 import com.gj.gb.model.GBStove.OvenStatus;
 import com.gj.gb.popup.GBDishListPopup;
-import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBKitchen extends Activity {
@@ -49,12 +44,12 @@ public class GBKitchen extends Activity {
 					toDishList(1);
 				}	else if(stove1.getStatus() == OvenStatus.COOKING){
 //					updateStove();
-					stove1.startAnim();
+					stove1.playResultAnimation(stove1.getResultStatus());
 				} else if(stove1.getStatus() == OvenStatus.FINISHED){
-					stove1.startAnim();
+					stove1.playResultAnimation(stove1.getResultStatus());
 					addDishCount(stove1);
 				}else if(stove1.getStatus() == OvenStatus.OVERCOOKED){
-					stove1.startAnim();
+					stove1.playResultAnimation(stove1.getResultStatus());
 				}	
 			}
 		});
@@ -65,12 +60,12 @@ public class GBKitchen extends Activity {
 				if(stove2.getStatus() == OvenStatus.VACANT){
 					toDishList(2);
 				}	else if(stove2.getStatus() == OvenStatus.COOKING){
-					stove2.startAnim();
+					stove2.playResultAnimation(stove2.getResultStatus());
 				} else if(stove2.getStatus() == OvenStatus.FINISHED){
-					stove2.startAnim();
+					stove2.playResultAnimation(stove2.getResultStatus());
 					addDishCount(stove2);
 				}else if(stove2.getStatus() == OvenStatus.OVERCOOKED){
-					stove2.startAnim();		
+					stove2.playResultAnimation(stove2.getResultStatus());		
 				}
 			}
 		});
@@ -81,12 +76,12 @@ public class GBKitchen extends Activity {
 				if(stove3.getStatus() == OvenStatus.VACANT){
 					toDishList(3);
 				}	else if(stove3.getStatus() == OvenStatus.COOKING){
-					stove3.startAnim();
+					stove3.playResultAnimation(stove3.getResultStatus());
 				} else if(stove3.getStatus() == OvenStatus.FINISHED){
-					stove3.startAnim();
+					stove3.playResultAnimation(stove3.getResultStatus());
 					addDishCount(stove3);
 				}else if(stove3.getStatus() == OvenStatus.OVERCOOKED){
-					stove3.startAnim();		
+					stove3.playResultAnimation(stove3.getResultStatus());		
 				}
 			}
 		});
@@ -97,12 +92,12 @@ public class GBKitchen extends Activity {
 				if(stove4.getStatus() == OvenStatus.VACANT){
 					toDishList(4);
 				}	else if(stove4.getStatus() == OvenStatus.COOKING){
-					stove4.startAnim();
+					stove4.playResultAnimation(stove4.getResultStatus());
 				} else if(stove4.getStatus() == OvenStatus.FINISHED){
-					stove4.startAnim();
+					stove4.playResultAnimation(stove4.getResultStatus());
 					addDishCount(stove4);
 				}else if(stove4.getStatus() == OvenStatus.OVERCOOKED){
-					stove4.startAnim();		
+					stove4.playResultAnimation(stove4.getResultStatus());		
 				}
 			}
 		});

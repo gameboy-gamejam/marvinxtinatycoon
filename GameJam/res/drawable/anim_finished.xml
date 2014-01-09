@@ -1,0 +1,17 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true" >
+
+    <item
+        android:drawable="@drawable/finished_1"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/finished_2"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/finished_3"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/finished_4"
+        android:duration="200"/>
+
+</animation-list>

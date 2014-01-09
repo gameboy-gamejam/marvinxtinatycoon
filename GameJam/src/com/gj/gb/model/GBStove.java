@@ -1,26 +1,37 @@
 package com.gj.gb.model;
 
-import com.gj.gb.R;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.gj.gb.R;
+
 public class GBStove {
 	public enum OvenStatus {
-		VACANT, COOKING, // RAW pa
+		VACANT, 
+		COOKING, // RAW pa
 		FINISHED, // Tama lng
-		OVERCOOKED // sunog na
+		OVERCOOKED, // sunog na
+	}
+	
+	public enum ResultStatus{
+		RAW,
+		NORMAL,
+		BUNRT
 	}
 
-	private OvenStatus mStatus;
+	private OvenStatus mOvenStatus;
+	private ResultStatus mResultStatus;
 	private int mDishId;
 	private int mCount;
 	private int mProgressBarId;
@@ -31,7 +42,7 @@ public class GBStove {
 	AnimationSet animation;
 
 	public GBStove(Activity activity, int progressBarId, int resultId) {
-		this.mStatus = OvenStatus.VACANT;
+		this.mOvenStatus = OvenStatus.VACANT;
 		this.mDishId = -1;
 		this.mCount = 0;
 		this.mProgressBarId = progressBarId;
@@ -44,26 +55,34 @@ public class GBStove {
 		fadeIn.setDuration(500);
 		shake.setDuration(2000);
 		fadeOut.setDuration(500);
-		
+
 		shake.setStartOffset(1000);
 		fadeOut.setStartOffset(6000);
 		animation = new AnimationSet(false);
 		animation.addAnimation(fadeIn);
 		animation.addAnimation(shake);
 		animation.addAnimation(fadeOut);
-//		fadeIn.setAnimationListener(animation1Listener);
-//		shake.setAnimationListener(animation2Listener);
-//		fadeOut.setAnimationListener(animation3Listener);
-		animation.setAnimationListener(animation1Listener);
+		// fadeIn.setAnimationListener(animation1Listener);
+		// shake.setAnimationListener(animation2Listener);
+		// fadeOut.setAnimationListener(animation3Listener);
+		// animation.setAnimationListener(animation1Listener);
 
 	}
 
+	public ResultStatus getResultStatus() {
+		return mResultStatus;
+	}
+
+	public void setResultStatus(ResultStatus status) {
+		this.mResultStatus = status;
+	}
+	
 	public OvenStatus getStatus() {
-		return mStatus;
+		return mOvenStatus;
 	}
 
 	public void setStatus(OvenStatus status) {
-		this.mStatus = status;
+		this.mOvenStatus = status;
 	}
 
 	public int getDishId() {
@@ -82,22 +101,13 @@ public class GBStove {
 		this.mCount = count;
 	}
 
-	// process
-	// at start nasa VACANT yung stove
-	// tapos tatawagin to after ma press yung cook button sa pop up
-	// edi magiging COOKING status... sya
-	// kapag na click ulit sya tapos cooking status pa rin lagot sya... raw
-	// yun..
-	// after 10 sec lilipat na sya sa FINISHED
-	// ayun ang sakto lng pero hindi pa dun nagtatapos
-	// may after cooking pa...
-	// mga 5sec after mapunta sya sa FInished ay masusunog na yung dish...
-	// panic mode n yun
-	// in short fail..
-	// so kapag COOKING at OVERCOOKED yung status rereset ko n lng yung lahat
 	public void startCooking() {
-		mStatus = OvenStatus.COOKING;
+		mOvenStatus = OvenStatus.COOKING;
+		mResultStatus = ResultStatus.RAW;
 		Log.d("Marvin_Debug", "moved to cooking");
+		startCookingAnim();
+		
+		
 		timer = new CountDownTimer(10000, 1000) {
 			public void onTick(long m) {
 				int sec = (int) (10 - (m / 1000));
@@ -106,7 +116,8 @@ public class GBStove {
 			}
 
 			public void onFinish() {
-				mStatus = OvenStatus.FINISHED;
+				mOvenStatus = OvenStatus.FINISHED;
+				mResultStatus = ResultStatus.NORMAL;
 				((ProgressBar) mActivity.findViewById(mProgressBarId))
 						.setProgress(10);
 				Log.d("Marvin_Debug", "moved to finished");
@@ -123,7 +134,8 @@ public class GBStove {
 			}
 
 			public void onFinish() {
-				mStatus = OvenStatus.OVERCOOKED;
+				mOvenStatus = OvenStatus.OVERCOOKED;
+				mResultStatus = ResultStatus.BUNRT;
 				Log.d("Marvin_Debug", "moved to over cooked");
 			}
 		}.start();
@@ -131,50 +143,54 @@ public class GBStove {
 
 	public void reset() {
 		timer.cancel();
-		mStatus = OvenStatus.VACANT;
-		((ProgressBar) mActivity.findViewById(mProgressBarId)).setProgress(0);
+		mOvenStatus = OvenStatus.VACANT;
+		mActivity.runOnUiThread(new Runnable() {  
+            @Override
+            public void run() {
+        		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
+        		img.setBackgroundResource(R.drawable.test2);
+        		((ProgressBar) mActivity.findViewById(mProgressBarId)).setProgress(0);
+            }
+        });
+
 	}
 
-	public void startAnim() {
-		
-		
-		if (mStatus == OvenStatus.COOKING) {
-			((ImageView) mActivity.findViewById(mResultId))
-					.setBackgroundResource(R.drawable.raw);
-		} else if (mStatus == OvenStatus.FINISHED) {
-			((ImageView) mActivity.findViewById(mResultId))
-					.setBackgroundResource(R.drawable.normal);
-		} else if (mStatus == OvenStatus.OVERCOOKED) {
-			((ImageView) mActivity.findViewById(mResultId))
-					.setBackgroundResource(R.drawable.raw);
-		}
-		
-		reset();
-		((ImageView) mActivity.findViewById(mResultId)).startAnimation(animation);
-
+	public void startCookingAnim() {
+		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
+		img.setBackgroundResource(R.drawable.anim_cooking);
+		AnimationDrawable anim = (AnimationDrawable) img.getBackground();
 		((ImageView) mActivity.findViewById(mResultId)).setVisibility(View.VISIBLE);
-		
+		anim.start();
+	}
+	
+	public void playResultAnimation(ResultStatus status) {
+		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
+		if (status == ResultStatus.RAW) {
+			img.setBackgroundResource(R.drawable.anim_raw);
+		} else if (status == ResultStatus.NORMAL) {
+			img.setBackgroundResource(R.drawable.anim_finished);
+		} else if (status == ResultStatus.BUNRT) {
+			img.setBackgroundResource(R.drawable.anim_burnt);
+		}
+		AnimationDrawable anim = (AnimationDrawable) img.getBackground();
+		anim.start();
+		stopAnim(anim);
 	}
 
-	AnimationListener animation1Listener = new AnimationListener() {
-
-		@Override
-		public void onAnimationStart(Animation animation) {
-
-
+	public void stopAnim(final AnimationDrawable animation) {
+		long totalDuration = 0;
+		for (int i = 0; i < animation.getNumberOfFrames(); i++) {
+			totalDuration += animation.getDuration(i);
 		}
+		Timer timer = new Timer();
 
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			Log.d("Marvin_Debug", "sdfsdfsdfs");
-			((ImageView) mActivity.findViewById(mResultId))
-			.setVisibility(View.GONE);
-			
-		}
-	};
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				animation.stop();
+				reset();
+			}
+		};
+		timer.schedule(timerTask, totalDuration);
+	}
 }
