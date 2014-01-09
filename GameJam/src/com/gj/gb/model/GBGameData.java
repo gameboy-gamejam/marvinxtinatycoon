@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.util.Log;
+
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBEconomics;
@@ -338,5 +340,24 @@ public class GBGameData {
 			return true;
 		}
 		return false;
+	}
+
+	public void refreshIngredients() {
+		List<GBIngredient> toBeRemoved = new ArrayList<GBIngredient>();
+		int n = this.ingredients.size();
+		for (int i=0; i<n; i++) {
+			GBIngredient gbi = ingredients.get(i);
+			if (gbi.getQuantity() == 0) {
+				toBeRemoved.add(gbi);
+			}
+		}
+		
+		if (toBeRemoved.size() > 0) {
+			int len = toBeRemoved.size();
+			for (int i=0; i<len; i++) {
+				Log.w("test", "Removed!");
+				this.ingredients.remove(toBeRemoved.get(i));
+			}
+		}
 	}
 }

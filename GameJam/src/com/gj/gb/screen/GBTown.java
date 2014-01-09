@@ -127,6 +127,8 @@ public class GBTown extends Activity {
 	}
 
 	private void updateData() {
+		data.refreshIngredients();
+		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
