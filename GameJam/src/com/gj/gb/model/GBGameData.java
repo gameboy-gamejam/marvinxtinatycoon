@@ -267,6 +267,7 @@ public class GBGameData {
 	}
 
 	public void updateDay() {
+		dayState = GBDayState.MORNING;
 		totalDay++;
 		
 		currentDay++;
@@ -293,6 +294,7 @@ public class GBGameData {
 		dayTotalCustomer = 0;
 		dayTotalGold = 0;
 		dayTotalRatings = 0;
+		dayTotalExperience = 0;
 	}
 
 	private boolean is31() {
@@ -374,6 +376,7 @@ public class GBGameData {
 	protected int dayTotalCustomer = 0;
 	protected int dayTotalGold = 0;
 	protected int dayTotalRatings = 0;
+	private int dayTotalExperience = 0;
 	
 	public int getDayTotalCustomer() {
 		return dayTotalCustomer;
@@ -397,6 +400,14 @@ public class GBGameData {
 
 	public void setDayTotalRatings(int dayTotalRatings) {
 		this.dayTotalRatings = dayTotalRatings;
+	}
+
+	public int getDayTotalExperience() {
+		return dayTotalExperience;
+	}
+
+	public void setDayTotalExperience(int dayTotalExperience) {
+		this.dayTotalExperience = dayTotalExperience;
 	}
 
 	List<GBRecipe> available;

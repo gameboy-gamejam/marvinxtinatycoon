@@ -135,6 +135,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/GBTheme.Transparent">
         </activity>
+       <activity  
+            android:name="com.gj.gb.popup.GBDaySummaryPop"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/GBTheme.Transparent">
+        </activity>
         
         <!-- Mini Games -->
         <activity

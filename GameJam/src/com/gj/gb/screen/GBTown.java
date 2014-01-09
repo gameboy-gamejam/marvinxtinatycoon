@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
+import com.gj.gb.popup.GBDaySummaryPop;
 import com.gj.gb.popup.GBLevelUpPop;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
@@ -179,9 +179,7 @@ public class GBTown extends Activity {
 			this.data.clearMenu();
 			if(this.data.update()) {
 				// TODO: call day summary first
-				this.data.updateDay();
-				this.data.recoverStamina(5);
-				GBEconomics.update();
+				toDaySummary();
 			}
 			updateData();
 			this.data.recoverStamina(1);
@@ -192,7 +190,16 @@ public class GBTown extends Activity {
 		
 		if (requestCode == 300) {
 			updateData();
+		} else if (requestCode == 400) {
+			this.data.updateDay();
+			this.data.recoverStamina(5);
+			GBEconomics.update();
+			updateData();
 		}
+	}
+
+	private void toDaySummary() {
+		startActivityForResult(new Intent(this, GBDaySummaryPop.class), 400);
 	}
 
 	private void toLevelUp() {
