@@ -27,13 +27,8 @@
                     android:id="@+id/btn_cook_1"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/test2" />
+                    android:background="@drawable/test2" />
 
-                <ImageView
-                    android:id="@+id/result_1"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -62,7 +57,7 @@
                     android:id="@+id/btn_cook_2"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/test2" />
+                    android:background="@drawable/test2" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -97,7 +92,7 @@
                     android:id="@+id/btn_cook_3"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/test2" />
+                    android:background="@drawable/test2" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -125,7 +120,7 @@
                     android:id="@+id/btn_cook_4"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/test2" />
+                    android:background="@drawable/test2" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

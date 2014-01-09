@@ -14,6 +14,7 @@ import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBStove;
 import com.gj.gb.model.GBStove.OvenStatus;
 import com.gj.gb.popup.GBDishListPopup;
+import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBKitchen extends Activity {
@@ -22,7 +23,7 @@ public class GBKitchen extends Activity {
 	public static final int RESULT_CODE_DISH = 20001;
 	GBStove stove1, stove2, stove3, stove4;
 
-	GBGameData data;
+	GBGameData mData;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +33,12 @@ public class GBKitchen extends Activity {
 	}
 	
 	private void init(){
-		stove1 = new GBStove(this, R.id.progressBar1, R.id.result_1);
-		stove2 = new GBStove(this, R.id.progressBar2, R.id.result_1);
-		stove3 = new GBStove(this, R.id.progressBar3, R.id.result_1);
-		stove4 = new GBStove(this, R.id.progressBar4, R.id.result_1);
+		mData = GBDataManager.getGameData();
+		
+		stove1 = new GBStove(this, R.id.progressBar1, R.id.btn_cook_1);
+		stove2 = new GBStove(this, R.id.progressBar2, R.id.btn_cook_2);
+		stove3 = new GBStove(this, R.id.progressBar3, R.id.btn_cook_3);
+		stove4 = new GBStove(this, R.id.progressBar4, R.id.btn_cook_4);
 
 		findViewById(R.id.btn_cook_1).setOnClickListener(new OnClickListener() {
 			@Override
@@ -132,7 +135,7 @@ public class GBKitchen extends Activity {
 		editorDish.putInt("dish_"+stove.getDishId(), mDishCountPref.getInt("dish_"+stove.getDishId(), 0)+ stove.getCount());
 		editorDish.commit();
 		Log.d("Marvin_Debug", "dishCount:  "+mDishCountPref.getInt("dish_"+stove.getDishId(), 0));
-		data.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()), stove.getCount());
+		mData.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()), stove.getCount());
 	}
 
 	@Override
