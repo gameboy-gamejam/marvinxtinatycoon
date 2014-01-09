@@ -52,6 +52,9 @@ public class GBDataManager {
 		if (GAME_DATA == null) {
 			GAME_DATA = new GBGameData();
 
+			GAME_DATA.setDayTotalCustomer(0);
+			GAME_DATA.setDayTotalGold(0);
+			GAME_DATA.setDayTotalRatings(0);
 			GAME_DATA.setCurrentDay(1);
 			GAME_DATA.setCurrentMonth(1);
 			GAME_DATA.setCurrentYear(2014);
@@ -103,6 +106,9 @@ public class GBDataManager {
 		edit.putInt("experience", GAME_DATA.getExperience());
 		edit.putInt("totalCustomer", GAME_DATA.getTotalCustomers());
 		edit.putInt("stamina", GAME_DATA.getStamina());
+		edit.putInt("day_customer", GAME_DATA.getDayTotalCustomer());
+		edit.putInt("day_gold", GAME_DATA.getDayTotalGold());
+		edit.putInt("day_rating", GAME_DATA.getDayTotalRatings());
 
 		String converted = convertIngredientList(GAME_DATA.getIngredients());
 		edit.putString("ingredients", converted);
@@ -154,6 +160,9 @@ public class GBDataManager {
 			GAME_DATA.setTotalCustomers(PREFS.getInt("totalCustomer", 0));
 			GAME_DATA.setStamina(PREFS.getInt("stamina", 10)); // pano logic nito?
 																// haha
+			GAME_DATA.setExperience(PREFS.getInt("day_customer", 0));
+			GAME_DATA.setExperience(PREFS.getInt("day_gold", 0));
+			GAME_DATA.setExperience(PREFS.getInt("day_rating", 0));
 	
 			List<GBIngredient> parsed = parseIngredientString(PREFS.getString(
 					"ingredients", ""));

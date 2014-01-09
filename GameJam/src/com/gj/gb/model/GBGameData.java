@@ -288,6 +288,10 @@ public class GBGameData {
 			currentMonth = 1;
 			currentYear++;
 		}
+		
+		dayTotalCustomer = 0;
+		dayTotalGold = 0;
+		dayTotalRatings = 0;
 	}
 
 	private boolean is31() {
@@ -364,5 +368,33 @@ public class GBGameData {
 		if (stamina > 10) {
 			stamina = 10;
 		}
+	}
+	
+	protected int dayTotalCustomer = 0;
+	protected int dayTotalGold = 0;
+	protected int dayTotalRatings = 0;
+	
+	public int getDayTotalCustomer() {
+		return dayTotalCustomer;
+	}
+
+	public void setDayTotalCustomer(int dayTotalCustomer) {
+		this.dayTotalCustomer = dayTotalCustomer;
+	}
+
+	public int getDayTotalGold() {
+		return dayTotalGold;
+	}
+
+	public void setDayTotalGold(int dayTotalGold) {
+		this.dayTotalGold = dayTotalGold;
+	}
+
+	public int getDayTotalRatings() {
+		return dayTotalRatings;
+	}
+
+	public void setDayTotalRatings(int dayTotalRatings) {
+		this.dayTotalRatings = dayTotalRatings;
 	}
 }
