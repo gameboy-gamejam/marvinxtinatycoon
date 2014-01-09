@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/bg_default_selector"
             android:enabled="false"
             android:gravity="center"
             android:text="Continue"

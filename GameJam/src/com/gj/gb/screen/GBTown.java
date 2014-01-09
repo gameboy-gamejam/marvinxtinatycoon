@@ -12,9 +12,9 @@ import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
-import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.popup.GBDaySummaryPop;
 import com.gj.gb.popup.GBLevelUpPop;
+import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
@@ -25,56 +25,71 @@ public class GBTown extends Activity {
 	protected GBGameData data;
 	public static boolean shopFlag;
 	
+	private int currentHouse = 1;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scene_town);
+        setContentView(R.layout.scene_town_alt);
         shopFlag = false;
         int id = getIntent().getIntExtra("button_id", R.id.buttonNewGame);
         initData(id);
-        initButtons();
+        initView();
     }
 
-	private void initButtons() {
-		findViewById(R.id.buttonMenu).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonOutside).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonMarket).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonBulletin).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonShop).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonMayor).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonGuild).setOnClickListener(buttonListener);
-	}
-	
-	private OnClickListener buttonListener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			int id = v.getId();
-			switch (id) {
-			case R.id.buttonMenu:
-				startActivity(new Intent(GBTown.this, GBInGameMenu.class));
-				break;
-			case R.id.buttonOutside:
-				toOutside();
-				break;
-			case R.id.buttonMarket:
-				toMarket();
-				break;
-			case R.id.buttonShop:
-				toShop();
-				break;
-			case R.id.buttonMayor:
-				toMayor();
-				break;
-			case R.id.buttonGuild:
-				toGuild();
-				break;
-			case R.id.buttonBulletin:
-				break;
+	private void initView() {
+		findViewById(R.id.buttonLeft).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				currentHouse--;
+				updateHouse();
 			}
+		});
+		
+		findViewById(R.id.buttonRight).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				currentHouse++;
+				updateHouse();
+			}
+		});
+		
+		findViewById(R.id.buttonGo).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (currentHouse == 0) {
+					toMarket();
+				} else if (currentHouse == 1) {
+					toShop();
+				} else {
+					toOutside();
+				}
+			}
+		});
+	}
+
+	protected void updateHouse() {
+		if (currentHouse == 0) {
+			findViewById(R.id.buttonLeft).setEnabled(false);
+		} else if (currentHouse == 2) {
+			findViewById(R.id.buttonRight).setEnabled(false);
+		} else {
+			findViewById(R.id.buttonLeft).setEnabled(true);
+			findViewById(R.id.buttonRight).setEnabled(true);
 		}
-	};
-	
+		
+		if (currentHouse == 0) {
+			((ImageView) findViewById(R.id.imageView1)).setImageResource(R.drawable.market);
+		} else if (currentHouse == 1) {
+			((ImageView) findViewById(R.id.imageView1)).setImageResource(R.drawable.shop);
+		} else {
+			((ImageView) findViewById(R.id.imageView1)).setImageResource(R.drawable.outside);
+		}
+	}
+
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
@@ -133,9 +148,12 @@ public class GBTown extends Activity {
 		data.refreshIngredients();
 		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
-		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
-		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
-		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
+		((TextView) findViewById(R.id.textRating)).setText(String.valueOf(data.getCurrentRating()));
+		((TextView) findViewById(R.id.textCustomers)).setText(String.valueOf(data.getTotalCustomers()));
+		((TextView) findViewById(R.id.textLevel)).setText("LEVEL " + data.getLevel());
+		((TextView) findViewById(R.id.textGourmetPoints)).setText(String.valueOf(data.getExperience()));
+		((TextView) findViewById(R.id.textDay)).setText("DAY " + data.getTotalDay()+1);
+//		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
 	}
 
 	private int formatDayState(GBDayState dayState) {

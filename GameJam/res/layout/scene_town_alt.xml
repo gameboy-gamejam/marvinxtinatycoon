@@ -2,23 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6FCCFF">
-<!--     android:background="#EEECD2"> -->
-<!--     android:background="#6874A5"> -->
+    android:background="#6FCCFF" >
 
-    <View 
+    <!-- android:background="#EEECD2"> -->
+    <!-- android:background="#6874A5"> -->
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-   		android:background="@drawable/background_town"
-        />
-    
+        android:background="@drawable/background_town" />
+
     <Button
         android:id="@+id/buttonLeft"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/arrow_left" 
+        android:background="@drawable/button_left_arrow"
         android:padding="5dp" />
 
     <Button
@@ -28,15 +28,15 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="15dp"
-        android:background="@drawable/arrow_right" 
+        android:background="@drawable/button_right_arrow"
         android:padding="5dp" />
 
-    <View 
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    android:background="#116FCCFF"/>
-<!--     android:background="#77EEECD2"/> -->
-<!--         android:background="#776874A5"/> -->
+        android:background="#116FCCFF" />
+    <!-- android:background="#77EEECD2"/> -->
+    <!-- android:background="#776874A5"/> -->
 
     <Button
         android:id="@+id/buttonGo"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
+        android:text="ENTER" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -52,8 +52,8 @@
         android:layout_height="180dp"
         android:layout_above="@+id/buttonGo"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/market"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/shop" />
 
     <Button
         android:id="@+id/buttonSave"
@@ -88,6 +88,7 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-5dp"
         android:background="@drawable/bg_gourmet"
         android:gravity="center"
         android:text="0"
@@ -100,7 +101,51 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textGourmetPoints"
         android:layout_centerHorizontal="true"
-        android:text="Level 5" />
+        android:text="LEVEL 5"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textGold"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_default_on"
+        android:drawableLeft="@drawable/icon_gold"
+        android:drawablePadding="10dp"
+        android:gravity="right"
+        android:text="10G"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textRating"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textGold"
+        android:layout_below="@+id/textGold"
+        android:background="@drawable/bg_default_on"
+        android:drawableLeft="@drawable/icon_like"
+        android:drawablePadding="10dp"
+        android:gravity="right"
+        android:text="0"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textCustomers"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textRating"
+        android:background="@drawable/bg_default_on"
+        android:drawableLeft="@drawable/icon_people"
+        android:layout_alignLeft="@+id/textGold"
+        android:drawablePadding="10dp"
+        android:gravity="right"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textDay"
@@ -108,38 +153,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
         android:text="DAY 1"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textStamina"
+    <Button
+        android:id="@+id/buttonMainMenu"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:drawableTop="@drawable/icon_stamina_vectorized"
-        android:text="10" />
-
-    <TextView
-        android:id="@+id/textRate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:drawableTop="@drawable/icon_rate_vectorized"
-        android:layout_toLeftOf="@id/textStamina"
-        android:gravity="center_horizontal"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textGold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/textRate"
-        android:drawableTop="@drawable/icon_gold_vectorized"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:text="TextView" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Button" />
 
 </RelativeLayout>
