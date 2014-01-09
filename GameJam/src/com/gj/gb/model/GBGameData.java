@@ -7,6 +7,7 @@ import java.util.List;
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
 import com.gj.gb.logic.GBEconomics;
+import com.gj.gb.logic.GBStatsHelper;
 
 public class GBGameData {
 
@@ -328,5 +329,14 @@ public class GBGameData {
 	
 	public void clearReadyDish() {
 		this.cookedDish.clear();
+	}
+
+	public boolean hasLevel() {
+		if (experience >= nextLevel) {
+			nextLevel = GBStatsHelper.calculateNextLevel(level, nextLevel);
+			level++;
+			return true;
+		}
+		return false;
 	}
 }

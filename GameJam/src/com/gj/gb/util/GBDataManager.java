@@ -59,7 +59,7 @@ public class GBDataManager {
 			GAME_DATA.setCurrentGold(500);
 			GAME_DATA.setDayState(GBDayState.MORNING);
 			GAME_DATA.setLevel(1);
-			GAME_DATA.setNextLevel(50);
+			GAME_DATA.setNextLevel(20);
 			GAME_DATA.setExperience(0);
 			GAME_DATA.setTotalCustomers(0);
 			GAME_DATA.setStamina(10); // pano logic nito? haha

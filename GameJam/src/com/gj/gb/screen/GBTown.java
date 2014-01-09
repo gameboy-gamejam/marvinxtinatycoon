@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gj.gb.R;
 import com.gj.gb.model.GBGameData;
@@ -173,6 +174,13 @@ public class GBTown extends Activity {
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
 			this.data.update();
 			updateData();
+			if (this.data.hasLevel()) {
+				toLevelUp();
+			}
 		}
+	}
+
+	private void toLevelUp() {
+		Toast.makeText(this, "Level Up", Toast.LENGTH_SHORT).show();
 	}
 }
