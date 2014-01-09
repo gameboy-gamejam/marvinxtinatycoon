@@ -25,7 +25,7 @@ public class GBCustomerSprite {
 		GONE
 	}
 
-	private Bitmap bitmap, bitmap1, bitmap2, bitmap3, glowBitmap;
+	private Bitmap bitmap1, bitmap2, bitmap3, glowBitmap;
 	private Paint paint, glowPaint, shadowPaint;
 
 	private float x, y;
@@ -51,11 +51,14 @@ public class GBCustomerSprite {
 		this.pointY = y;
 		this.targetY = y - 50;
 
-		this.bitmap = bitmap1;
 		this.paint = new Paint();
 		this.paint.setTextSize(50.0f);
 
-		this.glowBitmap = bitmap.extractAlpha();
+        this.bitmap1 = bitmap1;
+        this.bitmap2 = bitmap2;
+        this.bitmap3 = bitmap3;
+        
+		this.glowBitmap = bitmap1.extractAlpha();
 		this.glowPaint = new Paint();
 
 		int glowColor = Color.rgb(0, 192, 255);
@@ -70,20 +73,10 @@ public class GBCustomerSprite {
         shadowPaint.setStrokeWidth(2.0f);
         shadowPaint.setStyle(Paint.Style.STROKE);
         shadowPaint.setShadowLayer(5.0f, 10.0f, 10.0f, Color.BLACK);
-        
-        this.bitmap1 = bitmap1;
-        this.bitmap2 = bitmap2;
-        this.bitmap3 = bitmap3;
 	}
 
 	public void update(long elapse) {
-		int hit = customer.getHit();
-		
-		if (hit == 1) {
-			this.bitmap = bitmap2;
-		} else if (hit >= 2) {
-			this.bitmap = bitmap3;
-		}
+
 	}
 	
 
@@ -92,7 +85,15 @@ public class GBCustomerSprite {
 			if (selected) {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
-			canvas.drawBitmap(bitmap, x, y, paint);
+			GBCustomerState state = customer.getState();
+			
+			if (state == GBCustomerState.LEAVING) {
+				canvas.drawBitmap(bitmap3, x, y, paint);
+			} else if (customer.getSomething()) {
+				canvas.drawBitmap(bitmap2, x, y, paint);
+			} else {
+				canvas.drawBitmap(bitmap1, x, y, paint);
+			}
 			canvas.drawBitmap(thoughtCloud, x, y-thoughtCloud.getHeight(), paint);
 			if (customer.getOrder() == null) {
 				canvas.drawBitmap(defaultThought, x, y-thoughtCloud.getHeight(), paint);
@@ -148,8 +149,8 @@ public class GBCustomerSprite {
 			int action = event.getAction();
 			float eventX = event.getX();
 			float eventY = event.getY();
-			int width = bitmap.getWidth();
-			int height = bitmap.getHeight();
+			int width = bitmap1.getWidth();
+			int height = bitmap1.getHeight();
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
@@ -174,8 +175,8 @@ public class GBCustomerSprite {
 			int action = event.getAction();
 			float eventX = event.getX();
 			float eventY = event.getY();
-			int width = bitmap.getWidth();
-			int height = bitmap.getHeight();
+			int width = bitmap1.getWidth();
+			int height = bitmap1.getHeight();
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
@@ -199,11 +200,11 @@ public class GBCustomerSprite {
 	}
 	
 	public int getWidth() {
-		return bitmap.getWidth();
+		return bitmap1.getWidth();
 	}
 	
 	public int getHeight() {
-		return bitmap.getHeight();
+		return bitmap1.getHeight();
 	}
 
 	public void setListener(GBRestaurantDataListener listener) {

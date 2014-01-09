@@ -72,18 +72,20 @@ public class GBCustomerSpriteManager {
 		
 		Bitmap bitmap2 = ImageCache.getBitmap("scaled_customer_1_2");
 		if (bitmap2 == null) {
-			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));		
+			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_1_2");	
+			Log.w("test", "image 2 = " + (bitmap == null));
 			float imageRatio = scaleWidthSample / bitmap.getWidth();		
-			spriteBitmap = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
-			ImageCache.putBitmap(spriteBitmap, "scaled_customer_" + (customer.getAvatar()-1) + "_2");
+			bitmap2 = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
+			ImageCache.putBitmap(bitmap2, "scaled_customer_1_2");
 		}
 		
 		Bitmap bitmap3 = ImageCache.getBitmap("scaled_customer_1_3");
 		if (bitmap3 == null) {
-			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_" + (customer.getAvatar()-1));
+			Bitmap bitmap = ImageCache.getBitmap(activity, "customer_1_3");
+			Log.w("test", "image 3 = " + (bitmap == null));
 			float imageRatio = scaleWidthSample / bitmap.getWidth();
-			spriteBitmap = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
-			ImageCache.putBitmap(spriteBitmap, "scaled_customer_" + (customer.getAvatar()-1) + "_3");
+			bitmap3 = Utils.getResizedBitmap(bitmap, imageRatio, imageRatio);
+			ImageCache.putBitmap(bitmap3, "scaled_customer_1_3");
 		}
 	
 		GBCustomerSprite sprite = new GBCustomerSprite(customer, spriteBitmap, bitmap2, bitmap3, 0, 0);
