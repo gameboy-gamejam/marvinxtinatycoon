@@ -190,7 +190,8 @@ public class GBCustomerSprite {
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
 				selected = false;
-				if (customer.getState() == GBCustomerState.LEAVING) {
+				if (customer.getState() == GBCustomerState.LEAVING
+						&& GBDataManager.getGameData().hasDish(customer.getOrder().getId())) {
 					served = true;
 					customer.setState(GBCustomerState.SERVED);
 					listener.onDishServed(customer);

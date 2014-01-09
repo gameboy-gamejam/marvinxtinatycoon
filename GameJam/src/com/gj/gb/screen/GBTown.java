@@ -9,9 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
+import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
 import com.gj.gb.popup.GBPopConfirm;
+import com.gj.gb.popup.GBDaySummaryPop;
+import com.gj.gb.popup.GBLevelUpPop;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
@@ -127,6 +130,8 @@ public class GBTown extends Activity {
 	}
 
 	private void updateData() {
+		data.refreshIngredients();
+		
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
@@ -172,8 +177,33 @@ public class GBTown extends Activity {
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
-			this.data.update();
+			this.data.clearMenu();
+			if(this.data.update()) {
+				// TODO: call day summary first
+				toDaySummary();
+			}
+			updateData();
+			this.data.recoverStamina(1);
+			if (this.data.hasLevel()) {
+				toLevelUp();
+			}
+		}
+		
+		if (requestCode == 300) {
+			updateData();
+		} else if (requestCode == 400) {
+			this.data.updateDay();
+			this.data.recoverStamina(5);
+			GBEconomics.update();
 			updateData();
 		}
+	}
+
+	private void toDaySummary() {
+		startActivityForResult(new Intent(this, GBDaySummaryPop.class), 400);
+	}
+
+	private void toLevelUp() {
+		startActivityForResult(new Intent(this, GBLevelUpPop.class), 300);
 	}
 }

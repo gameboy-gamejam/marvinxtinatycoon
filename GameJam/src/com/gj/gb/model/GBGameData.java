@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import android.util.Log;
+
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.factory.GBRecipeFactory;
-import com.gj.gb.logic.GBEconomics;
+import com.gj.gb.logic.GBStatsHelper;
+import com.gj.gb.util.Utils;
 
 public class GBGameData {
 
@@ -74,13 +77,12 @@ public class GBGameData {
 	}
 
 	public int getCurrentRating() {
-		// update rating value
-		currentRating = totalCustomers / currentDay;
 		return currentRating;
 	}
 
 	public void setCurrentRating(int currentRating) {
 		this.currentRating = currentRating;
+		if (this.currentRating < 0) this.currentRating = 0;
 	}
 
 	public int getTotalCustomers() {
@@ -207,7 +209,7 @@ public class GBGameData {
 		return ok == n;
 	}
 	
-	public List<GBRecipe> getRecipes() {
+	public List<GBRecipe> getAvailableRecipes() {
 		if (recipes == null || recipes.size() == 0) {
 			recipes = new ArrayList<GBRecipe>();
 			recipes.clear();
@@ -250,23 +252,23 @@ public class GBGameData {
 		stamina--;
 	}
 
-	public void update() {
-		updateDayState();
+	public boolean update() {
+		return updateDayState();
 	}
 
-	private void updateDayState() {
+	private boolean updateDayState() {
 		if (dayState == GBDayState.MORNING) {
 			dayState = GBDayState.AFTERNOON;
 		} else if (dayState == GBDayState.AFTERNOON) {
 			dayState = GBDayState.EVENING;
 		} else if (dayState == GBDayState.EVENING) {
-			dayState = GBDayState.MORNING;
-			updateDay();
-			GBEconomics.update();
+			return true;
 		}
+		return false;
 	}
 
-	private void updateDay() {
+	public void updateDay() {
+		dayState = GBDayState.MORNING;
 		totalDay++;
 		
 		currentDay++;
@@ -289,6 +291,11 @@ public class GBGameData {
 			currentMonth = 1;
 			currentYear++;
 		}
+		
+		dayTotalCustomer = 0;
+		dayTotalGold = 0;
+		dayTotalRatings = 0;
+		dayTotalExperience = 0;
 	}
 
 	private boolean is31() {
@@ -330,5 +337,107 @@ public class GBGameData {
 	
 	public void clearReadyDish() {
 		this.cookedDish.clear();
+	}
+
+	public boolean hasLevel() {
+		if (experience >= nextLevel) {
+			nextLevel = GBStatsHelper.calculateNextLevel(level, nextLevel);
+			level++;
+			return true;
+		}
+		return false;
+	}
+
+	public void refreshIngredients() {
+		List<GBIngredient> toBeRemoved = new ArrayList<GBIngredient>();
+		int n = this.ingredients.size();
+		for (int i=0; i<n; i++) {
+			GBIngredient gbi = ingredients.get(i);
+			if (gbi.getQuantity() == 0) {
+				toBeRemoved.add(gbi);
+			}
+		}
+		
+		if (toBeRemoved.size() > 0) {
+			int len = toBeRemoved.size();
+			for (int i=0; i<len; i++) {
+				Log.w("test", "Removed!");
+				this.ingredients.remove(toBeRemoved.get(i));
+			}
+		}
+	}
+
+	public void recoverStamina(int i) {
+		stamina += i;
+		if (stamina > 10) {
+			stamina = 10;
+		}
+	}
+	
+	protected int dayTotalCustomer = 0;
+	protected int dayTotalGold = 0;
+	protected int dayTotalRatings = 0;
+	private int dayTotalExperience = 0;
+	
+	public int getDayTotalCustomer() {
+		return dayTotalCustomer;
+	}
+
+	public void setDayTotalCustomer(int dayTotalCustomer) {
+		this.dayTotalCustomer = dayTotalCustomer;
+	}
+
+	public int getDayTotalGold() {
+		return dayTotalGold;
+	}
+
+	public void setDayTotalGold(int dayTotalGold) {
+		this.dayTotalGold = dayTotalGold;
+	}
+
+	public int getDayTotalRatings() {
+		return dayTotalRatings;
+	}
+
+	public void setDayTotalRatings(int dayTotalRatings) {
+		this.dayTotalRatings = dayTotalRatings;
+	}
+
+	public int getDayTotalExperience() {
+		return dayTotalExperience;
+	}
+
+	public void setDayTotalExperience(int dayTotalExperience) {
+		this.dayTotalExperience = dayTotalExperience;
+	}
+
+	List<GBRecipe> available;
+	
+	public List<GBRecipe> getMenu() {
+		if (available == null) {
+			available = new ArrayList<GBRecipe>();
+			List<GBRecipe> recipes = getAvailableRecipes();
+			int n = recipes.size();
+			if (n < 4) {
+				for (int i=0; i<n; i++) {
+					available.add(recipes.get(i));
+				}
+			} else {
+				while (available.size() < 4) {
+					GBRecipe random = recipes.get(Utils.RANDOM.nextInt(n));
+					if (!available.contains(random)) {
+						available.add(random);
+					}
+				}
+			}
+		}
+		return available;
+	}
+	
+	public void clearMenu() {
+		if (available != null) {
+			available.clear();
+			available = null;
+		}
 	}
 }

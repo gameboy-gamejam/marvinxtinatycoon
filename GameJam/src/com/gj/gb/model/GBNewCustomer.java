@@ -135,7 +135,7 @@ public class GBNewCustomer {
 	}
 	
 	private void decide() {
-		List<GBRecipe> recipes = GBDataManager.getGameData().getRecipes();
+		List<GBRecipe> recipes = GBDataManager.getGameData().getMenu();
 		// ai chever para malaman kung anu ung gustong foods
 		int n = recipes.size();
 		int index = Utils.RANDOM.nextInt(n);
