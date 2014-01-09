@@ -4,10 +4,12 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/info"
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:background="@drawable/bg_default"
         android:orientation="vertical" >
 
         <TextView
@@ -15,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:background="@drawable/bg_default_layer"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -29,10 +31,20 @@
                 android:id="@+id/ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_default_selector"
+                android:background="@drawable/btn_green"
                 android:gravity="center"
                 android:text="@string/ok" />
         </LinearLayout>
     </LinearLayout>
+    
+        <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/btn_close" />
 
 </RelativeLayout>

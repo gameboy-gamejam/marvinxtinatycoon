@@ -62,6 +62,14 @@ public class GBDishListPopup extends Activity {
 				finish();
 			}
 		});
+		
+		findViewById(R.id.btn_close2).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 
 		findViewById(R.id.btn_prepare).setOnClickListener(
 				new OnClickListener() {
