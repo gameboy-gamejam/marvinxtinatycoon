@@ -142,7 +142,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name="com.gj.gb.stage.FruitGatheringStage"
+            android:name="com.gj.gb.stage.AppleCatchingStage"
             android:launchMode="singleTop"
             android:screenOrientation="landscape">
         </activity>
