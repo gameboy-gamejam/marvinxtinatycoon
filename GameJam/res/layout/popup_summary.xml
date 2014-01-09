@@ -4,12 +4,13 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
+        android:id="@+id/info"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_default_layer" >
+        android:background="@drawable/bg_default" >
 
         <TextView
             android:id="@+id/textDayLabel"
@@ -17,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="DAY 1"
-            android:layout_marginTop="5dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -31,18 +32,17 @@
             android:text="JAN. 4, 2014"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-
         <TextView
             android:id="@+id/labelGold"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textDate"
-            android:gravity="center_horizontal"
             android:layout_marginTop="25dp"
+            android:gravity="center_horizontal"
             android:text="GOLD"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/labelExperience"
@@ -50,11 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/labelGold"
-            android:gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:text="EXP."
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/labelRating"
@@ -65,32 +65,32 @@
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="RATING"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textDate"
-            android:gravity="center_horizontal"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="150"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textExperience"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textGold"
-            android:gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="+50"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textRating"
@@ -98,11 +98,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelExperience"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="0/1000"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000" />
 
         <Button
             android:id="@+id/buttonNextDay"
@@ -111,8 +111,19 @@
             android:layout_below="@+id/labelRating"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
+            android:background="@drawable/btn_green"
+            android:gravity="center"
             android:text="Next Day" />
-        
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/btn_close" />
 
 </RelativeLayout>

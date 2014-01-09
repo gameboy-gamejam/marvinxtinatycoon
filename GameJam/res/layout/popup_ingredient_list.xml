@@ -1,228 +1,256 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center" >
 
-    <LinearLayout
-        android:id="@+id/holder_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_default_layer"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dummy Name"
-            android:textSize="@dimen/dp_18" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/holder_ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/holder_name"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_default_layer"
-        android:paddingBottom="@dimen/dp_10"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingredients" />
-
-        <RelativeLayout
-            android:id="@+id/holder_ingredient_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5" >
-
-            <TextView
-                android:id="@+id/name_ingredient_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Pizza" />
-
-            <TextView
-                android:id="@+id/max_ingredient_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="35" />
-
-            <TextView
-                android:id="@+id/divider_ingredient_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/max_ingredient_1"
-                android:text=" / " />
-
-            <TextView
-                android:id="@+id/current_ingredient_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/divider_ingredient_1"
-                android:text="0" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/holder_ingredient_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5" >
-
-            <TextView
-                android:id="@+id/name_ingredient_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Pizza" />
-
-            <TextView
-                android:id="@+id/max_ingredient_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="35" />
-
-            <TextView
-                android:id="@+id/divider_ingredient_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/max_ingredient_2"
-                android:text=" / " />
-
-            <TextView
-                android:id="@+id/current_ingredient_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/divider_ingredient_2"
-                android:text="0" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/holder_ingredient_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5" >
-
-            <TextView
-                android:id="@+id/name_ingredient_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="Pizza" />
-
-            <TextView
-                android:id="@+id/max_ingredient_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="35" />
-
-            <TextView
-                android:id="@+id/divider_ingredient_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/max_ingredient_3"
-                android:text=" / " />
-
-            <TextView
-                android:id="@+id/current_ingredient_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/divider_ingredient_3"
-                android:text="0" />
-        </RelativeLayout>
-    </LinearLayout>
-
     <RelativeLayout
-        android:id="@+id/holder_count"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/holder_ingredients"
-        android:background="@drawable/bg_default_layer" >
+        android:id="@+id/info"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_default" >
 
         <LinearLayout
-            android:id="@+id/holder_count_info"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:id="@+id/holder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dummy Name"
+                android:textSize="@dimen/dp_18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/holder_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/holder_name"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:background="@drawable/bg_default_2"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_10" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredients" />
+
+            <RelativeLayout
+                android:id="@+id/holder_ingredient_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5" >
+
+                <TextView
+                    android:id="@+id/name_ingredient_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Pizza" />
+
+                <TextView
+                    android:id="@+id/max_ingredient_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="35" />
+
+                <TextView
+                    android:id="@+id/divider_ingredient_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/max_ingredient_1"
+                    android:text=" / " />
+
+                <TextView
+                    android:id="@+id/current_ingredient_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/divider_ingredient_1"
+                    android:text="0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/holder_ingredient_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5" >
+
+                <TextView
+                    android:id="@+id/name_ingredient_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Pizza" />
+
+                <TextView
+                    android:id="@+id/max_ingredient_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="35" />
+
+                <TextView
+                    android:id="@+id/divider_ingredient_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/max_ingredient_2"
+                    android:text=" / " />
+
+                <TextView
+                    android:id="@+id/current_ingredient_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/divider_ingredient_2"
+                    android:text="0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/holder_ingredient_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5" >
+
+                <TextView
+                    android:id="@+id/name_ingredient_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Pizza" />
+
+                <TextView
+                    android:id="@+id/max_ingredient_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="35" />
+
+                <TextView
+                    android:id="@+id/divider_ingredient_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/max_ingredient_3"
+                    android:text=" / " />
+
+                <TextView
+                    android:id="@+id/current_ingredient_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/divider_ingredient_3"
+                    android:text="0" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/holder_count"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/holder_ingredients"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/bg_default_2" >
+
+            <LinearLayout
+                android:id="@+id/holder_count_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/current_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/dp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" / "
+                    android:textSize="@dimen/dp_20" />
+
+                <TextView
+                    android:id="@+id/max_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="@dimen/dp_20" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btn_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_toLeftOf="@+id/holder_count_info"
+                android:src="@drawable/btn_left" />
+
+            <ImageView
+                android:id="@+id/btn_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_toRightOf="@+id/holder_count_info"
+                android:src="@drawable/btn_right" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/holder_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/holder_count"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/current_value"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_close"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="@dimen/dp_20" />
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:background="@drawable/btn_red"
+                android:gravity="center"
+                android:text="Close" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_cook"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" / "
-                android:textSize="@dimen/dp_20" />
-
-            <TextView
-                android:id="@+id/max_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:textSize="@dimen/dp_20" />
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/btn_green"
+                android:gravity="center"
+                android:text="Cook" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/btn_left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_20"
-            android:layout_toLeftOf="@+id/holder_count_info"
-            android:src="@drawable/btn_left" />
-
-        <ImageView
-            android:id="@+id/btn_right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_toRightOf="@+id/holder_count_info"
-            android:src="@drawable/btn_right" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/holder_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/holder_count"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/btn_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_default_selector"
-            android:gravity="center"
-            android:text="Close" />
-
-        <TextView
-            android:id="@+id/btn_cook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_default_selector"
-            android:gravity="center"
-            android:text="Cook" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/btn_close2"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/btn_close" />
 
 </RelativeLayout>

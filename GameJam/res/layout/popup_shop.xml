@@ -4,34 +4,25 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
+        android:id="@+id/info"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="25dp"
-        android:background="@drawable/bg_default_layer" >
-
-        <Button
-            android:id="@+id/buttonClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/btn_close"
-            />
+        android:background="@drawable/bg_default" >
 
         <TextView
             android:id="@+id/labelGold"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/buttonClose"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal"
             android:text="GOLD"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/labelCustomer"
@@ -39,12 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/labelGold"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:text="CUSTOMER"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/labelExperience"
@@ -52,12 +43,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/labelCustomer"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:text="EXP."
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/labelRating"
@@ -65,48 +56,47 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/labelExperience"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="RATING"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonClose"
-            android:gravity="center_horizontal"
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="150"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textCustomer"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelGold"
-            android:gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="8/10"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textExperience"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelCustomer"
-            android:gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="+50"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/textRating"
@@ -114,22 +104,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelExperience"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
             android:layout_toRightOf="@id/labelGold"
+            android:gravity="center_horizontal"
             android:text="0/1000"
-            android:textColor="#000"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000" />
+
         <Button
             android:id="@+id/buttonContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/labelRating"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_default_selector"
             android:layout_marginTop="15dp"
+            android:background="@drawable/btn_green"
+            android:gravity="center"
             android:text="CONTINUE" />
-        
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/btn_close" />
 
 </RelativeLayout>

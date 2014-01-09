@@ -1,36 +1,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:gravity="center" >
 
     <RelativeLayout
+        android:id="@+id/info"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
+        android:background="@drawable/bg_default" >
 
-        <TextView
-            android:id="@+id/tip"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_default_layer"
-            android:gravity="center"/>
+            android:layout_centerInParent="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tip"
-            android:gravity="top"
-            android:paddingBottom="@dimen/dp_15" >
+            <TextView
+                android:id="@+id/tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="Sample" />
 
             <TextView
                 android:id="@+id/play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_default_selector"
+                android:layout_below="@id/tip"
+                android:background="@drawable/btn_green"
                 android:gravity="center"
                 android:text="@string/play"
                 android:textSize="@dimen/dp_12" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/btn_close" />
 
 </RelativeLayout>
