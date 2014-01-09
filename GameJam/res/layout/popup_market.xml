@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_margin="25dp"
+        android:layout_margin="15dp"
         android:background="#E9E1D8"
         android:orientation="vertical" >
 

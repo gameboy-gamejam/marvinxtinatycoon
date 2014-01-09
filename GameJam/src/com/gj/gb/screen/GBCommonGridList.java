@@ -70,7 +70,7 @@ public class GBCommonGridList extends Activity {
 		case R.id.buttonRecipe:
 			setContentView(R.layout.scene_recipe_grid);
 			grid = (GridView) findViewById(R.id.gridList);
-			grid.setAdapter(new RecipeGridViewAdapter(this, data.getRecipes()));
+			grid.setAdapter(new RecipeGridViewAdapter(this, data.getAvailableRecipes()));
 			grid.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -111,8 +111,8 @@ public class GBCommonGridList extends Activity {
 	protected void updateRecipeInfo(int position) {
 		GBRecipe recipe = null;
 		
-		if (data.getRecipes().size() > 0) {
-			recipe = data.getRecipes().get(position);
+		if (data.getAvailableRecipes().size() > 0) {
+			recipe = data.getAvailableRecipes().get(position);
 		}
 		
 		if (recipe == null) {

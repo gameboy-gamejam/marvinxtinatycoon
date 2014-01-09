@@ -37,18 +37,19 @@ public class GBStatsHelper {
 	}
 	
 	public static int calculateNextLevel(int currentLevel, int currentNextLevel) {
-		int nextLevel = currentLevel + 1;
-		float x3 = nextLevel * nextLevel * nextLevel;
-		float x2 = -6.25f * (nextLevel * nextLevel);
-		float x1 = 11.75f * nextLevel;
-		float c = -6.5f;
-		
-		float y = x3 + x2 + x1 + c;
-		y = y * -1;
-		
-		int toNextLevel = currentNextLevel;
-		toNextLevel *= y;
-		
-		return toNextLevel;
+		return currentNextLevel += 30;
+//		int nextLevel = currentLevel + 1;
+//		float x3 = nextLevel * nextLevel * nextLevel;
+//		float x2 = -6.25f * (nextLevel * nextLevel);
+//		float x1 = 11.75f * nextLevel;
+//		float c = -6.5f;
+//		
+//		float y = x3 + x2 + x1 + c;
+//		y = y * -1;
+//		
+//		int toNextLevel = currentNextLevel;
+//		toNextLevel *= y;
+//		
+//		return toNextLevel;
 	}
 } 

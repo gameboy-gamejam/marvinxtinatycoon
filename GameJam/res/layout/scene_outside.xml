@@ -88,4 +88,24 @@
         android:layout_margin="25dp"
         android:text="Mini 1" />
 
+    <ImageView
+        android:id="@+id/iconStamina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/icon_heart"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/textStamina"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iconStamina"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/iconStamina"
+        android:gravity="right|bottom"
+        android:text="10"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
 </RelativeLayout>

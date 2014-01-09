@@ -26,9 +26,14 @@ public class GBOutside extends Activity {
 		setContentView(R.layout.scene_outside);
 	
 		initButtons();
-		updateData();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateData();
+	}
+
 	private void updateData() {
 		GBGameData data = GBDataManager.getGameData();
 		
@@ -36,6 +41,7 @@ public class GBOutside extends Activity {
 		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
 		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
 		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
+		((TextView) findViewById(R.id.textStamina)).setText(String.valueOf(data.getStamina()));
 	}
 
 	private int formatDayState(GBDayState dayState) {
@@ -58,6 +64,7 @@ public class GBOutside extends Activity {
 					toTown();
 					break;
 				case R.id.buttonGame1:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, CarrotStage.class));
@@ -66,6 +73,7 @@ public class GBOutside extends Activity {
 					}
 					break;
 				case R.id.buttonGame2:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, FishStage.class));
@@ -74,6 +82,7 @@ public class GBOutside extends Activity {
 					}
 					break;
 				case R.id.buttonGame3:
+					gbData.setExperience(gbData.getExperience()+1);
 					if(gbData.getStamina() > 0){
 						gbData.useStamina();
 						startActivity(new Intent(GBOutside.this, FruitGatheringStage.class));
