@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gj.gb.R;
@@ -17,7 +16,6 @@ import com.gj.gb.stage.AppleCatchingStage;
 import com.gj.gb.stage.CarrotStage;
 import com.gj.gb.stage.FishStage;
 import com.gj.gb.util.GBDataManager;
-import com.gj.gb.util.Utils;
 
 public class GBOutside extends Activity {
 
@@ -38,28 +36,28 @@ public class GBOutside extends Activity {
 	private void updateData() {
 		GBGameData data = GBDataManager.getGameData();
 
-		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(
-				data.getCurrentGold(), "#,###,###"));
-		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data
-				.getCurrentRating()));
-		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(
-				data.getCurrentDay(), data.getCurrentMonth(),
-				data.getCurrentYear()));
-		((ImageView) findViewById(R.id.imageDayState))
-				.setImageResource(formatDayState(data.getDayState()));
 		((TextView) findViewById(R.id.textStamina)).setText(String.valueOf(data
 				.getStamina()));
+		updateDayState();
 	}
 
-	private int formatDayState(GBDayState dayState) {
+	private void updateDayState() {
+		GBDayState dayState = GBDataManager.getGameData().getDayState();
 		if (dayState == GBDayState.AFTERNOON) {
-			return R.drawable.daystate_1;
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_2);
+			findViewById(R.id.bgFilter).setBackgroundResource(
+					R.color.sky_2_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
 		} else if (dayState == GBDayState.EVENING) {
-			return R.drawable.daystate_2;
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_3);
+			findViewById(R.id.bgFilter).setBackgroundResource(
+					R.color.sky_3_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_1);
+			findViewById(R.id.bgFilter).setVisibility(View.INVISIBLE);
 		}
-		return R.drawable.daystate_0;
 	}
-
 	private OnClickListener buttonListener = new OnClickListener() {
 
 		@Override
