@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="sky_1">#6FCCFF</color>
+    <color name="sky_2">#EEECD2</color>
+    <color name="sky_3">#6874A5</color>
+    <color name="sky_2_clear">#77EEECD2</color>
+    <color name="sky_3_clear">#776874A5</color>
     <color name="black">#000</color>
     <color name="light_shadow">#555555</color>
     <color name="text_shadow">#232323</color>

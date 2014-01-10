@@ -69,6 +69,14 @@ public class GBTown extends Activity {
 				}
 			}
 		});
+		
+		findViewById(R.id.buttonMainMenu).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				toMainMenu();
+			}
+		});
 	}
 
 	protected void updateHouse() {
@@ -92,7 +100,7 @@ public class GBTown extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+		toMainMenu();
 	}
 	
 	protected void toGuild() {
@@ -129,6 +137,12 @@ public class GBTown extends Activity {
 		startActivityForResult(intent, 102);
 	}
 
+	protected void toMainMenu() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Do you want to go to the main menu?\n(The data is not saved.)");
+		startActivityForResult(intent, 103);
+	}
+	
 	private void initData(int id) {
 		if (id == R.id.buttonNewGame) {
 			GBDataManager.createData();
@@ -152,8 +166,25 @@ public class GBTown extends Activity {
 		((TextView) findViewById(R.id.textCustomers)).setText(String.valueOf(data.getTotalCustomers()));
 		((TextView) findViewById(R.id.textLevel)).setText("LEVEL " + data.getLevel());
 		((TextView) findViewById(R.id.textGourmetPoints)).setText(String.valueOf(data.getExperience()));
-		((TextView) findViewById(R.id.textDay)).setText("DAY " + data.getTotalDay()+1);
+		((TextView) findViewById(R.id.textDay)).setText("DAY " + (data.getTotalDay()+1));
+		updateDayState();
 //		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
+	}
+
+	private void updateDayState() {
+		GBDayState dayState = data.getDayState();
+		if (dayState == GBDayState.AFTERNOON) {
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_2);
+			findViewById(R.id.bgFilter).setBackgroundResource(R.color.sky_2_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
+		} else if (dayState == GBDayState.EVENING) {
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_3);
+			findViewById(R.id.bgFilter).setBackgroundResource(R.color.sky_3_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_1);
+			findViewById(R.id.bgFilter).setVisibility(View.INVISIBLE);
+		}
 	}
 
 	private int formatDayState(GBDayState dayState) {
@@ -174,12 +205,6 @@ public class GBTown extends Activity {
 			this.data.update();
 			updateData();
 		}
-
-		/* CHEAT! */
-		if (returnToMain) {
-			GBTown.returnToMain = false;
-			finish();
-		}
 	}
 
 	@Override
@@ -192,6 +217,9 @@ public class GBTown extends Activity {
 			startActivityForResult(new Intent(this, GBOutside.class), 202);
 		} else if (requestCode == 102 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBRestaurant.class), 203);
+		} else if (requestCode == 103 && resultCode == RESULT_OK) {
+			finish();
+			return;
 		}
 		
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {

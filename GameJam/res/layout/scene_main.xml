@@ -3,6 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <View
+        android:id="@+id/bgSky"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6FCCFF" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_town" />
+
     <RelativeLayout
         android:id="@+id/panelStart"
         android:layout_width="match_parent"
@@ -28,43 +39,49 @@
 
     <RelativeLayout
         android:id="@+id/panelButtons"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:background="@color/blackTranslucent"
         android:visibility="gone" >
 
-        <Button
-            android:id="@+id/buttonContinue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:enabled="false"
-            android:gravity="center"
-            android:text="Continue"
-            android:textColor="@color/white" />
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" >
 
-        <Button
-            android:id="@+id/buttonNewGame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/buttonContinue"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_default_selector"
-            android:gravity="center"
-            android:text="New Game"
-            android:textColor="@color/white" />
+            <Button
+                android:id="@+id/buttonContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="Continue"
+                android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/buttonScores"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonContinue"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_default_selector"
-            android:gravity="center"
-            android:text="Scores"
-            android:textColor="@color/white" />
+            <Button
+                android:id="@+id/buttonNewGame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/buttonContinue"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_default_selector"
+                android:gravity="center"
+                android:text="New Game"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/buttonScores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonContinue"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_default_selector"
+                android:gravity="center"
+                android:text="Scores"
+                android:textColor="@color/white" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
