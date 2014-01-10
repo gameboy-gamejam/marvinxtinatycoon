@@ -222,7 +222,7 @@ public class GBTown extends Activity {
 		((TextView) findViewById(R.id.textLevel)).setText("LEVEL "
 				+ data.getLevel());
 		((TextView) findViewById(R.id.textGourmetPoints)).setText(String
-				.valueOf(data.getExperience()));
+				.valueOf(Math.round(data.getExperience())));
 		((TextView) findViewById(R.id.textDay)).setText("DAY "
 				+ (data.getTotalDay() + 1));
 		updateDayState();

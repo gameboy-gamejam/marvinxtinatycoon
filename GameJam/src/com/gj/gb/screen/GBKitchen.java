@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 
 import com.gj.gb.R;
 import com.gj.gb.factory.GBRecipeFactory;
+import com.gj.gb.logic.GBStatsHelper;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBStove;
 import com.gj.gb.model.GBStove.OvenStatus;
@@ -143,6 +144,7 @@ public class GBKitchen extends Activity {
 						+ mDishCountPref.getInt("dish_" + stove.getDishId(), 0));
 		mData.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()),
 				stove.getCount());
+		mData.setExperience(GBStatsHelper.computeCookPoint(GBRecipeFactory.getRecipeById(stove.getDishId())));
 	}
 
 	@Override

@@ -90,6 +90,10 @@ public class GBMarket extends Activity {
 					intent.putExtra("btn_1", "OK");
 					startActivityForResult(intent, 500);
 				} else {
+					
+					GBGameData data = GBDataManager.getGameData();
+					data.setExperience(data.getExperience() + 0.05f);
+					
 					Intent intent = new Intent(GBMarket.this,
 							GBMarketPopConfirm.class);
 					intent.putExtra("ingredient_id", iid);
