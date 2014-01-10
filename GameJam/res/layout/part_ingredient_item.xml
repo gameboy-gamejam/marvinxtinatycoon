@@ -33,7 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/holder"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:text="19G" />
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:text="19G"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

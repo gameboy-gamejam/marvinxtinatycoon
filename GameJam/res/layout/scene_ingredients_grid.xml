@@ -1,111 +1,128 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#77000000" >
+    android:layout_height="match_parent" >
 
-    <Button
+    <RelativeLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_default" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_default_2"
+            android:drawablePadding="2dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="YOUR CURRENT INGREDIENTS"
+            android:textColor="#fff"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/textView1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <GridView
+                android:id="@+id/gridList"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0.6"
+                android:background="@drawable/bg_default_2"
+                android:cacheColorHint="#00000000"
+                android:listSelector="#00000000"
+                android:numColumns="3" >
+            </GridView>
+
+            <RelativeLayout
+                android:id="@+id/panelItemDetail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:background="@drawable/bg_default_2" >
+
+                <ImageView
+                    android:id="@+id/imageIcon"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_grid"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/textIngredientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageIcon"
+                    android:layout_centerHorizontal="true"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="Potato"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textIngredientPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textIngredientName"
+                    android:layout_centerHorizontal="true"
+                    android:text="5"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textIngredientQty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="50x"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textIngredientDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textIngredientQty"
+                    android:layout_below="@+id/textIngredientPrice"
+                    android:gravity="center"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
         android:id="@+id/buttonClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignRight="@id/info"
+        android:layout_alignTop="@id/info"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_2"
         android:background="@drawable/btn_close" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonClose"
-        android:layout_centerHorizontal="true"
-        android:text="YOUR CURRENT INGREDIENTS"
-        android:textColor="#fff"
-        android:shadowColor="@color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="2"
-        android:drawablePadding="2dp"
-        android:background="@drawable/bg_market"
-        android:textSize="25dp" />
-
-    <LinearLayout 
-        android:layout_below="@id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp">
-
-        <GridView
-            android:id="@+id/gridList"
-            android:layout_width="0dp"
-            android:layout_weight="0.6"
-            android:layout_height="match_parent"
-            android:numColumns="3"
-        android:background="@drawable/bg_market">
-        </GridView>
-        
-        <RelativeLayout 
-            android:id="@+id/panelItemDetail"
-            android:layout_width="0dp"
-            android:layout_weight="0.4"
-            android:layout_height="match_parent"
-        android:background="@drawable/bg_market">
-
-            <ImageView
-                android:id="@+id/imageIcon"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_launcher"
-        android:background="@drawable/bg_grid"  />
-
-            <TextView
-                android:id="@+id/textIngredientName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageIcon"
-                android:layout_centerHorizontal="true"
-                android:text="Potato"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/textIngredientPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textIngredientName"
-                android:layout_centerHorizontal="true"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:text="5"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/textIngredientQty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="50x"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/textIngredientDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textIngredientQty"
-                android:layout_below="@+id/textIngredientPrice"
-                android:gravity="center"
-                android:visibility="gone" />
-            
-        </RelativeLayout>
-    </LinearLayout>
 </RelativeLayout>

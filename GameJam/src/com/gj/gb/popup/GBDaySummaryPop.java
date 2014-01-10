@@ -34,7 +34,7 @@ public class GBDaySummaryPop extends Activity {
 		((TextView) findViewById(R.id.textDayLabel)).setText("DAY " + (data.getTotalDay()+1));
 		((TextView) findViewById(R.id.textGold)).setText(String.valueOf(gold));
 		((TextView) findViewById(R.id.textExperience)).setText(String
-				.valueOf(exp));
+				.valueOf((int)exp));
 		((TextView) findViewById(R.id.textRating)).setText(String
 				.valueOf(ratings));
 	}

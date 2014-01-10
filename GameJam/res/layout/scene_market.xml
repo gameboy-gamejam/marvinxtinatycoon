@@ -111,6 +111,8 @@
         android:layout_below="@id/holder_title"
         android:layout_toRightOf="@id/holder_left"
         android:background="@drawable/bg_market"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"
         android:numColumns="5"
         android:overScrollMode="never" >
     </GridView>

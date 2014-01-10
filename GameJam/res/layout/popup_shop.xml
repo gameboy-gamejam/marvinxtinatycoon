@@ -20,9 +20,13 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="25dp"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="GOLD"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/labelCustomer"
@@ -33,9 +37,13 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="CUSTOMER"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/labelExperience"
@@ -46,9 +54,13 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="EXP."
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/labelRating"
@@ -59,9 +71,13 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="RATING"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textGold"
@@ -70,9 +86,13 @@
             android:layout_marginTop="25dp"
             android:layout_toRightOf="@id/labelGold"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="150"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textCustomer"
@@ -82,9 +102,13 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="8/10"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textExperience"
@@ -94,9 +118,13 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="+50"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textRating"
@@ -106,9 +134,13 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/labelGold"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="0/1000"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/buttonContinue"
@@ -119,7 +151,12 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_green"
             android:gravity="center"
-            android:text="CONTINUE" />
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="Continue"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <Button
