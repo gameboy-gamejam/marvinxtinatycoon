@@ -50,29 +50,30 @@
             android:layout_below="@+id/progressGameTime"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
+            android:text="PENDING CUSTOMERS:"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="PENDING CUSTOMERS:" />
+            android:visibility="invisible" />
 
-        <LinearLayout 
+        <LinearLayout
             android:id="@+id/pendingCustomers"
-            android:layout_below="@id/textPendingCustomer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-        
+            android:layout_below="@id/textPendingCustomer"
+            android:orientation="horizontal" />
+
         <RelativeLayout
             android:id="@+id/filter1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#77000000" >
 
-            <TextView 
+            <TextView
                 android:id="@+id/textTapToStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="TAP TO START"/>
-            
+                android:text="TAP TO START" />
+
             <TextView
                 android:id="@+id/textReady"
                 android:layout_width="wrap_content"
@@ -111,8 +112,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@drawable/btn_blue"
             android:enabled="false"
-            android:text="Kitchen" />
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="KITCHEN"
+            android:textColor="#fff"
+            android:textStyle="bold" />
 
         <GridView
             android:id="@+id/listReadyDish"

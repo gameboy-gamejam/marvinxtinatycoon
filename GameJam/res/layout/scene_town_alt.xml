@@ -46,6 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_blue"
+        android:textStyle="bold"
+        android:textColor="#fff"
         android:text="ENTER" />
 
     <ImageView
@@ -70,7 +73,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Button" />
+        android:drawableTop="@drawable/icon_floppy"
+        android:text="SAVE"
+        android:textColor="#fff"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:drawablePadding="2dp"
+        android:background="@null" />
 
     <Button
         android:id="@+id/buttonIngredients"
@@ -79,7 +90,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/buttonSave"
-        android:text="Button" />
+        android:drawableTop="@drawable/icon_list"
+        android:text="ITEM"
+        android:textColor="#fff"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:drawablePadding="2dp"
+        android:background="@null"
+        android:layout_marginRight="15dp" />
 
     <Button
         android:id="@+id/buttonRecipe"
@@ -88,7 +108,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/buttonIngredients"
-        android:text="Button" />
+        android:drawableTop="@drawable/icon_plate"
+        android:text="DISH"
+        android:textColor="#fff"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:drawablePadding="2dp"
+        android:background="@null"
+        android:layout_marginRight="15dp" />
 
     <TextView
         android:id="@+id/textGourmetPoints"
@@ -173,5 +202,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="Button" />
+        android:text="BACK"
+        android:textStyle="bold"
+        android:drawableTop="@drawable/icon_undo"
+        android:textColor="#fff"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:drawablePadding="2dp"
+        android:background="@null" />
 </RelativeLayout>
