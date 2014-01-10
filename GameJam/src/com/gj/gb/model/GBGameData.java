@@ -44,7 +44,7 @@ public class GBGameData {
 
 	protected int level;
 
-	protected int gourmetPoints;
+	protected float gourmetPoints;
 
 	protected int nextLevel;
 
@@ -110,11 +110,12 @@ public class GBGameData {
 		this.level = level;
 	}
 
-	public int getExperience() {
+	public float getExperience() {
 		return gourmetPoints;
 	}
 
-	public void setExperience(int experience) {
+	public void setExperience(float experience) {
+		setDayTotalExperience(experience);
 		this.gourmetPoints = experience;
 	}
 
@@ -345,12 +346,14 @@ public class GBGameData {
 	}
 
 	public boolean hasLevel() {
-		if (gourmetPoints >= nextLevel) {
+		boolean retval = false;
+		while (gourmetPoints >= nextLevel) {
 			nextLevel = GBStatsHelper.calculateNextLevel(level, nextLevel);
+			Log.w("test", "Gourmet Points: " + gourmetPoints);
 			level++;
-			return true;
+			retval = true;
 		}
-		return false;
+		return retval;
 	}
 
 	public void refreshIngredients() {
@@ -382,7 +385,7 @@ public class GBGameData {
 	protected int dayTotalCustomer = 0;
 	protected int dayTotalGold = 0;
 	protected int dayTotalRatings = 0;
-	private int dayTotalExperience = 0;
+	private float dayTotalExperience = 0;
 
 	public int getDayTotalCustomer() {
 		return dayTotalCustomer;
@@ -408,11 +411,11 @@ public class GBGameData {
 		this.dayTotalRatings = dayTotalRatings;
 	}
 
-	public int getDayTotalExperience() {
+	public float getDayTotalExperience() {
 		return dayTotalExperience;
 	}
 
-	public void setDayTotalExperience(int dayTotalExperience) {
+	public void setDayTotalExperience(float dayTotalExperience) {
 		this.dayTotalExperience = dayTotalExperience;
 	}
 

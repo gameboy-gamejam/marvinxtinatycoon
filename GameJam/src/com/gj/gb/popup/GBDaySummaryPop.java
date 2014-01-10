@@ -28,9 +28,10 @@ public class GBDaySummaryPop extends Activity {
 
 		GBGameData data = GBDataManager.getGameData();
 		int gold = data.getDayTotalGold();
-		int exp = data.getDayTotalExperience();
+		float exp = data.getDayTotalExperience();
 		int ratings = data.getDayTotalRatings();
 
+		((TextView) findViewById(R.id.textDayLabel)).setText("DAY " + data.getTotalDay());
 		((TextView) findViewById(R.id.textGold)).setText(String.valueOf(gold));
 		((TextView) findViewById(R.id.textExperience)).setText(String
 				.valueOf(exp));

@@ -46,7 +46,7 @@ public class GBMyInfo extends Activity {
 		levelBar.setProgress(data.getLevel());
 
 		expBar.setMax(data.getNextLevel());
-		expBar.setProgress(data.getExperience());
+		expBar.setProgress((int) data.getExperience());
 
 		staminaBar.setMax(10);
 		staminaBar.setProgress(data.getStamina());
