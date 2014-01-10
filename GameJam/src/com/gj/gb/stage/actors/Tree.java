@@ -11,11 +11,11 @@ import com.gj.gb.R;
 import com.gj.gb.stage.common.StageHelper;
 
 public class Tree {
-	
+
 	public static final int MAX_NUMBER_TREE_TAP = 3;
-	
+
 	private static final int MAX_SHAKE_TREE = 3;
-	
+
 	private float mPosX;
     private float mPosY;
     private float mPosXRightBorder;
@@ -70,26 +70,27 @@ public class Tree {
     }
 	
 	public void reset(){
+
 		mIsShaking = false;
 		mShakingIdx = 0;
 		mTapIdx = 0;
 	}
-	
+
 	public void setShaking(boolean isShaking) {
-		if(!mIsShaking) {
+		if (!mIsShaking) {
 			mIsShaking = isShaking;
 		}
 	}
-	
-	public boolean isShaking(){
+
+	public boolean isShaking() {
 		return mIsShaking;
 	}
-	
-	public int getTapIDx(){
+
+	public int getTapIDx() {
 		return mTapIdx;
 	}
-	
-	public void addTap(){
+
+	public void addTap() {
 		mTapIdx++;
 	}
 }

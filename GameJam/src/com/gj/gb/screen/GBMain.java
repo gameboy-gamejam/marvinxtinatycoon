@@ -22,20 +22,21 @@ public class GBMain extends Activity {
 		findViewById(R.id.buttonContinue).setOnClickListener(listener);
 		findViewById(R.id.buttonScores).setOnClickListener(listener);
 		findViewById(R.id.textTap).setOnClickListener(listener);
-		
+
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		// enables the continue button if there is save file
 		GBDataManager.setContextRef(this);
-		findViewById(R.id.buttonContinue).setEnabled(GBDataManager.hasSaveData());
+		findViewById(R.id.buttonContinue).setEnabled(
+				GBDataManager.hasSaveData());
 	}
 
 	protected OnClickListener listener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			int id = v.getId();
@@ -68,7 +69,8 @@ public class GBMain extends Activity {
 
 	protected void confirmNewGame() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Your game data will be reset.\n Are you sure you want to start a new game?");
+		intent.putExtra("message",
+				"Your game data will be reset.\n Are you sure you want to start a new game?");
 		startActivityForResult(intent, 100);
 	}
 

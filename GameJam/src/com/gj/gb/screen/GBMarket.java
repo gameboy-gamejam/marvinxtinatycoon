@@ -25,29 +25,29 @@ public class GBMarket extends Activity {
 
 	public static final int TYPE_BUY = 1;
 	public static final int TYPE_SELL = 2;
-	
+
 	private GBGameData data;
-	
+
 	private int type;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_market);
-		
+
 		data = GBDataManager.getGameData();
-		
+
 		initButtons();
 		updateData();
 		updateBuyGridView();
 	}
-	
+
 	private OnClickListener buttonListener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			int id = v.getId();
-			
+
 			switch (id) {
 			case R.id.buttonDone:
 				confirmExit();
@@ -71,23 +71,27 @@ public class GBMarket extends Activity {
 	protected void updateBuyGridView() {
 		type = TYPE_BUY;
 		GridView grid = (GridView) findViewById(R.id.gridList);
-		grid.setAdapter(new IngredientMarketGridViewAdapter2(this, GBEconomics.getMarketList()));
+		grid.setAdapter(new IngredientMarketGridViewAdapter2(this, GBEconomics
+				.getMarketList()));
 		grid.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				int iid = GBEconomics.getMarketList().get(position);
 				int max = calculateMaxQuantity(iid);
-				
+
 				if (max == 0) {
-					Intent intent = new Intent(GBMarket.this, GBPopConfirm.class);
-					intent.putExtra("message", "You do not have enough gold to purchase this ingredient.");
+					Intent intent = new Intent(GBMarket.this,
+							GBPopConfirm.class);
+					intent.putExtra("message",
+							"You do not have enough gold to purchase this ingredient.");
 					intent.putExtra("one_button", true);
 					intent.putExtra("btn_1", "OK");
 					startActivityForResult(intent, 500);
 				} else {
-					Intent intent = new Intent(GBMarket.this, GBMarketPopConfirm.class);
+					Intent intent = new Intent(GBMarket.this,
+							GBMarketPopConfirm.class);
 					intent.putExtra("ingredient_id", iid);
 					intent.putExtra("max_qty", max);
 					intent.putExtra("type", TYPE_BUY);
@@ -101,39 +105,44 @@ public class GBMarket extends Activity {
 		int normalPrice = GBIngredientsFactory.getIngredientById(id).getPrice();
 		int price = GBEconomics.recomputePrice(normalPrice);
 		int gold = data.getCurrentGold();
-		
+
 		int quantity = 0;
-		for (int i=0; /* infinite ;A; watdapak*/; i++) {
+		for (int i = 0; /* infinite ;A; watdapak */; i++) {
 			int temp = i * price;
 			if (temp <= gold) {
 				quantity++;
 			} else {
-				quantity-=1;
+				quantity -= 1;
 				break;
 			}
 		}
-		
+
 		return quantity;
 	}
 
 	protected void confirmExit() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Are you finished buying/selling ingredients?");
+		intent.putExtra("message",
+				"Are you finished buying/selling ingredients?");
 		startActivityForResult(intent, 100);
 	}
 
 	protected void updateSellGridView() {
 		type = TYPE_SELL;
 		GridView grid = (GridView) findViewById(R.id.gridList);
-		grid.setAdapter(new IngredientMarketGridViewAdapter(this, data.getIngredients()));
+		grid.setAdapter(new IngredientMarketGridViewAdapter(this, data
+				.getIngredients()));
 		grid.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				Intent intent = new Intent(GBMarket.this, GBMarketPopConfirm.class);
-				intent.putExtra("ingredient_id", data.getIngredients().get(position).getId());
-				intent.putExtra("max_qty", data.getIngredients().get(position).getQuantity());
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(GBMarket.this,
+						GBMarketPopConfirm.class);
+				intent.putExtra("ingredient_id",
+						data.getIngredients().get(position).getId());
+				intent.putExtra("max_qty", data.getIngredients().get(position)
+						.getQuantity());
 				intent.putExtra("type", TYPE_SELL);
 				startActivityForResult(intent, 1000);
 			}
@@ -142,14 +151,15 @@ public class GBMarket extends Activity {
 
 	private void updateData() {
 		GBGameData data = GBDataManager.getGameData();
-		
-		((TextView) findViewById(R.id.textCurrentGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
+
+		((TextView) findViewById(R.id.textCurrentGold)).setText(Utils
+				.formatNum(data.getCurrentGold(), "#,###,###"));
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (requestCode == 100 && resultCode == RESULT_OK) {
 			setResult(RESULT_OK);
 			finish();

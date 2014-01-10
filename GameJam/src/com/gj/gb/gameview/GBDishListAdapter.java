@@ -40,7 +40,7 @@ public class GBDishListAdapter extends BaseAdapter {
 	public void setDishId(int dishId) {
 		this.mDishId = dishId;
 	}
-	
+
 	public int getDishId() {
 		return mDishId;
 	}

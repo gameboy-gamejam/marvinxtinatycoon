@@ -7,7 +7,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.75"
-        android:background="#f46ca0" >
+        android:background="@drawable/bg_kitchen" >
 
         <SurfaceView
             android:id="@+id/surfaceCanvas"
@@ -24,6 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/bg_default_on"
             android:gravity="right"
             android:text="0G"
             android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -33,12 +34,14 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textGoldEarn"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@+id/textGoldEarn"
+            android:background="@drawable/bg_default_on"
             android:max="90000"
             android:progress="90000" />
 
@@ -50,36 +53,49 @@
             android:layout_below="@+id/progressGameTime"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
+            android:text="PENDING CUSTOMERS:"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="PENDING CUSTOMERS:" />
+            android:visibility="invisible" />
 
-        <LinearLayout 
+        <LinearLayout
             android:id="@+id/pendingCustomers"
-            android:layout_below="@id/textPendingCustomer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-        
+            android:layout_below="@id/textPendingCustomer"
+            android:orientation="horizontal" />
+
         <RelativeLayout
             android:id="@+id/filter1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#77000000" >
 
-            <TextView 
+            <TextView
                 android:id="@+id/textTapToStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:textSize="50dp"
+                android:textColor="#fff" 
                 android:text="TAP TO START"/>
-            
+
             <TextView
                 android:id="@+id/textReady"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="READY?"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:textSize="50dp"
+                android:textColor="#fff"  />
 
             <TextView
                 android:id="@+id/textGo"
@@ -87,7 +103,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="GO!"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:textSize="50dp"
+                android:textColor="#fff"  />
 
             <TextView
                 android:id="@+id/textClose"
@@ -95,7 +117,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="CLOSED"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:textSize="50dp"
+                android:textColor="#fff"  />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -106,23 +134,36 @@
         android:background="#afcaba"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/buttonKitchen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:enabled="false"
-            android:text="Kitchen" />
-
-        <GridView
-            android:id="@+id/listReadyDish"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/buttonKitchen"
-            android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
-            android:numColumns="1" >
-        </GridView>
+            android:padding="5dp" >
+
+            <Button
+                android:id="@+id/buttonKitchen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/btn_blue"
+                android:enabled="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="KITCHEN"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
+            <GridView
+                android:id="@+id/listReadyDish"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/buttonKitchen"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:numColumns="1" >
+            </GridView>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/filter2"

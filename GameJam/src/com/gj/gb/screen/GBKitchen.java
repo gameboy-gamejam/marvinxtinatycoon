@@ -24,17 +24,17 @@ public class GBKitchen extends Activity {
 	GBStove stove1, stove2, stove3, stove4;
 
 	GBGameData mData;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_kitchen);
 		init();
 	}
-	
-	private void init(){
+
+	private void init() {
 		mData = GBDataManager.getGameData();
-		
+
 		stove1 = new GBStove(this, R.id.progressBar1, R.id.btn_cook_1);
 		stove2 = new GBStove(this, R.id.progressBar2, R.id.btn_cook_2);
 		stove3 = new GBStove(this, R.id.progressBar3, R.id.btn_cook_3);
@@ -43,68 +43,68 @@ public class GBKitchen extends Activity {
 		findViewById(R.id.btn_cook_1).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(stove1.getStatus() == OvenStatus.VACANT){
+				if (stove1.getStatus() == OvenStatus.VACANT) {
 					toDishList(1);
-				}	else if(stove1.getStatus() == OvenStatus.COOKING){
-//					updateStove();
+				} else if (stove1.getStatus() == OvenStatus.COOKING) {
+					// updateStove();
 					stove1.playResultAnimation(stove1.getResultStatus());
-				} else if(stove1.getStatus() == OvenStatus.FINISHED){
+				} else if (stove1.getStatus() == OvenStatus.FINISHED) {
 					stove1.playResultAnimation(stove1.getResultStatus());
 					addDishCount(stove1);
-				}else if(stove1.getStatus() == OvenStatus.OVERCOOKED){
+				} else if (stove1.getStatus() == OvenStatus.OVERCOOKED) {
 					stove1.playResultAnimation(stove1.getResultStatus());
-				}	
+				}
 			}
 		});
 
 		findViewById(R.id.btn_cook_2).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(stove2.getStatus() == OvenStatus.VACANT){
+				if (stove2.getStatus() == OvenStatus.VACANT) {
 					toDishList(2);
-				}	else if(stove2.getStatus() == OvenStatus.COOKING){
+				} else if (stove2.getStatus() == OvenStatus.COOKING) {
 					stove2.playResultAnimation(stove2.getResultStatus());
-				} else if(stove2.getStatus() == OvenStatus.FINISHED){
+				} else if (stove2.getStatus() == OvenStatus.FINISHED) {
 					stove2.playResultAnimation(stove2.getResultStatus());
 					addDishCount(stove2);
-				}else if(stove2.getStatus() == OvenStatus.OVERCOOKED){
-					stove2.playResultAnimation(stove2.getResultStatus());		
+				} else if (stove2.getStatus() == OvenStatus.OVERCOOKED) {
+					stove2.playResultAnimation(stove2.getResultStatus());
 				}
 			}
 		});
-		
+
 		findViewById(R.id.btn_cook_3).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(stove3.getStatus() == OvenStatus.VACANT){
+				if (stove3.getStatus() == OvenStatus.VACANT) {
 					toDishList(3);
-				}	else if(stove3.getStatus() == OvenStatus.COOKING){
+				} else if (stove3.getStatus() == OvenStatus.COOKING) {
 					stove3.playResultAnimation(stove3.getResultStatus());
-				} else if(stove3.getStatus() == OvenStatus.FINISHED){
+				} else if (stove3.getStatus() == OvenStatus.FINISHED) {
 					stove3.playResultAnimation(stove3.getResultStatus());
 					addDishCount(stove3);
-				}else if(stove3.getStatus() == OvenStatus.OVERCOOKED){
-					stove3.playResultAnimation(stove3.getResultStatus());		
+				} else if (stove3.getStatus() == OvenStatus.OVERCOOKED) {
+					stove3.playResultAnimation(stove3.getResultStatus());
 				}
 			}
 		});
-		
+
 		findViewById(R.id.btn_cook_4).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(stove4.getStatus() == OvenStatus.VACANT){
+				if (stove4.getStatus() == OvenStatus.VACANT) {
 					toDishList(4);
-				}	else if(stove4.getStatus() == OvenStatus.COOKING){
+				} else if (stove4.getStatus() == OvenStatus.COOKING) {
 					stove4.playResultAnimation(stove4.getResultStatus());
-				} else if(stove4.getStatus() == OvenStatus.FINISHED){
+				} else if (stove4.getStatus() == OvenStatus.FINISHED) {
 					stove4.playResultAnimation(stove4.getResultStatus());
 					addDishCount(stove4);
-				}else if(stove4.getStatus() == OvenStatus.OVERCOOKED){
-					stove4.playResultAnimation(stove4.getResultStatus());		
+				} else if (stove4.getStatus() == OvenStatus.OVERCOOKED) {
+					stove4.playResultAnimation(stove4.getResultStatus());
 				}
 			}
 		});
-		
+
 		findViewById(R.id.back).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -124,18 +124,25 @@ public class GBKitchen extends Activity {
 		intent.putExtra("stove_no", stove_no);
 		startActivityForResult(intent, REQUEST_CODE_DISH);
 	}
-	
-	private void addDishCount(GBStove stove){
-		//eto yung nag add na sa shared pref ng dish count
-		SharedPreferences mDishCountPref = getSharedPreferences("DishCounts", MODE_PRIVATE);
+
+	private void addDishCount(GBStove stove) {
+		// eto yung nag add na sa shared pref ng dish count
+		SharedPreferences mDishCountPref = getSharedPreferences("DishCounts",
+				MODE_PRIVATE);
 		SharedPreferences.Editor editorDish = mDishCountPref.edit();
-		//dish
-		Log.d("Marvin_Debug", "dishId:  "+stove.getDishId());
-		Log.d("Marvin_Debug", "dishCount:  "+stove.getCount());
-		editorDish.putInt("dish_"+stove.getDishId(), mDishCountPref.getInt("dish_"+stove.getDishId(), 0)+ stove.getCount());
+		// dish
+		Log.d("Marvin_Debug", "dishId:  " + stove.getDishId());
+		Log.d("Marvin_Debug", "dishCount:  " + stove.getCount());
+		editorDish.putInt(
+				"dish_" + stove.getDishId(),
+				mDishCountPref.getInt("dish_" + stove.getDishId(), 0)
+						+ stove.getCount());
 		editorDish.commit();
-		Log.d("Marvin_Debug", "dishCount:  "+mDishCountPref.getInt("dish_"+stove.getDishId(), 0));
-		mData.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()), stove.getCount());
+		Log.d("Marvin_Debug",
+				"dishCount:  "
+						+ mDishCountPref.getInt("dish_" + stove.getDishId(), 0));
+		mData.addDish(GBRecipeFactory.getRecipeById(stove.getDishId()),
+				stove.getCount());
 	}
 
 	@Override
@@ -146,7 +153,7 @@ public class GBKitchen extends Activity {
 		case REQUEST_CODE_DISH:
 			if (resultCode == RESULT_CODE_DISH) {
 				data.getIntExtra("stove_no", -1);
-				
+
 				switch (data.getIntExtra("stove_no", -1)) {
 				case 1:
 					stove1.setDishId(data.getIntExtra("DishId", -1));
@@ -169,7 +176,7 @@ public class GBKitchen extends Activity {
 					stove4.startCooking();
 					break;
 				default:
-					//do nothing
+					// do nothing
 					break;
 				}
 			}

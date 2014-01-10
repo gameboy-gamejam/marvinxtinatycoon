@@ -46,7 +46,7 @@ public class GBDataManager {
 	public static void clearGamePrefs() {
 		PREFS.edit().clear().commit();
 	}
-	
+
 	public static void createData() {
 		// temporary fix
 		if (GAME_DATA == null) {
@@ -114,9 +114,9 @@ public class GBDataManager {
 
 		String converted = convertIngredientList(GAME_DATA.getIngredients());
 		edit.putString("ingredients", converted);
-		
+
 		GBEconomics.saveData(edit);
-		
+
 		edit.commit();
 	}
 
@@ -148,33 +148,34 @@ public class GBDataManager {
 	public static void loadData() {
 		if (GAME_DATA == null) {
 			GAME_DATA = new GBGameData();
-	
+
 			GAME_DATA.setCurrentDay(PREFS.getInt("currentDay", 1));
 			GAME_DATA.setCurrentMonth(PREFS.getInt("currentMonth", 1));
 			GAME_DATA.setCurrentYear(PREFS.getInt("currentYear", 2014));
 			GAME_DATA.setTotalDay(PREFS.getInt("totalDay", 0));
 			GAME_DATA.setCurrentGold(PREFS.getInt("currentGold", 1));
-			GAME_DATA.setDayState(GBDayState.valueOf(PREFS.getString("dayState",
-					GBDayState.MORNING.toString())));
+			GAME_DATA.setDayState(GBDayState.valueOf(PREFS.getString(
+					"dayState", GBDayState.MORNING.toString())));
 			GAME_DATA.setLevel(PREFS.getInt("level", 1));
 			GAME_DATA.setNextLevel(PREFS.getInt("nextLevel", 50));
 			GAME_DATA.setExperience(PREFS.getInt("experience", 0));
 			GAME_DATA.setTotalCustomers(PREFS.getInt("totalCustomer", 0));
-			GAME_DATA.setStamina(PREFS.getInt("stamina", 10)); // pano logic nito?
+			GAME_DATA.setStamina(PREFS.getInt("stamina", 10)); // pano logic
+																// nito?
 																// haha
 			GAME_DATA.setDayTotalCustomer(PREFS.getInt("day_customer", 0));
 			GAME_DATA.setDayTotalGold(PREFS.getInt("day_gold", 0));
 			GAME_DATA.setDayTotalRatings(PREFS.getInt("day_rating", 0));
 			GAME_DATA.setDayTotalExperience(PREFS.getInt("day_experience", 0));
-	
+
 			List<GBIngredient> parsed = parseIngredientString(PREFS.getString(
 					"ingredients", ""));
 			GAME_DATA.setIngredients(parsed);
-			
+
 			GBEconomics.loadData(PREFS);
 		}
 	}
-	
+
 	private static List<GBIngredient> parseIngredientString(String string) {
 		List<GBIngredient> retVal = new ArrayList<GBIngredient>();
 

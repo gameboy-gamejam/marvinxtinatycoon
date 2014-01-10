@@ -5,20 +5,21 @@ import com.gj.gb.factory.GBIngredientsFactory;
 public class GBIngredient {
 
 	public enum IngredientCategory {
-		
-		CROPS, // vegetables and other ingredients that can be harvested from land
-		
+
+		CROPS, // vegetables and other ingredients that can be harvested from
+				// land
+
 		FISH, // fish products
-		
+
 		MEAT, // meat products
-		
+
 		FRUIT, // products that can be harvested from tree
-		
+
 		OTHERS
 	}
-	
+
 	protected GBIngredientsFactory ingredient;
-	
+
 	private int quantity;
 
 	public GBIngredient(GBIngredientsFactory ingredient) {
@@ -32,20 +33,20 @@ public class GBIngredient {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	public int getId(){
-	    return ingredient.getId();
+
+	public int getId() {
+		return ingredient.getId();
 	}
-	
-	public String getName(){
-	    return ingredient.getName();
+
+	public String getName() {
+		return ingredient.getName();
 	}
-	
-	public int getPrice(){
-	    return ingredient.getPrice();
+
+	public int getPrice() {
+		return ingredient.getPrice();
 	}
-	
-	public int getRarity(){
-	    return ingredient.getRarityLevel();
+
+	public int getRarity() {
+		return ingredient.getRarityLevel();
 	}
 }

@@ -16,15 +16,15 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public static final int REQUEST_CODE_SHOW_EXIT_MENU 	= 11001;
 	public static final int REQUEST_CODE_NOT_ENOUGH_STAMINA = 11002; 
 	protected static final int FRAMEDELAY = 70;
-	
+
 	protected boolean mIsGameFinish = false;
 	protected boolean mIsShowReadyInstruction = false;
 	protected OnTouchListener mOnTouchListener;
 
 	protected abstract void playGame();// director of the stage
-	
+
 	protected abstract void resumeGame();
-	
+
 	protected abstract void endGame();
 
 	protected abstract void showReadyInstruction();
@@ -34,25 +34,28 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	protected abstract void showPointsAndReward();
 
 	protected abstract void releaseResources();
-	
-	protected void closeAllExceptSplash(){
-        Intent intent = new Intent(this, GBSplash.class);
-        intent.putExtra("ExitMe", true);//TODO add me to GBSplash (add finish();)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
-	
-	protected void showNotEnoughStaminaPopup(){
+
+	protected void closeAllExceptSplash() {
+		Intent intent = new Intent(this, GBSplash.class);
+		intent.putExtra("ExitMe", true);// TODO add me to GBSplash (add
+										// finish();)
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
+	}
+
+	protected void showNotEnoughStaminaPopup() {
 		Intent intent = new Intent(Stage.this, GBAcknowledgementPopup.class);
-		intent.putExtra(GBAcknowledgementPopup.KEY_EXTRA_MESSAGE, getResources().getString(R.string.not_enough_stamina));
+		intent.putExtra(GBAcknowledgementPopup.KEY_EXTRA_MESSAGE,
+				getResources().getString(R.string.not_enough_stamina));
 		startActivityForResult(intent, REQUEST_CODE_NOT_ENOUGH_STAMINA);
 	}
 
-	//TODO baka pedeng iakyat
+	// TODO baka pedeng iakyat
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN
+				&& event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			showInGameMenu();
 			return true;
 		}
@@ -71,21 +74,18 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 		if (isFinishing()) {
 			releaseResources();
 		} else {
-			/*boolean isScreenOn = ((PowerManager) this.getApplicationContext()
-					.getSystemService(Context.POWER_SERVICE)).isScreenOn();
-			if (!isScreenOn) {
-				disruptAndExitGame();
-				isScreenOn = true;
-			}*/
+			/*
+			 * boolean isScreenOn = ((PowerManager) this.getApplicationContext()
+			 * .getSystemService(Context.POWER_SERVICE)).isScreenOn(); if
+			 * (!isScreenOn) { disruptAndExitGame(); isScreenOn = true; }
+			 */
 		}
 	}
 
-	/*@Override
-	protected void onUserLeaveHint() {
-		super.onUserLeaveHint();
-		releaseResources();
-		finish();
-	}*/
+	/*
+	 * @Override protected void onUserLeaveHint() { super.onUserLeaveHint();
+	 * releaseResources(); finish(); }
+	 */
 
 	@Override
 	protected void onDestroy() {

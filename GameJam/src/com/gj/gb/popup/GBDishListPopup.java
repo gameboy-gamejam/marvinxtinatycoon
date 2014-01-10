@@ -25,9 +25,9 @@ public class GBDishListPopup extends Activity {
 
 	private static final int REQUEST_CODE_INGREDIENT = 10001;
 	public static final int RESULT_CODE_INGREDIENT = 20001;
-	
+
 	private int mStoveNo;
-	
+
 	private GBGameData data;
 
 	@Override
@@ -52,7 +52,7 @@ public class GBDishListPopup extends Activity {
 
 	private void init() {
 		data = GBDataManager.getGameData();
-		
+
 		mDishListAdapter = new GBDishListAdapter(this);
 		gridView = (GridView) findViewById(R.id.dishlist);
 		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
@@ -62,7 +62,7 @@ public class GBDishListPopup extends Activity {
 				finish();
 			}
 		});
-		
+
 		findViewById(R.id.btn_close2).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,16 +88,16 @@ public class GBDishListPopup extends Activity {
 	private void generateDishes() {
 		mDishList.clear();
 		mDishList.addAll(data.getAvailableRecipes());
-//		//lagay nyo dito yung mga bagong dish
-//		for (int i = 0; i < 3; i++) {
-//			mDishList.add(GBRecipeFactory.getRecipeById(i));
-//		}
-//		for (int i = 0; i < 3; i++) {
-//			mDishList.add(GBRecipeFactory.getRecipeById(i));
-//		}
-//		for (int i = 0; i < 3; i++) {
-//			mDishList.add(GBRecipeFactory.getRecipeById(i));
-//		}
+		// //lagay nyo dito yung mga bagong dish
+		// for (int i = 0; i < 3; i++) {
+		// mDishList.add(GBRecipeFactory.getRecipeById(i));
+		// }
+		// for (int i = 0; i < 3; i++) {
+		// mDishList.add(GBRecipeFactory.getRecipeById(i));
+		// }
+		// for (int i = 0; i < 3; i++) {
+		// mDishList.add(GBRecipeFactory.getRecipeById(i));
+		// }
 	}
 
 	@Override

@@ -18,10 +18,10 @@ public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 
 	Context context;
 	List<GBNewCustomer> data;
-	
+
 	public CustomerGridViewAdapter(Context context, List<GBNewCustomer> objects) {
 		super(context, R.layout.part_gridview, R.id.textDummy, objects);
-		
+
 		this.context = context;
 		this.data = objects;
 	}
@@ -29,26 +29,29 @@ public class CustomerGridViewAdapter extends ArrayAdapter<GBNewCustomer> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		IngredientHolder holder = null;
-		
+
 		if (convertView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			convertView = inflater.inflate(R.layout.part_ingredient_item, parent, false);
-			
+			convertView = inflater.inflate(R.layout.part_ingredient_item,
+					parent, false);
+
 			holder = new IngredientHolder();
-			holder.imageIcon = (ImageView) convertView.findViewById(R.id.imageIngredientIcon);
-			
+			holder.imageIcon = (ImageView) convertView
+					.findViewById(R.id.imageIngredientIcon);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (IngredientHolder) convertView.getTag();
 		}
-		
+
 		GBNewCustomer customer = getItem(position);
 
-		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "customer_"+(customer.getAvatar()-1)));
-		
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context,
+				"customer_" + (customer.getAvatar() - 1)));
+
 		return super.getView(position, convertView, parent);
 	}
-	
+
 	static class IngredientHolder {
 		ImageView imageIcon;
 	}

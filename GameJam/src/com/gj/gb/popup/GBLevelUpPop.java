@@ -19,37 +19,40 @@ public class GBLevelUpPop extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popup_levelup);
-		
-		findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
-		
+
+		findViewById(R.id.buttonClose).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						setResult(RESULT_OK);
+						finish();
+					}
+				});
+
 		findViewById(R.id.buttonOk).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				finish();
 			}
 		});
-		
+
 		initData();
 	}
 
 	private void initData() {
 		ImageView image = (ImageView) findViewById(R.id.imagePrize);
-		
-		GBIngredient ingredient = GBIngredientsFactory.getIngredientById(Utils.RANDOM.nextInt(47));
-		image.setImageBitmap(ImageCache.getBitmap(this, "ingredient_"+(ingredient.getId()+1)));
-		
+
+		GBIngredient ingredient = GBIngredientsFactory
+				.getIngredientById(Utils.RANDOM.nextInt(47));
+		image.setImageBitmap(ImageCache.getBitmap(this, "ingredient_"
+				+ (ingredient.getId() + 1)));
+
 		GBDataManager.getGameData().updateIngredient(ingredient.getId(), 1);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		setResult(RESULT_OK);

@@ -37,7 +37,7 @@ public class GBIngredientListPopup extends Activity {
 	List<Integer> mIngredientList;
 
 	GBGameData data;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +51,7 @@ public class GBIngredientListPopup extends Activity {
 		mIngredientList = mRecipe.getIngredients();
 
 		data = GBDataManager.getGameData();
-		
+
 		((TextView) findViewById(R.id.name)).setText(mRecipe.getName());
 		((TextView) findViewById(R.id.max_value)).setText(MAX_OVEN_CAPACITY
 				+ "");
@@ -70,64 +70,66 @@ public class GBIngredientListPopup extends Activity {
 			((TextView) findViewById(mNameIdList[i])).setText(ingredient
 					.getName());
 
-			((TextView) findViewById(mMaxIdList[i]))
-					.setText(data.getIngredientQty(ingredient.getId())
-							+ "");
+			((TextView) findViewById(mMaxIdList[i])).setText(data
+					.getIngredientQty(ingredient.getId()) + "");
 
 		}
-		
-		findViewById(R.id.btn_close).setOnClickListener( new OnClickListener() {
+
+		findViewById(R.id.btn_close).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
 		});
-		
-		findViewById(R.id.btn_close2).setOnClickListener( new OnClickListener() {
+
+		findViewById(R.id.btn_close2).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
 		});
-		
-		findViewById(R.id.btn_right).setOnClickListener( new OnClickListener() {
+
+		findViewById(R.id.btn_right).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				addCount();
 			}
 		});
-		
-		findViewById(R.id.btn_left).setOnClickListener( new OnClickListener() {
+
+		findViewById(R.id.btn_left).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				subCount();
 			}
 		});
-		
-		findViewById(R.id.btn_cook).setOnClickListener( new OnClickListener() {
+
+		findViewById(R.id.btn_cook).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				cook();
 			}
 		});
-		
 
 	}
-	
-	//para sa method na to...
+
+	// para sa method na to...
 	// chinecheck ko muna kung kailan pwede gumana yung cook button...
 	// tapos yun na babawasan ko na agad yung ingredients .. astigggg
-	//tapos kailangan kasi ng dishId at cookCount duhhh!!! para sa stove at sa sharedpref sa GB Kitchen thingy...
-	public void cook(){
+	// tapos kailangan kasi ng dishId at cookCount duhhh!!! para sa stove at sa
+	// sharedpref sa GB Kitchen thingy...
+	public void cook() {
 		for (int i = 0; i < mIngredientList.size(); i++) {
-			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
+			GBIngredient ingredient = GBIngredientsFactory
+					.getIngredientById(mIngredientList.get(i));
 			int count = data.getIngredientQty(ingredient.getId());
-			if(mCount > count || mCount == 0) return;
+			if (mCount > count || mCount == 0)
+				return;
 		}
-		
-		//deduct the ingredients from the shared pref
+
+		// deduct the ingredients from the shared pref
 		for (int i = 0; i < mIngredientList.size(); i++) {
-			GBIngredient ingredient = GBIngredientsFactory.getIngredientById(mIngredientList.get(i));
+			GBIngredient ingredient = GBIngredientsFactory
+					.getIngredientById(mIngredientList.get(i));
 			data.updateIngredient(ingredient.getId(), -1 * mCount);
 		}
 		Intent intent = getIntent();
@@ -146,7 +148,7 @@ public class GBIngredientListPopup extends Activity {
 		}
 		((TextView) findViewById(R.id.current_value)).setText(mCount + "");
 	}
-	
+
 	public void subCount() {
 		if (mCount <= 0)
 			return;

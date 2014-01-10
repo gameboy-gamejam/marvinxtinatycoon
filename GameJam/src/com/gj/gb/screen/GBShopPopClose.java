@@ -18,26 +18,28 @@ public class GBShopPopClose extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popup_shop);
-		
+
 		initData();
-		
-		findViewById(R.id.buttonContinue).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
-		
-		findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
+
+		findViewById(R.id.buttonContinue).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						onBackPressed();
+					}
+				});
+
+		findViewById(R.id.buttonClose).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						onBackPressed();
+					}
+				});
 	}
-	
+
 	private void initData() {
 		Intent intent = getIntent();
 		int gold = intent.getIntExtra("gold_earned", 0);
@@ -46,29 +48,34 @@ public class GBShopPopClose extends Activity {
 		int experience = intent.getIntExtra("experience_gained", 0);
 		int ratings = intent.getIntExtra("ratings_earned", 0);
 		String rating = "";
-		if (ratings >= 0) rating = "+";
+		if (ratings >= 0)
+			rating = "+";
 		rating += ratings;
-		
+
 		GBGameData data = GBDataManager.getGameData();
 		data.setCurrentGold(data.getCurrentGold() + gold);
 		data.setTotalCustomers(data.getTotalCustomers() + totalCustomer);
 		data.setExperience(data.getExperience() + experience);
 		data.setCurrentRating(data.getCurrentRating() + ratings);
-		
-		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(gold, "#,###,###"));
-		((TextView) findViewById(R.id.textCustomer)).setText(totalCustomerServed + "/" + totalCustomer);
-		((TextView) findViewById(R.id.textExperience)).setText("+" + experience);
+
+		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(gold,
+				"#,###,###"));
+		((TextView) findViewById(R.id.textCustomer))
+				.setText(totalCustomerServed + "/" + totalCustomer);
+		((TextView) findViewById(R.id.textExperience))
+				.setText("+" + experience);
 		((TextView) findViewById(R.id.textRating)).setText(rating);
 	}
 
 	@Override
 	public void onBackPressed() {
-//		GBTown.shopFlag = true;
+		// GBTown.shopFlag = true;
 		Intent intent = new Intent(GBShopPopClose.this, GBTown.class);
-		intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+				| Intent.FLAG_ACTIVITY_NO_HISTORY);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(intent);
-		
+
 		setResult(RESULT_OK);
 		finish();
 	}

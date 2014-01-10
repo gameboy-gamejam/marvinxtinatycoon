@@ -51,7 +51,7 @@ public class GBRestaurant extends Activity implements Runnable,
 
 	public static final int REQUEST_CLOSE = 1000;
 	public static final int REQUEST_MENU = 1001;
-	
+
 	public static boolean returnToMain = false;
 
 	private Thread thread = null;
@@ -72,17 +72,17 @@ public class GBRestaurant extends Activity implements Runnable,
 	private int ratingsEarned = 0;
 	private int customerServed = 0;
 	private int totalCustomer = 0;
-	
+
 	private SurfaceView shopSurface;
 	private SurfaceHolder shopSurfaceHolder;
 	private LinearLayout containerPending;
-	
+
 	private int screenWidth, screenHeight;
-	
+
 	private int totalCustomerTime = 0;
-	
+
 	private boolean started = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -97,10 +97,11 @@ public class GBRestaurant extends Activity implements Runnable,
 	@Override
 	public void onBackPressed() {
 		if (enableBack) {
-//			isSuspended = true;
-//			Intent intent = new Intent(GBRestaurant.this, GBInGameMenu.class);
-//			intent.putExtra("from", "shop");
-//			startActivityForResult(intent, 2000);
+			// isSuspended = true;
+			// Intent intent = new Intent(GBRestaurant.this,
+			// GBInGameMenu.class);
+			// intent.putExtra("from", "shop");
+			// startActivityForResult(intent, 2000);
 		}
 	}
 
@@ -116,7 +117,7 @@ public class GBRestaurant extends Activity implements Runnable,
 	}
 
 	Bitmap bitmap = null;
-	
+
 	/* Thread */
 	@Override
 	public void run() {
@@ -131,7 +132,7 @@ public class GBRestaurant extends Activity implements Runnable,
 		long currentTime = startTime;
 
 		bitmap = ImageCache.getBitmap(this, "ic_launcher");
-		
+
 		while (isRunning) {
 			final long elapsedTime = System.currentTimeMillis() - currentTime;
 			currentTime += elapsedTime;
@@ -140,14 +141,14 @@ public class GBRestaurant extends Activity implements Runnable,
 				int timeProgress = timer.getProgress();
 
 				updateData(elapsedTime);
-				
+
 				if (!isRenderSuspended) {
 					try {
 						Canvas canvas = shopSurfaceHolder.lockCanvas();
 						render(canvas);
 						shopSurfaceHolder.unlockCanvasAndPost(canvas);
 					} catch (IllegalArgumentException e) {
-						
+
 					}
 				}
 
@@ -204,7 +205,9 @@ public class GBRestaurant extends Activity implements Runnable,
 		queueManager.setRestaurantListener(this);
 
 		totalCustomer = customerList.size();
-		totalCustomerTime += customerList.get(totalCustomer-1).getArrivalTime() + customerList.get(totalCustomer-1).getTotalTime() + 2000; 
+		totalCustomerTime += customerList.get(totalCustomer - 1)
+				.getArrivalTime()
+				+ customerList.get(totalCustomer - 1).getTotalTime() + 2000;
 	}
 
 	@Override
@@ -408,17 +411,18 @@ public class GBRestaurant extends Activity implements Runnable,
 		shopSurface = (SurfaceView) findViewById(R.id.surfaceCanvas);
 		shopSurface.setZOrderOnTop(true);
 		shopSurface.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (queueManager == null) return false;
+				if (queueManager == null)
+					return false;
 				return queueManager.onTouch(event);
 			}
 		});
 		shopSurfaceHolder = shopSurface.getHolder();
 		shopSurfaceHolder.addCallback(this);
 		shopSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
-		
+
 		findViewById(R.id.buttonKitchen).setOnClickListener(
 				new OnClickListener() {
 
@@ -431,11 +435,12 @@ public class GBRestaurant extends Activity implements Runnable,
 				});
 
 		findViewById(R.id.filter1).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if (!started) {
-					findViewById(R.id.textTapToStart).setVisibility(View.INVISIBLE);
+					findViewById(R.id.textTapToStart).setVisibility(
+							View.INVISIBLE);
 					handler = new Handler(GBRestaurant.this);
 					handler.sendEmptyMessage(HANDLE_MESSAGE_START_SHOP);
 					started = true;
@@ -482,7 +487,7 @@ public class GBRestaurant extends Activity implements Runnable,
 		experienceEarned += GBStatsHelper.getExperience(customer);
 		ratingsEarned += GBStatsHelper.getRatings(customer);
 		goldEarned += GBStatsHelper.getGoldEarn(customer);
-		((TextView) findViewById(R.id.textGoldEarn)).setText(goldEarned+"G");
+		((TextView) findViewById(R.id.textGoldEarn)).setText(goldEarned + "G");
 		refreshDishList();
 	}
 

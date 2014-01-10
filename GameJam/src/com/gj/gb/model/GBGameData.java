@@ -14,42 +14,42 @@ import com.gj.gb.util.Utils;
 public class GBGameData {
 
 	public enum GBDayState {
-		
+
 		MORNING,
-		
+
 		AFTERNOON,
-		
+
 		EVENING
 	}
-	
+
 	protected GBDayState dayState;
-	
+
 	protected int currentDay;
-	
+
 	protected int currentMonth;
-	
+
 	protected int currentYear;
-	
+
 	protected int totalDay;
 
 	protected int currentGold;
-	
+
 	protected int currentRating;
-	
+
 	protected int totalCustomers;
 
 	protected List<GBIngredient> ingredients = new ArrayList<GBIngredient>();
-	
+
 	protected List<GBRecipe> recipes = new ArrayList<GBRecipe>();
-	
+
 	protected int level;
-	
-	protected int experience;
-	
+
+	protected int gourmetPoints;
+
 	protected int nextLevel;
-	
+
 	private int stamina;
-	
+
 	private List<GBRecipe> cookedDish = new ArrayList<GBRecipe>();
 
 	public GBDayState getDayState() {
@@ -82,7 +82,8 @@ public class GBGameData {
 
 	public void setCurrentRating(int currentRating) {
 		this.currentRating = currentRating;
-		if (this.currentRating < 0) this.currentRating = 0;
+		if (this.currentRating < 0)
+			this.currentRating = 0;
 	}
 
 	public int getTotalCustomers() {
@@ -92,11 +93,11 @@ public class GBGameData {
 	public void setTotalCustomers(int totalCustomers) {
 		this.totalCustomers = totalCustomers;
 	}
-	
+
 	public void addCustomerCount(int customer) {
 		this.totalCustomers += customer;
 	}
-	
+
 	public boolean removeIngredient(GBIngredient ingredient) {
 		return this.ingredients.remove(ingredient);
 	}
@@ -110,11 +111,11 @@ public class GBGameData {
 	}
 
 	public int getExperience() {
-		return experience;
+		return gourmetPoints;
 	}
 
 	public void setExperience(int experience) {
-		this.experience = experience;
+		this.gourmetPoints = experience;
 	}
 
 	public int getNextLevel() {
@@ -160,10 +161,10 @@ public class GBGameData {
 	public void addIngredient(GBIngredient ingredient) {
 		this.ingredients.add(ingredient);
 	}
-	
+
 	public int getIngredientQty(int id) {
 		int n = ingredients.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			GBIngredient ingredient = ingredients.get(i);
 			if (ingredient.getId() == id) {
 				return ingredient.getQuantity();
@@ -171,10 +172,10 @@ public class GBGameData {
 		}
 		return 0;
 	}
-	
+
 	public void removeIngredient(int id) {
 		int n = this.ingredients.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			if (ingredients.get(i).getId() == id) {
 				ingredients.remove(i);
 				updateRecipe();
@@ -182,10 +183,11 @@ public class GBGameData {
 			}
 		}
 	}
-	
+
 	private void updateRecipe() {
-		if (recipes == null) recipes = new ArrayList<GBRecipe>();
-		
+		if (recipes == null)
+			recipes = new ArrayList<GBRecipe>();
+
 		recipes.clear();
 		recipes.addAll(GBRecipeFactory.getAllAvailableRecipe());
 	}
@@ -193,11 +195,11 @@ public class GBGameData {
 	public boolean hasIngredient(List<Integer> ingredients) {
 		int n = ingredients.size();
 		int m = this.ingredients.size();
-		
+
 		int ok = 0;
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			int iid = ingredients.get(i);
-			for (int j=0; j<m; j++) {
+			for (int j = 0; j < m; j++) {
 				int jid = this.ingredients.get(j).getId();
 				if (iid == jid) {
 					ok++;
@@ -205,10 +207,10 @@ public class GBGameData {
 				}
 			}
 		}
-		
+
 		return ok == n;
 	}
-	
+
 	public List<GBRecipe> getAvailableRecipes() {
 		if (recipes == null || recipes.size() == 0) {
 			recipes = new ArrayList<GBRecipe>();
@@ -220,14 +222,14 @@ public class GBGameData {
 
 	public void updateIngredient(int id, int quantity) {
 		int n = this.ingredients.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			GBIngredient ingredient = ingredients.get(i);
 			if (ingredient.getId() == id) {
 				ingredient.setQuantity(ingredient.getQuantity() + quantity);
 				return; // quick return
 			}
 		}
-		
+
 		GBIngredient ingredient = GBIngredientsFactory.getIngredientById(id);
 		ingredient.setQuantity(quantity);
 		ingredients.add(ingredient);
@@ -242,13 +244,14 @@ public class GBGameData {
 	}
 
 	/**
-	 * @param stamina the stamina to set
+	 * @param stamina
+	 *            the stamina to set
 	 */
 	public void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
-	
-	public void useStamina(){
+
+	public void useStamina() {
 		stamina--;
 	}
 
@@ -270,12 +273,14 @@ public class GBGameData {
 	public void updateDay() {
 		dayState = GBDayState.MORNING;
 		totalDay++;
-		
+
 		currentDay++;
-		
+
 		if (currentMonth == 2) {
-			boolean isLeapYear = new GregorianCalendar().isLeapYear(currentYear);
-			if ((isLeapYear && currentDay > 29) || (!isLeapYear && currentDay > 28)) {
+			boolean isLeapYear = new GregorianCalendar()
+					.isLeapYear(currentYear);
+			if ((isLeapYear && currentDay > 29)
+					|| (!isLeapYear && currentDay > 28)) {
 				currentDay = 1;
 				currentMonth++;
 			}
@@ -286,12 +291,12 @@ public class GBGameData {
 			currentDay = 1;
 			currentMonth++;
 		}
-		
+
 		if (currentMonth > 12) {
 			currentMonth = 1;
 			currentYear++;
 		}
-		
+
 		dayTotalCustomer = 0;
 		dayTotalGold = 0;
 		dayTotalRatings = 0;
@@ -303,16 +308,16 @@ public class GBGameData {
 				|| currentMonth == 7 || currentMonth == 8 || currentMonth == 10
 				|| currentMonth == 12;
 	}
-	
+
 	public void addDish(GBRecipe recipe, int qty) {
-		for (int i=0; i<qty; i++) {
+		for (int i = 0; i < qty; i++) {
 			cookedDish.add(recipe);
 		}
 	}
-	
+
 	public void removeDish(int id) {
 		int n = cookedDish.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			GBRecipe temp = cookedDish.get(i);
 			if (temp.getId() == id) {
 				cookedDish.remove(temp);
@@ -320,27 +325,27 @@ public class GBGameData {
 			}
 		}
 	}
-	
+
 	public List<GBRecipe> getReadyDish() {
 		return cookedDish;
 	}
-	
+
 	public boolean hasDish(int id) {
 		int n = cookedDish.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			if (cookedDish.get(i).getId() == id) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public void clearReadyDish() {
 		this.cookedDish.clear();
 	}
 
 	public boolean hasLevel() {
-		if (experience >= nextLevel) {
+		if (gourmetPoints >= nextLevel) {
 			nextLevel = GBStatsHelper.calculateNextLevel(level, nextLevel);
 			level++;
 			return true;
@@ -351,16 +356,16 @@ public class GBGameData {
 	public void refreshIngredients() {
 		List<GBIngredient> toBeRemoved = new ArrayList<GBIngredient>();
 		int n = this.ingredients.size();
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			GBIngredient gbi = ingredients.get(i);
 			if (gbi.getQuantity() == 0) {
 				toBeRemoved.add(gbi);
 			}
 		}
-		
+
 		if (toBeRemoved.size() > 0) {
 			int len = toBeRemoved.size();
-			for (int i=0; i<len; i++) {
+			for (int i = 0; i < len; i++) {
 				Log.w("test", "Removed!");
 				this.ingredients.remove(toBeRemoved.get(i));
 			}
@@ -373,12 +378,12 @@ public class GBGameData {
 			stamina = 10;
 		}
 	}
-	
+
 	protected int dayTotalCustomer = 0;
 	protected int dayTotalGold = 0;
 	protected int dayTotalRatings = 0;
 	private int dayTotalExperience = 0;
-	
+
 	public int getDayTotalCustomer() {
 		return dayTotalCustomer;
 	}
@@ -412,14 +417,14 @@ public class GBGameData {
 	}
 
 	List<GBRecipe> available;
-	
+
 	public List<GBRecipe> getMenu() {
 		if (available == null) {
 			available = new ArrayList<GBRecipe>();
 			List<GBRecipe> recipes = getAvailableRecipes();
 			int n = recipes.size();
 			if (n < 4) {
-				for (int i=0; i<n; i++) {
+				for (int i = 0; i < n; i++) {
 					available.add(recipes.get(i));
 				}
 			} else {
@@ -433,7 +438,7 @@ public class GBGameData {
 		}
 		return available;
 	}
-	
+
 	public void clearMenu() {
 		if (available != null) {
 			available.clear();

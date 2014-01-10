@@ -13,29 +13,33 @@ import com.gj.gb.util.Utils;
 
 public class GBEconomics {
 
-	protected static final float[] MARKET_RATE = { 0.5f, 0.75f, 1.0f, 1.5f, 2.0f };
-	
+	protected static final float[] MARKET_RATE = { 0.5f, 0.75f, 1.0f, 1.5f,
+			2.0f };
+
 	protected static float currentMarketRate = 1.0f;
-	
-	/* decreases as day increase, when value is equal to 0, market rate is changed */
+
+	/*
+	 * decreases as day increase, when value is equal to 0, market rate is
+	 * changed
+	 */
 	protected static int marketRateDuration = 5;
 
 	/* every 7 days, market demand changes */
 	protected static int marketDemandDuration = 7;
-	
+
 	protected static final int MIN_CUSTOMER = 5;
-	
+
 	// this should be called everytime the player advances to next day
 	public static void update() {
 		updateMarketRate();
 		updateMarketDemand();
 	}
-	
+
 	public static int recomputePrice(int originalPrice) {
 		float newPrice = currentMarketRate * originalPrice;
 		return Math.round(newPrice);
 	}
-	
+
 	public static int getRateColor() {
 		if (currentMarketRate < 1) {
 			return Color.BLUE;
@@ -48,10 +52,10 @@ public class GBEconomics {
 
 	private static void updateMarketDemand() {
 		marketDemandDuration--;
-		
+
 		if (marketDemandDuration == 0) {
 			shuffleMarketList();
-			
+
 			// reset duration to 7 days
 			marketDemandDuration = 7;
 		}
@@ -60,8 +64,8 @@ public class GBEconomics {
 	private static void shuffleMarketList() {
 		List<Integer> toBeRemoved = new ArrayList<Integer>();
 		int n = onMarket.size();
-		
-		while(toBeRemoved.size() < 5) {
+
+		while (toBeRemoved.size() < 5) {
 			int index = Utils.RANDOM.nextInt(n);
 			int iid = onMarket.get(index);
 			if (toBeRemoved.contains(iid)) {
@@ -70,15 +74,15 @@ public class GBEconomics {
 				toBeRemoved.add(iid);
 			}
 		}
-		
-		for (int i=0; i<5; i++) {
+
+		for (int i = 0; i < 5; i++) {
 			onMarket.remove(Integer.valueOf(toBeRemoved.get(i)));
 		}
-		
+
 		List<Integer> toBeAdded = new ArrayList<Integer>();
 		int m = offMarket.size();
 
-		while(toBeAdded.size() < 5) {
+		while (toBeAdded.size() < 5) {
 			int index = Utils.RANDOM.nextInt(m);
 			int iid = offMarket.get(index);
 			if (toBeAdded.contains(iid)) {
@@ -87,18 +91,18 @@ public class GBEconomics {
 				toBeAdded.add(iid);
 			}
 		}
-		
-		for (int i=0; i<5; i++) {
+
+		for (int i = 0; i < 5; i++) {
 			offMarket.remove(Integer.valueOf(toBeAdded.get(i)));
 		}
-		
+
 		onMarket.addAll(0, toBeAdded);
 		offMarket.addAll(toBeRemoved);
 	}
 
 	private static void updateMarketRate() {
 		marketRateDuration--;
-		
+
 		if (marketRateDuration == 0) {
 			float rate = MARKET_RATE[Utils.RANDOM.nextInt(MARKET_RATE.length)];
 			if (rate == currentMarketRate) {
@@ -113,26 +117,28 @@ public class GBEconomics {
 
 	public static int getDayCustomerCount(int ratings) {
 		boolean influx = isCustomerInflux();
-		
+
 		int max = MIN_CUSTOMER + (MIN_CUSTOMER * ratings);
 		int customer = Utils.RANDOM.nextInt(max) + MIN_CUSTOMER;
-		
+
 		if (influx) {
 			// if there is influx of customer, there will be at least
 			// a minimum of 7 customer in the player's restaurant
 			customer += Utils.RANDOM.nextInt(8) + 2;
 		}
-		
+
 		return customer;
 	}
-	
-	/* generate random value between 1 to 10, if number is equal to 2
-	 * there will be customer influx */
+
+	/*
+	 * generate random value between 1 to 10, if number is equal to 2 there will
+	 * be customer influx
+	 */
 	private static boolean isCustomerInflux() {
 		int random = Utils.RANDOM.nextInt(10) + 1;
 		return random == 2;
 	}
-	
+
 	protected static List<Integer> onMarket = new ArrayList<Integer>();
 	protected static List<Integer> offMarket = new ArrayList<Integer>();
 
@@ -143,18 +149,19 @@ public class GBEconomics {
 	public static List<Integer> getOffMarketList() {
 		return offMarket;
 	}
-	
+
 	public static void cleanup() {
 		onMarket.clear();
 		offMarket.clear();
-		
+
 		onMarket = null;
 		offMarket = null;
 	}
-	
+
 	public static void saveData(Editor edit) {
 		String market = convertIngredientIdList(GBEconomics.getMarketList());
-		String unlocked = convertIngredientIdList(GBEconomics.getOffMarketList());
+		String unlocked = convertIngredientIdList(GBEconomics
+				.getOffMarketList());
 		edit.putString("market_list", market);
 		edit.putString("off_list", unlocked);
 
@@ -166,36 +173,36 @@ public class GBEconomics {
 	private static String convertIngredientIdList(List<Integer> ingredients) {
 		int n = ingredients.size();
 		String retVal = "";
-		
+
 		for (int i = 0; i < n; i++) {
 			if (i > 0) {
 				retVal += ":";
 			}
 			retVal += String.valueOf(ingredients.get(i));
 		}
-		
+
 		return retVal;
 	}
-	
+
 	public static void loadData(SharedPreferences prefs) {
 		if (onMarket != null) {
 			onMarket.clear();
 		}
 		onMarket = parseIngredientIdString(prefs.getString("market_list", ""));
-	
+
 		if (offMarket != null) {
 			offMarket.clear();
 		}
 		offMarket = parseIngredientIdString(prefs.getString("off_list", ""));
-		
+
 		currentMarketRate = prefs.getFloat("current_rate", 1.0f);
 		marketRateDuration = prefs.getInt("market_rate_duration", 5);
 		marketDemandDuration = prefs.getInt("market_demand_duration", 7);
 	}
-	
+
 	private static List<Integer> parseIngredientIdString(String string) {
 		List<Integer> retVal = new ArrayList<Integer>();
-		
+
 		if (string.length() > 0) {
 			String[] items = string.split(":");
 			int n = items.length;
@@ -203,7 +210,7 @@ public class GBEconomics {
 				retVal.add(Integer.valueOf(items[i]));
 			}
 		}
-		
+
 		return retVal;
 	}
 
@@ -229,7 +236,7 @@ public class GBEconomics {
 		onMarket.add(40);
 		onMarket.add(42);
 		onMarket.add(44);
-		
+
 		offMarket.clear();
 		offMarket.add(0);
 		offMarket.add(1);
@@ -259,19 +266,21 @@ public class GBEconomics {
 		offMarket.add(45);
 		offMarket.add(46);
 	}
-	
+
 	public static int getRecipePrice(GBRecipe recipe) {
 		List<Integer> ingredients = recipe.getIngredients();
-		
+
 		int n = ingredients.size();
 		int totalPrice = 0;
-		
-		for (int i=0; i<n; i++) {
-			totalPrice += GBIngredientsFactory.getIngredientById(ingredients.get(i)).getPrice();
+
+		for (int i = 0; i < n; i++) {
+			totalPrice += GBIngredientsFactory.getIngredientById(
+					ingredients.get(i)).getPrice();
 		}
 
-		if (totalPrice < 10) totalPrice = 10;
-		
+		if (totalPrice < 10)
+			totalPrice = 10;
+
 		return totalPrice;
 	}
 }

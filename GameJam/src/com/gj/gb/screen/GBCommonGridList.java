@@ -1,7 +1,6 @@
 package com.gj.gb.screen;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,8 +41,6 @@ public class GBCommonGridList extends Activity {
 
 					@Override
 					public void onClick(View v) {
-						startActivity(new Intent(GBCommonGridList.this,
-								GBInGameMenu.class));
 						finish();
 					}
 				});
@@ -70,7 +67,8 @@ public class GBCommonGridList extends Activity {
 		case R.id.buttonRecipe:
 			setContentView(R.layout.scene_recipe_grid);
 			grid = (GridView) findViewById(R.id.gridList);
-			grid.setAdapter(new RecipeGridViewAdapter(this, data.getAvailableRecipes()));
+			grid.setAdapter(new RecipeGridViewAdapter(this, data
+					.getAvailableRecipes()));
 			grid.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -84,7 +82,8 @@ public class GBCommonGridList extends Activity {
 		case R.id.buttonCustomer:
 			setContentView(R.layout.scene_customer_grid);
 			grid = (GridView) findViewById(R.id.gridList);
-			grid.setAdapter(new CustomerGridViewAdapter(this, GBNewCustomerFactory.getAllCustomerType()));
+			grid.setAdapter(new CustomerGridViewAdapter(this,
+					GBNewCustomerFactory.getAllCustomerType()));
 			grid.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -101,37 +100,48 @@ public class GBCommonGridList extends Activity {
 	}
 
 	protected void updateCustomerInfo(int position) {
-		GBNewCustomer customer = GBNewCustomerFactory.getAllCustomerType().get(position);
-		
-		((TextView) findViewById(R.id.textCustomerName)).setText(customer.getName());
-		((TextView) findViewById(R.id.textCustomerDescription)).setText(customer.getDescription());
-		((ImageView) findViewById(R.id.imageCustomerIcon)).setImageBitmap(ImageCache.getBitmap(this, "customer_" + (customer.getAvatar()-1)));
+		GBNewCustomer customer = GBNewCustomerFactory.getAllCustomerType().get(
+				position);
+
+		((TextView) findViewById(R.id.textCustomerName)).setText(customer
+				.getName());
+		((TextView) findViewById(R.id.textCustomerDescription))
+				.setText(customer.getDescription());
+		((ImageView) findViewById(R.id.imageCustomerIcon))
+				.setImageBitmap(ImageCache.getBitmap(this, "customer_"
+						+ (customer.getAvatar() - 1)));
 	}
 
 	protected void updateRecipeInfo(int position) {
 		GBRecipe recipe = null;
-		
+
 		if (data.getAvailableRecipes().size() > 0) {
 			recipe = data.getAvailableRecipes().get(position);
 		}
-		
+
 		if (recipe == null) {
 			((TextView) findViewById(R.id.textRecipeName)).setText("");
 			((TextView) findViewById(R.id.textRecipeDescription)).setText("");
 			((TextView) findViewById(R.id.textRecipePrice)).setText("");
-			((ImageView) findViewById(R.id.imageRecipeIcon)).setImageBitmap(null);
+			((ImageView) findViewById(R.id.imageRecipeIcon))
+					.setImageBitmap(null);
 		} else {
-			
-			((TextView) findViewById(R.id.textRecipeName)).setText(recipe.getName());
-			((TextView) findViewById(R.id.textRecipeDescription)).setText(recipe.getDescription());
-			((TextView) findViewById(R.id.textRecipePrice)).setText(GBEconomics.getRecipePrice(recipe) + "G");
-			((ImageView) findViewById(R.id.imageRecipeIcon)).setImageBitmap(ImageCache.getBitmap(this, "recipe_" + recipe.getId()));
+
+			((TextView) findViewById(R.id.textRecipeName)).setText(recipe
+					.getName());
+			((TextView) findViewById(R.id.textRecipeDescription))
+					.setText(recipe.getDescription());
+			((TextView) findViewById(R.id.textRecipePrice)).setText("Price: " + GBEconomics
+					.getRecipePrice(recipe) + "G");
+			((ImageView) findViewById(R.id.imageRecipeIcon))
+					.setImageBitmap(ImageCache.getBitmap(this, "recipe_"
+							+ recipe.getId()));
 		}
 	}
 
 	protected void updateIngredientInfo(int position) {
 		GBIngredient ingredient = null;
-		
+
 		if (data.getIngredients().size() > 0) {
 			ingredient = data.getIngredients().get(position);
 		}
@@ -140,17 +150,17 @@ public class GBCommonGridList extends Activity {
 			((TextView) findViewById(R.id.textIngredientName)).setText("");
 			((TextView) findViewById(R.id.textIngredientPrice)).setText("");
 			((TextView) findViewById(R.id.textIngredientQty)).setText("");
-			((TextView) findViewById(R.id.textIngredientDescription)).setText("");
-			((ImageView) findViewById(R.id.imageIcon))
-					.setImageBitmap(null);
+			((TextView) findViewById(R.id.textIngredientDescription))
+					.setText("");
+			((ImageView) findViewById(R.id.imageIcon)).setImageBitmap(null);
 		} else {
-			
-			((TextView) findViewById(R.id.textIngredientName)).setText(ingredient
-					.getName());
-			((TextView) findViewById(R.id.textIngredientPrice)).setText(""
-					+ ingredient.getPrice());
-			((TextView) findViewById(R.id.textIngredientQty)).setText(ingredient
-					.getQuantity() + "x");
+
+			((TextView) findViewById(R.id.textIngredientName))
+					.setText(ingredient.getName());
+			((TextView) findViewById(R.id.textIngredientPrice)).setText("Price: "
+					+ ingredient.getPrice() + "G");
+			((TextView) findViewById(R.id.textIngredientQty))
+					.setText("Quantity: " + ingredient.getQuantity() + "x");
 			((ImageView) findViewById(R.id.imageIcon))
 					.setImageBitmap(ImageCache.getBitmap(this, "ingredient_"
 							+ (ingredient.getId() + 1)));
@@ -159,7 +169,6 @@ public class GBCommonGridList extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		startActivity(new Intent(GBCommonGridList.this, GBInGameMenu.class));
 		finish();
 	}
 }

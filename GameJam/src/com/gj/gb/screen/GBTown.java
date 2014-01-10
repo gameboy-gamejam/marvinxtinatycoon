@@ -12,77 +12,142 @@ import com.gj.gb.R;
 import com.gj.gb.logic.GBEconomics;
 import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBGameData.GBDayState;
-import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.popup.GBDaySummaryPop;
 import com.gj.gb.popup.GBLevelUpPop;
+import com.gj.gb.popup.GBPopConfirm;
 import com.gj.gb.util.GBDataManager;
 import com.gj.gb.util.Utils;
 
 public class GBTown extends Activity {
-	
+
 	public static boolean returnToMain = false;
-  
+
 	protected GBGameData data;
 	public static boolean shopFlag;
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.scene_town);
-        shopFlag = false;
-        int id = getIntent().getIntExtra("button_id", R.id.buttonNewGame);
-        initData(id);
-        initButtons();
-    }
 
-	private void initButtons() {
-		findViewById(R.id.buttonMenu).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonOutside).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonMarket).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonBulletin).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonShop).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonMayor).setOnClickListener(buttonListener);
-		findViewById(R.id.buttonGuild).setOnClickListener(buttonListener);
+	private int currentHouse = 1;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.scene_town_alt);
+		shopFlag = false;
+		int id = getIntent().getIntExtra("button_id", R.id.buttonNewGame);
+		initData(id);
+		initView();
 	}
-	
-	private OnClickListener buttonListener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			int id = v.getId();
-			switch (id) {
-			case R.id.buttonMenu:
-				startActivity(new Intent(GBTown.this, GBInGameMenu.class));
-				break;
-			case R.id.buttonOutside:
-				toOutside();
-				break;
-			case R.id.buttonMarket:
-				toMarket();
-				break;
-			case R.id.buttonShop:
-				toShop();
-				break;
-			case R.id.buttonMayor:
-				toMayor();
-				break;
-			case R.id.buttonGuild:
-				toGuild();
-				break;
-			case R.id.buttonBulletin:
-				break;
+
+	private void initView() {
+		findViewById(R.id.buttonLeft).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				currentHouse--;
+				updateHouse();
 			}
+		});
+
+		findViewById(R.id.buttonRight).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						currentHouse++;
+						updateHouse();
+					}
+				});
+
+		findViewById(R.id.buttonGo).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (currentHouse == 0) {
+					toMarket();
+				} else if (currentHouse == 1) {
+					toShop();
+				} else {
+					toOutside();
+				}
+			}
+		});
+
+		findViewById(R.id.buttonMainMenu).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						toMainMenu();
+					}
+				});
+
+		findViewById(R.id.buttonSave).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				toSaveData();
+			}
+		});
+
+		findViewById(R.id.buttonIngredients).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						toGridList(v.getId());
+					}
+				});
+
+		findViewById(R.id.buttonRecipe).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						toGridList(v.getId());
+					}
+				});
+	}
+
+	protected void toSaveData() {
+		GBDataManager.saveData();
+
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message", "Successfully saved");
+		intent.putExtra("one_button", true);
+		intent.putExtra("btn_1", "OK");
+		startActivityForResult(intent, 104);
+	}
+
+	protected void updateHouse() {
+		if (currentHouse == 0) {
+			findViewById(R.id.buttonLeft).setEnabled(false);
+		} else if (currentHouse == 2) {
+			findViewById(R.id.buttonRight).setEnabled(false);
+		} else {
+			findViewById(R.id.buttonLeft).setEnabled(true);
+			findViewById(R.id.buttonRight).setEnabled(true);
 		}
-	};
-	
+
+		if (currentHouse == 0) {
+			((ImageView) findViewById(R.id.imageView1))
+					.setImageResource(R.drawable.market);
+		} else if (currentHouse == 1) {
+			((ImageView) findViewById(R.id.imageView1))
+					.setImageResource(R.drawable.shop);
+		} else {
+			((ImageView) findViewById(R.id.imageView1))
+					.setImageResource(R.drawable.outside);
+		}
+	}
+
 	@Override
 	public void onBackPressed() {
-		startActivity(new Intent(GBTown.this, GBInGameMenu.class));
+		toMainMenu();
 	}
-	
+
 	protected void toGuild() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Sorry, the guild isn't open. Come back again some other time.");
+		intent.putExtra("message",
+				"Sorry, the guild isn't open. Come back again some other time.");
 		intent.putExtra("one_button", true);
 		intent.putExtra("btn_1", "OK");
 		startActivity(intent);
@@ -90,7 +155,8 @@ public class GBTown extends Activity {
 
 	protected void toMayor() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Sorry, the mayor doesn't want to be disturbed right now.");
+		intent.putExtra("message",
+				"Sorry, the mayor doesn't want to be disturbed right now.");
 		intent.putExtra("one_button", true);
 		intent.putExtra("btn_1", "OK");
 		startActivity(intent);
@@ -98,20 +164,35 @@ public class GBTown extends Activity {
 
 	protected void toMarket() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Do you want to visit the market to buy or sell ingredients?");
+		intent.putExtra("message",
+				"Do you want to visit the market to buy or sell ingredients?");
 		startActivityForResult(intent, 100);
 	}
 
 	protected void toOutside() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Do you want to go outside town and hunt for ingredients?");
+		intent.putExtra("message",
+				"Do you want to go outside town and hunt for ingredients?");
 		startActivityForResult(intent, 101);
+	}
+
+	protected void toGridList(int id) {
+		Intent intent = new Intent(this, GBCommonGridList.class);
+		intent.putExtra("type", id);
+		startActivity(intent);
 	}
 
 	protected void toShop() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
 		intent.putExtra("message", "Do you want to open your shop?");
 		startActivityForResult(intent, 102);
+	}
+
+	protected void toMainMenu() {
+		Intent intent = new Intent(this, GBPopConfirm.class);
+		intent.putExtra("message",
+				"Do you want to go to the main menu?\n(The data is not saved.)");
+		startActivityForResult(intent, 103);
 	}
 
 	private void initData(int id) {
@@ -131,54 +212,74 @@ public class GBTown extends Activity {
 
 	private void updateData() {
 		data.refreshIngredients();
-		
-		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(data.getCurrentGold(), "#,###,###"));
-		((TextView) findViewById(R.id.textRatings)).setText(String.valueOf(data.getCurrentRating()));
-		((TextView) findViewById(R.id.textDay)).setText(Utils.formatDate(data.getCurrentDay(), data.getCurrentMonth(), data.getCurrentYear()));
-		((ImageView) findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
+
+		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(
+				data.getCurrentGold(), "#,###,###"));
+		((TextView) findViewById(R.id.textRating)).setText(String.valueOf(data
+				.getCurrentRating()));
+		((TextView) findViewById(R.id.textCustomers)).setText(String
+				.valueOf(data.getTotalCustomers()));
+		((TextView) findViewById(R.id.textLevel)).setText("LEVEL "
+				+ data.getLevel());
+		((TextView) findViewById(R.id.textGourmetPoints)).setText(String
+				.valueOf(data.getExperience()));
+		((TextView) findViewById(R.id.textDay)).setText("DAY "
+				+ (data.getTotalDay() + 1));
+		updateDayState();
+		// ((ImageView)
+		// findViewById(R.id.imageDayState)).setImageResource(formatDayState(data.getDayState()));
 	}
 
-	private int formatDayState(GBDayState dayState) {
+	private void updateDayState() {
+		GBDayState dayState = data.getDayState();
 		if (dayState == GBDayState.AFTERNOON) {
-			return R.drawable.daystate_1;
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_2);
+			findViewById(R.id.bgFilter).setBackgroundResource(
+					R.color.sky_2_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
 		} else if (dayState == GBDayState.EVENING) {
-			return R.drawable.daystate_2;
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_3);
+			findViewById(R.id.bgFilter).setBackgroundResource(
+					R.color.sky_3_clear);
+			findViewById(R.id.bgFilter).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.bgSky).setBackgroundResource(R.color.sky_1);
+			findViewById(R.id.bgFilter).setVisibility(View.INVISIBLE);
 		}
-		return R.drawable.daystate_0;
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//oh no its a cheat
-		if(shopFlag){
+		// oh no its a cheat
+		if (shopFlag) {
 			shopFlag = false;
 			this.data.update();
 			updateData();
-		}
-
-		/* CHEAT! */
-		if (returnToMain) {
-			GBTown.returnToMain = false;
-			finish();
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (requestCode == 100 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBMarket.class), 201);
 		} else if (requestCode == 101 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBOutside.class), 202);
 		} else if (requestCode == 102 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBRestaurant.class), 203);
+		} else if (requestCode == 103 && resultCode == RESULT_OK) {
+			GBDataManager.saveData();
+			finish();
+			return;
+		} else if (requestCode == 104) {
+			return;
 		}
-		
+
 		if (requestCode == 201 || requestCode == 202 || requestCode == 203) {
 			this.data.clearMenu();
-			if(this.data.update()) {
+			if (this.data.update()) {
 				// TODO: call day summary first
 				toDaySummary();
 			}
@@ -188,7 +289,7 @@ public class GBTown extends Activity {
 				toLevelUp();
 			}
 		}
-		
+
 		if (requestCode == 300) {
 			updateData();
 		} else if (requestCode == 400) {

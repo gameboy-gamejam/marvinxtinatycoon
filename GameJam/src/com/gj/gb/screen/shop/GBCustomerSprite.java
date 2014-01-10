@@ -42,8 +42,8 @@ public class GBCustomerSprite {
 	private Bitmap defaultThought;
 	private Bitmap orderBitmap;
 
-	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap1, Bitmap bitmap2, Bitmap bitmap3, float x,
-			float y) {
+	public GBCustomerSprite(GBNewCustomer customer, Bitmap bitmap1,
+			Bitmap bitmap2, Bitmap bitmap3, float x, float y) {
 		this.customer = customer;
 		this.x = x;
 		this.y = y;
@@ -54,10 +54,10 @@ public class GBCustomerSprite {
 		this.paint = new Paint();
 		this.paint.setTextSize(50.0f);
 
-        this.bitmap1 = bitmap1;
-        this.bitmap2 = bitmap2;
-        this.bitmap3 = bitmap3;
-        
+		this.bitmap1 = bitmap1;
+		this.bitmap2 = bitmap2;
+		this.bitmap3 = bitmap3;
+
 		this.glowBitmap = bitmap1.extractAlpha();
 		this.glowPaint = new Paint();
 
@@ -67,18 +67,17 @@ public class GBCustomerSprite {
 		this.glowPaint
 				.setMaskFilter(new BlurMaskFilter(glowRadius, Blur.OUTER));
 		this.shadowPaint = new Paint();
-        shadowPaint.setAntiAlias(true);
-        shadowPaint.setColor(Color.WHITE);
-        shadowPaint.setTextSize(45.0f);
-        shadowPaint.setStrokeWidth(2.0f);
-        shadowPaint.setStyle(Paint.Style.STROKE);
-        shadowPaint.setShadowLayer(5.0f, 10.0f, 10.0f, Color.BLACK);
+		shadowPaint.setAntiAlias(true);
+		shadowPaint.setColor(Color.WHITE);
+		shadowPaint.setTextSize(45.0f);
+		shadowPaint.setStrokeWidth(2.0f);
+		shadowPaint.setStyle(Paint.Style.STROKE);
+		shadowPaint.setShadowLayer(5.0f, 10.0f, 10.0f, Color.BLACK);
 	}
 
 	public void update(long elapse) {
 
 	}
-	
 
 	public void render(Canvas canvas) {
 		if (visibility == GBSpriteVisibility.VISIBLE) {
@@ -86,7 +85,7 @@ public class GBCustomerSprite {
 				canvas.drawBitmap(glowBitmap, x, y, glowPaint);
 			}
 			GBCustomerState state = customer.getState();
-			
+
 			if (state == GBCustomerState.LEAVING) {
 				canvas.drawBitmap(bitmap3, x, y, paint);
 			} else if (customer.getSomething()) {
@@ -94,11 +93,14 @@ public class GBCustomerSprite {
 			} else {
 				canvas.drawBitmap(bitmap1, x, y, paint);
 			}
-			canvas.drawBitmap(thoughtCloud, x, y-thoughtCloud.getHeight(), paint);
+			canvas.drawBitmap(thoughtCloud, x, y - thoughtCloud.getHeight(),
+					paint);
 			if (customer.getOrder() == null) {
-				canvas.drawBitmap(defaultThought, x, y-thoughtCloud.getHeight(), paint);
+				canvas.drawBitmap(defaultThought, x,
+						y - thoughtCloud.getHeight(), paint);
 			} else {
-				canvas.drawBitmap(orderBitmap, x, y-thoughtCloud.getHeight(), paint);
+				canvas.drawBitmap(orderBitmap, x, y - thoughtCloud.getHeight(),
+						paint);
 			}
 		} else if (visibility == GBSpriteVisibility.GONE && served) {
 			// draw points
@@ -154,17 +156,17 @@ public class GBCustomerSprite {
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
-					|| eventX >= (x + width - 5)
-					|| eventY >= (y + height - 5)) {
+					|| eventX >= (x + width - 5) || eventY >= (y + height - 5)) {
 				selected = false;
 				return;
 			}
-			
+
 			if (action == MotionEvent.ACTION_DOWN) {
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
 				selected = false;
-				if (GBDataManager.getGameData().hasDish(customer.getOrder().getId())) {
+				if (GBDataManager.getGameData().hasDish(
+						customer.getOrder().getId())) {
 					served = true;
 					customer.setState(GBCustomerState.SERVED);
 					listener.onDishServed(customer);
@@ -180,30 +182,30 @@ public class GBCustomerSprite {
 
 			// touch event is outside range
 			if (eventX <= (x + 5) || eventY <= (y + 5)
-					|| eventX >= (x + width - 5)
-					|| eventY >= (y + height - 5)) {
+					|| eventX >= (x + width - 5) || eventY >= (y + height - 5)) {
 				selected = false;
 				return;
 			}
-			
+
 			if (action == MotionEvent.ACTION_DOWN) {
 				selected = true;
 			} else if (action == MotionEvent.ACTION_UP) {
 				selected = false;
 				if (customer.getState() == GBCustomerState.LEAVING
-						&& GBDataManager.getGameData().hasDish(customer.getOrder().getId())) {
+						&& GBDataManager.getGameData().hasDish(
+								customer.getOrder().getId())) {
 					served = true;
 					customer.setState(GBCustomerState.SERVED);
 					listener.onDishServed(customer);
 				}
-			}			
+			}
 		}
 	}
-	
+
 	public int getWidth() {
 		return bitmap1.getWidth();
 	}
-	
+
 	public int getHeight() {
 		return bitmap1.getHeight();
 	}

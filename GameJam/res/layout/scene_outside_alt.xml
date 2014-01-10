@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6FCCFF">
+<!--     android:background="#EEECD2"> -->
+<!--     android:background="#6874A5"> -->
+
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+   		android:background="@drawable/background_town"
+        />
+    
+    <Button
+        android:id="@+id/buttonLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="LEFT" />
+
+    <Button
+        android:id="@+id/buttonRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:text="RIGHT" />
+
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:background="#116FCCFF"/>
+<!--     android:background="#77EEECD2"/> -->
+<!--         android:background="#776874A5"/> -->
+</RelativeLayout>

@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import com.gj.gb.R;
 
 public class Basket {
-    
     private static final int WIDTH = 256;//TODO check again
     private static final int HEIGHT = 150;
     private static final int MOVEMENT_PER_FRAME = 25;//TODO testing
@@ -60,5 +59,4 @@ public class Basket {
         }
         canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
     }
-    
-}
+ }
