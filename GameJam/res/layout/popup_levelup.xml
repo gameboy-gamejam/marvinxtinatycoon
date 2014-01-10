@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_default_layer" >
+        android:background="@drawable/bg_default" >
 
         <Button
             android:id="@+id/buttonOk"
@@ -20,15 +20,25 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/btn_green"
             android:gravity="center"
-            android:text="Ok" />
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="Ok"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textLevelUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="LEVEL UP!"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -38,8 +48,13 @@
             android:layout_above="@+id/buttonOk"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="You receive a random ingredient!"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/imagePrize"
