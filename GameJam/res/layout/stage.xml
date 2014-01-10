@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/bg_default_layer"
+    android:background="@drawable/bg_default_2"
     android:padding="5dp">
 	    <SurfaceView
 	        android:id="@+id/gameCanvas"
