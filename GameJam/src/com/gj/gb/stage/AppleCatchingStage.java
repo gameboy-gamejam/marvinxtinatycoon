@@ -140,7 +140,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 	                                List<Apple> spoiledApple = new ArrayList<Apple>();
 	                                for(Apple apple: apples){
 	                                	if(apple.isHitBasket(basket)){
-	                                		mPointsEarned+=30;
+	                                		mPointsEarned+=20;
 	                                		spoiledApple.add(apple);
 	                                	} else if(apple.isHitGround()){
 	                                		spoiledApple.add(apple);
@@ -165,7 +165,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
                             }
                         }
                     }
-                    mDirector.postDelayed(mScript, 70);
+                    mDirector.postDelayed(mScript, FRAMEDELAY);
 				}
 			}
 		};
@@ -239,7 +239,7 @@ public class AppleCatchingStage extends Stage implements SensorEventListener{
 		mRecordedSeedTime = System.currentTimeMillis();
 		mEstimatedTimeFinish = mRecordedSeedTime + MAX_TIME_FRUIT_FALL_FINISH;
 		mIsScriptRunning = true;
-		mDirector.postDelayed(mScript, 70);
+		mDirector.postDelayed(mScript, FRAMEDELAY);
 	}
 
 	@Override

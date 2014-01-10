@@ -14,7 +14,7 @@ public class Apple {
 	private static final int WIDTH = 100;
 	private static final int HEIGHT = 100;
 	
-	private static final int mMovement = 20;
+	private static final int mMovement = 35;
 	private float mWallPosY;
 	
 	private int mPosX;
