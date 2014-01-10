@@ -148,7 +148,7 @@ public class GBStove {
             @Override
             public void run() {
         		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
-        		img.setBackgroundResource(R.drawable.test2);
+        		img.setBackgroundResource(R.drawable.stove);
         		((ProgressBar) mActivity.findViewById(mProgressBarId)).setProgress(0);
             }
         });

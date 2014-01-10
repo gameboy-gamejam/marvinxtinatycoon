@@ -27,7 +27,7 @@
                     android:id="@+id/btn_cook_1"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/test2" />
+                    android:background="@drawable/stove" />
 
 
                 <RelativeLayout
@@ -38,8 +38,8 @@
                     <ProgressBar
                         android:id="@+id/progressBar1"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="90dp"
-                        android:layout_height="@dimen/dp_7"
+                        android:layout_width="190dp"
+                        android:layout_height="@dimen/dp_20"
                         android:background="@drawable/img_combo_gauge_small_body"
                         android:progressDrawable="@drawable/combo_boss_list_gauge" />
                 </RelativeLayout>
@@ -57,17 +57,18 @@
                     android:id="@+id/btn_cook_2"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/test2" />
+                    android:background="@drawable/stove" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5" >
 
                     <ProgressBar
                         android:id="@+id/progressBar2"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="90dp"
-                        android:layout_height="@dimen/dp_7"
+                        android:layout_width="190dp"
+                        android:layout_height="@dimen/dp_20"
                         android:background="@drawable/img_combo_gauge_small_body"
                         android:progressDrawable="@drawable/combo_boss_list_gauge" />
                 </RelativeLayout>
@@ -92,17 +93,18 @@
                     android:id="@+id/btn_cook_3"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/test2" />
+                    android:background="@drawable/stove" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5" >
 
                     <ProgressBar
                         android:id="@+id/progressBar3"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="90dp"
-                        android:layout_height="@dimen/dp_7"
+                        android:layout_width="190dp"
+                        android:layout_height="@dimen/dp_20"
                         android:background="@drawable/img_combo_gauge_small_body"
                         android:progressDrawable="@drawable/combo_boss_list_gauge" />
                 </RelativeLayout>
@@ -120,17 +122,18 @@
                     android:id="@+id/btn_cook_4"
                     android:layout_width="200dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/test2" />
+                    android:background="@drawable/stove" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5" >
 
                     <ProgressBar
                         android:id="@+id/progressBar4"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="90dp"
-                        android:layout_height="@dimen/dp_7"
+                        android:layout_width="190dp"
+                        android:layout_height="@dimen/dp_20"
                         android:background="@drawable/img_combo_gauge_small_body"
                         android:progressDrawable="@drawable/combo_boss_list_gauge" />
                 </RelativeLayout>

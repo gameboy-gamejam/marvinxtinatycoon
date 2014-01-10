@@ -18,8 +18,13 @@
             android:layout_height="0dp"
             android:layout_weight="0.6"
             android:gravity="center"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
             android:text="This is a sample message."
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +41,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_green"
                 android:gravity="center"
-                android:text="Yes" />
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="Yes"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/buttonNegative"
@@ -47,7 +57,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_red"
                 android:gravity="center"
-                android:text="No" />
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="No"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 

@@ -22,7 +22,12 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
                 android:text="Dummy Name"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dp_18" />
         </LinearLayout>
 
@@ -32,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/holder_name"
             android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/bg_default_2"
             android:orientation="vertical"
             android:paddingBottom="@dimen/dp_10" >
@@ -42,7 +47,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredients" />
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="Ingredients"
+                android:textColor="@color/white" />
 
             <RelativeLayout
                 android:id="@+id/holder_ingredient_1"
@@ -56,28 +66,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Pizza" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="Pizza"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/max_ingredient_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="35" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="35"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/divider_ingredient_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/max_ingredient_1"
-                    android:text=" / " />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text=" / "
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/current_ingredient_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/divider_ingredient_1"
-                    android:text="0" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="0"
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,28 +122,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Pizza" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="Pizza"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/max_ingredient_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="35" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="35"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/divider_ingredient_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/max_ingredient_2"
-                    android:text=" / " />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text=" / "
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/current_ingredient_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/divider_ingredient_2"
-                    android:text="0" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="0"
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -128,28 +178,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Pizza" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="Pizza"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/max_ingredient_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="35" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="35"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/divider_ingredient_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/max_ingredient_3"
-                    android:text=" / " />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text=" / "
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/current_ingredient_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/divider_ingredient_3"
-                    android:text="0" />
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="0"
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -176,20 +246,35 @@
                     android:id="@+id/current_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
                     android:text="0"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dp_20" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
                     android:text=" / "
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dp_20" />
 
                 <TextView
                     android:id="@+id/max_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
                     android:text="5"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/dp_20" />
             </LinearLayout>
 
@@ -228,7 +313,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_red"
                 android:gravity="center"
-                android:text="Close" />
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="Close"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/btn_cook"
@@ -239,7 +329,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_green"
                 android:gravity="center"
-                android:text="Cook" />
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="Cook"
+                android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
 
