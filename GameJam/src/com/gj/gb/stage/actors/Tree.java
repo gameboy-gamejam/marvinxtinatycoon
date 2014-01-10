@@ -45,7 +45,7 @@ public class Tree {
     
     public void drawMe(Canvas canvas, Resources res){
     	if(mCurrentSkin == null){
-        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.tree);
+        	mCurrentSkin = BitmapFactory.decodeResource(res, R.drawable.bg_tree);
             Bitmap.createScaledBitmap(mCurrentSkin, mWidth, mHeight, false);
         }
     	canvas.drawRect(0, 0, 1000, 700, black);
@@ -61,7 +61,7 @@ public class Tree {
     			return;
     		}
     	}
-    	canvas.drawBitmap(mCurrentSkin, mPosX, mPosY, null);
+    	canvas.drawBitmap(mCurrentSkin, 0, 0, null);
     }
 	
 	public boolean isHit(float touchPosX, float touchPosY){
