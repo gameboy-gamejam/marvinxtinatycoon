@@ -63,7 +63,7 @@
                     android:background="@drawable/btn_red"
                     android:gravity="center"
                     android:minLines="2"
-                    android:text="@string/return_to_town" />
+                    android:text="Back" />
 
                 <TextView
                     android:id="@+id/playAgain"
