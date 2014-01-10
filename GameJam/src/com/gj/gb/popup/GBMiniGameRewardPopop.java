@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.gj.gb.R;
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.RewardSystem;
+import com.gj.gb.model.GBGameData;
 import com.gj.gb.model.GBIngredient;
 import com.gj.gb.model.GBIngredient.IngredientCategory;
+import com.gj.gb.util.GBDataManager;
 
 public class GBMiniGameRewardPopop extends Activity {
 
@@ -57,6 +59,10 @@ public class GBMiniGameRewardPopop extends Activity {
 		IngredientCategory category = (IngredientCategory) extra
 				.getSerializable(KEY_EXTRA_CATEGORY);
 
+		
+		GBGameData data = GBDataManager.getGameData();
+		data.setExperience((data.getExperience() +(points*0.1f)));
+		
 		int rarityLvl = RewardSystem.getRarityLevelFromScore(points);
 		List<GBIngredient> rewardsAvailable = GBIngredientsFactory
 				.findIngredientByCategoryAndLessThanEqualRarity(category,

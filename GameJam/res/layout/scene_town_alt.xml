@@ -40,6 +40,12 @@
     <!-- android:background="#77EEECD2"/> -->
     <!-- android:background="#776874A5"/> -->
 
+    <View
+        android:id="@+id/bgFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#116FCCFF" />
+    
     <Button
         android:id="@+id/buttonGo"
         android:layout_width="wrap_content"
@@ -60,12 +66,6 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/shop" />
 
-    <View
-        android:id="@+id/bgFilter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#116FCCFF" />
-    
     <Button
         android:id="@+id/buttonSave"
         style="?android:attr/buttonStyleSmall"

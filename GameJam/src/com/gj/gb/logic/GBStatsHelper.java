@@ -2,9 +2,12 @@ package com.gj.gb.logic;
 
 import java.util.List;
 
+import android.util.Log;
+
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.model.GBNewCustomer;
 import com.gj.gb.model.GBNewCustomer.GBCustomerState;
+import com.gj.gb.model.GBRecipe;
 
 public class GBStatsHelper {
 
@@ -38,7 +41,10 @@ public class GBStatsHelper {
 	}
 
 	public static int calculateNextLevel(int currentLevel, int currentNextLevel) {
-		return currentNextLevel += 30;
+		int current = currentNextLevel;
+		current += (30 * (currentLevel*currentLevel)) + (5 * currentLevel);
+		Log.w("test", "Level " + currentLevel + ": CurrentNextLevel " + currentNextLevel + ": Next Next Level " + current);
+		return current;
 		// int nextLevel = currentLevel + 1;
 		// float x3 = nextLevel * nextLevel * nextLevel;
 		// float x2 = -6.25f * (nextLevel * nextLevel);
@@ -52,5 +58,19 @@ public class GBStatsHelper {
 		// toNextLevel *= y;
 		//
 		// return toNextLevel;
+	}
+
+	public static float computeCookPoint(GBRecipe recipeById) {
+		List<Integer> ingredient = recipeById.getIngredients();
+		int n = ingredient.size();
+
+		int totalRarity = 0;
+		for (int i = 0; i < n; i++) {
+			totalRarity += GBIngredientsFactory.getIngredientById(
+					ingredient.get(i)).getRarity();
+		}
+		totalRarity /= 3; // average rarity
+		
+		return (totalRarity * 2.5f) + (GBEconomics.getRecipePrice(recipeById)/2);
 	}
 }
