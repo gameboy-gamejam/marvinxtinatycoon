@@ -15,7 +15,7 @@ public abstract class Stage extends Activity implements SurfaceHolder.Callback {
 	public static final int REQUEST_CODE_GAME_START 		= 11000;
 	public static final int REQUEST_CODE_SHOW_EXIT_MENU 	= 11001;
 	public static final int REQUEST_CODE_NOT_ENOUGH_STAMINA = 11002; 
-	protected static final int FRAMEDELAY = 100;
+	protected static final int FRAMEDELAY = 70;
 	
 	protected boolean mIsGameFinish = false;
 	protected boolean mIsShowReadyInstruction = false;

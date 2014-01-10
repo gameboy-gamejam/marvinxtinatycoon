@@ -57,7 +57,7 @@ public class Tree {
     			mShakingIdx = 0;
     		}
     		if(mShakingIdx%2 != 0){    		    
-    			canvas.drawBitmap(mCurrentSkin, mPosX+7, mPosY, null);
+    			canvas.drawBitmap(mCurrentSkin, 10, 0, null);
     			return;
     		}
     	}

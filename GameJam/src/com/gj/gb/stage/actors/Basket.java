@@ -11,7 +11,7 @@ public class Basket {
     
     private static final int WIDTH = 256;//TODO check again
     private static final int HEIGHT = 150;
-    private static final int MOVEMENT_PER_FRAME = 9;//TODO testing
+    private static final int MOVEMENT_PER_FRAME = 25;//TODO testing
     
     private float mPosX;
     private float mPosY;
