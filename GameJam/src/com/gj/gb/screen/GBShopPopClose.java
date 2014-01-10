@@ -57,6 +57,11 @@ public class GBShopPopClose extends Activity {
 		data.setTotalCustomers(data.getTotalCustomers() + totalCustomer);
 		data.setExperience(data.getExperience() + experience);
 		data.setCurrentRating(data.getCurrentRating() + ratings);
+		
+		data.setDayTotalCustomer(data.getDayTotalCustomer()+totalCustomer);
+		data.setDayTotalExperience(data.getDayTotalExperience()+experience);
+		data.setDayTotalGold(data.getDayTotalGold()+gold);
+		data.setDayTotalRatings(data.getDayTotalRatings()+ratings);
 
 		((TextView) findViewById(R.id.textGold)).setText(Utils.formatNum(gold,
 				"#,###,###"));

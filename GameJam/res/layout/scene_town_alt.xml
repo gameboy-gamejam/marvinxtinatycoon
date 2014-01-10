@@ -155,7 +155,12 @@
         android:drawablePadding="10dp"
         android:gravity="right"
         android:text="10G"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/textRating"
@@ -169,7 +174,12 @@
         android:gravity="right"
         android:text="0"
         android:layout_marginBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/textCustomers"
@@ -182,7 +192,12 @@
         android:drawablePadding="10dp"
         android:gravity="right"
         android:text="0"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/textDay"

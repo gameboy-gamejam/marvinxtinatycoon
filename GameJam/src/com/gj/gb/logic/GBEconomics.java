@@ -215,6 +215,7 @@ public class GBEconomics {
 	}
 
 	public static void initMarket() {
+		if (onMarket == null) onMarket = new ArrayList<Integer>();
 		onMarket.clear();
 		onMarket.add(5);
 		onMarket.add(7);
@@ -237,6 +238,7 @@ public class GBEconomics {
 		onMarket.add(42);
 		onMarket.add(44);
 
+		if (offMarket == null) offMarket = new ArrayList<Integer>();
 		offMarket.clear();
 		offMarket.add(0);
 		offMarket.add(1);

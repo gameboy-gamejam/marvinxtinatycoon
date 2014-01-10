@@ -26,6 +26,11 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_default_on"
             android:gravity="right"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:textColor="#fff"
             android:text="0G"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 

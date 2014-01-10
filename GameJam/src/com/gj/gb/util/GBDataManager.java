@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 import com.gj.gb.factory.GBIngredientsFactory;
 import com.gj.gb.logic.GBEconomics;
@@ -40,11 +41,14 @@ public class GBDataManager {
 	}
 
 	public static void clearGameData() {
+		Log.w("test", "data cleared");
 		GAME_DATA = null;
 	}
 
 	public static void clearGamePrefs() {
+		Log.w("test", "prefs cleared");
 		PREFS.edit().clear().commit();
+		Log.w("test", "prefs: " + PREFS.getAll().size());
 	}
 
 	public static void createData() {
@@ -118,6 +122,7 @@ public class GBDataManager {
 		GBEconomics.saveData(edit);
 
 		edit.commit();
+		Log.w("test", "data saved");
 	}
 
 	private static String convertIngredientList(List<GBIngredient> ingredients) {

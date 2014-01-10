@@ -20,8 +20,8 @@ public class GBMain extends Activity {
 
 		findViewById(R.id.buttonNewGame).setOnClickListener(listener);
 		findViewById(R.id.buttonContinue).setOnClickListener(listener);
-		findViewById(R.id.buttonScores).setOnClickListener(listener);
-		findViewById(R.id.textTap).setOnClickListener(listener);
+//		findViewById(R.id.buttonScores).setOnClickListener(listener);
+		findViewById(R.id.panelStart).setOnClickListener(listener);
 
 	}
 
@@ -31,8 +31,14 @@ public class GBMain extends Activity {
 
 		// enables the continue button if there is save file
 		GBDataManager.setContextRef(this);
-		findViewById(R.id.buttonContinue).setEnabled(
-				GBDataManager.hasSaveData());
+		findViewById(R.id.buttonNewGame).setBackgroundResource(R.drawable.btn_red);
+		if (GBDataManager.hasSaveData()) {
+			findViewById(R.id.buttonContinue).setEnabled(true);
+			findViewById(R.id.buttonContinue).setBackgroundResource(R.drawable.btn_green);
+		} else {
+			findViewById(R.id.buttonContinue).setEnabled(false);
+			findViewById(R.id.buttonContinue).setBackgroundResource(R.drawable.btn_grey);
+		}
 	}
 
 	protected OnClickListener listener = new OnClickListener() {
@@ -52,10 +58,11 @@ public class GBMain extends Activity {
 			case R.id.buttonContinue:
 				toGameScreen(id);
 				break;
-			case R.id.buttonScores:
+//			case R.id.buttonScores:
+			case R.id.panelStart:
 			case R.id.textTap:
 				findViewById(R.id.panelButtons).setVisibility(View.VISIBLE);
-				findViewById(R.id.panelStart).setVisibility(View.INVISIBLE);
+				findViewById(R.id.panelStart).setVisibility(View.GONE);
 			}
 		}
 	};

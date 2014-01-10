@@ -270,7 +270,6 @@ public class GBTown extends Activity {
 		} else if (requestCode == 102 && resultCode == RESULT_OK) {
 			startActivityForResult(new Intent(this, GBRestaurant.class), 203);
 		} else if (requestCode == 103 && resultCode == RESULT_OK) {
-			GBDataManager.saveData();
 			finish();
 			return;
 		} else if (requestCode == 104) {
