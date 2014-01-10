@@ -15,13 +15,13 @@ public class GBSplash extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_splash);
-		
-		if(getIntent().getBooleanExtra("ExitMe", false)){
-            finish();
-        }
-		
+
+		if (getIntent().getBooleanExtra("ExitMe", false)) {
+			finish();
+		}
+
 		Handler handler = new Handler(new Callback() {
-			
+
 			@Override
 			public boolean handleMessage(Message msg) {
 				initApp();

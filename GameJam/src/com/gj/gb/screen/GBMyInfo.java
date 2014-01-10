@@ -18,33 +18,36 @@ public class GBMyInfo extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_my_info);
-		
-		findViewById(R.id.buttonClose).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(GBMyInfo.this, GBInGameMenu.class));
-				finish();
-			}
-		});
-		
+
+		findViewById(R.id.buttonClose).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(GBMyInfo.this,
+								GBInGameMenu.class));
+						finish();
+					}
+				});
+
 		displayData();
 	}
 
 	private void displayData() {
 		GBGameData data = GBDataManager.getGameData();
-		((TextView) findViewById(R.id.textTotalDay)).setText(String.valueOf(data.getTotalDay()));
-		
+		((TextView) findViewById(R.id.textTotalDay)).setText(String
+				.valueOf(data.getTotalDay()));
+
 		ProgressBar levelBar = (ProgressBar) findViewById(R.id.progressLevel);
 		ProgressBar expBar = (ProgressBar) findViewById(R.id.progressExp);
 		ProgressBar staminaBar = (ProgressBar) findViewById(R.id.progressStamina);
-		
+
 		levelBar.setMax(100);
 		levelBar.setProgress(data.getLevel());
-		
+
 		expBar.setMax(data.getNextLevel());
 		expBar.setProgress(data.getExperience());
-		
+
 		staminaBar.setMax(10);
 		staminaBar.setProgress(data.getStamina());
 	}

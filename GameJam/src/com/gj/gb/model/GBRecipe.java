@@ -6,13 +6,13 @@ import java.util.List;
 public class GBRecipe {
 
 	protected int id;
-	
+
 	protected String name;
-	
+
 	protected String description;
-	
+
 	protected List<Integer> ingredients;
-	
+
 	private int quantity;
 
 	public GBRecipe(int id, String name, String description, int... ingredient) {
@@ -22,11 +22,11 @@ public class GBRecipe {
 		this.description = description;
 		this.ingredients = new ArrayList<Integer>();
 		int n = ingredient.length;
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i++) {
 			this.ingredients.add(ingredient[i]);
 		}
 	}
-	
+
 	public int getId() {
 		return id;
 	}

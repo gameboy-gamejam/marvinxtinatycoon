@@ -10,35 +10,49 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Close" />
+        android:background="@drawable/btn_close" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonClose"
         android:layout_centerHorizontal="true"
-        android:text="YOUR CURRENT INGREDIENTS" />
+        android:text="YOUR CURRENT INGREDIENTS"
+        android:textColor="#fff"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:drawablePadding="2dp"
+        android:background="@drawable/bg_market"
+        android:textSize="25dp" />
 
     <LinearLayout 
         android:layout_below="@id/textView1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
         <GridView
             android:id="@+id/gridList"
             android:layout_width="0dp"
             android:layout_weight="0.6"
             android:layout_height="match_parent"
-            android:numColumns="3">
+            android:numColumns="3"
+        android:background="@drawable/bg_market">
         </GridView>
         
         <RelativeLayout 
             android:id="@+id/panelItemDetail"
             android:layout_width="0dp"
             android:layout_weight="0.4"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+        android:background="@drawable/bg_market">
 
             <ImageView
                 android:id="@+id/imageIcon"
@@ -47,7 +61,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+        android:background="@drawable/bg_grid"  />
 
             <TextView
                 android:id="@+id/textIngredientName"
@@ -56,6 +71,7 @@
                 android:layout_below="@+id/imageIcon"
                 android:layout_centerHorizontal="true"
                 android:text="Potato"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -64,6 +80,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textIngredientName"
                 android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:text="5"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -74,6 +92,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:text="50x"
+                android:textStyle="bold"
+                android:textColor="#000"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -83,7 +103,7 @@
                 android:layout_above="@+id/textIngredientQty"
                 android:layout_below="@+id/textIngredientPrice"
                 android:gravity="center"
-                android:text="This is a sample description." />
+                android:visibility="gone" />
             
         </RelativeLayout>
     </LinearLayout>

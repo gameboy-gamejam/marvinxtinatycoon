@@ -8,62 +8,62 @@ import com.gj.gb.util.Utils;
 public class GBNewCustomer {
 
 	public enum GBCustomerState {
-		
+
 		ARRIVING,
-		
+
 		ARRIVED,
-		
+
 		IN_QUEUE,
-		
+
 		DECIDING,
-		
+
 		WAITING,
-		
+
 		LEAVING,
-		
+
 		SERVED,
-		
+
 		RAGE_QUIT
 	}
-	
+
 	private GBCustomerState state = GBCustomerState.ARRIVING;
-	
+
 	// the time this customer arrives at the restaurant
 	private long arrivalTime = 0;
-	
+
 	// tolerable time to wait in queue
 	private long queueTime = 0;
 	// total time it takes to decide for order
 	private long decideTime = 0;
 	// tolerable time to wait for the order
 	private long waitTime = 0;
-	
+
 	private long totalStayTime = 0;
 
 	// you don't like the customer when they're angry and hungry
 	private boolean angryAtQueue = false, angryAtWaiting = false;
-	
+
 	// bonus gold earned after satisfying this customer
 	private int tip = 0;
 
 	private int id;
 	private int avatar;
-	
+
 	private String name;
 	private String description;
 
 	private long offset = 0;
-	
+
 	private GBRecipe order = null;
-	
+
 	private boolean consumed = false;
-	
+
 	public GBNewCustomer(int avatar, String name, String description) {
 		this.avatar = avatar;
 		this.name = name;
 		this.description = description;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -82,72 +82,76 @@ public class GBNewCustomer {
 
 	public void update(long elapsed) {
 		totalStayTime += elapsed;
-		
+
 		switch (state) {
-			case ARRIVING:
-				if (totalStayTime >= arrivalTime) {
-					state = GBCustomerState.ARRIVED;
-				}
-				break;
-			case ARRIVED:
-				break;
-			case IN_QUEUE:
-				offset = queueTime;
-				if (!angryAtQueue && totalStayTime >= (queueTime + arrivalTime)) {
-					angryAtQueue = true;
-				}
-				break;
-			case DECIDING:
-				long decidePlus = offset + arrivalTime;
-				if (totalStayTime >= (decideTime + decidePlus)) {
-					state = GBCustomerState.WAITING;
-					decide();
-				}
-				break;
-			case WAITING:
-				long waitPlus = offset + arrivalTime + decideTime;
-				if (totalStayTime >= ((waitTime/2) + waitPlus)) soemthing = true;
-				if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
-//					Log.w("test", "Customer " + id + " is very angry...");
-					angryAtWaiting = true;
-					state = GBCustomerState.LEAVING;
-				}
-				if (angryAtQueue && angryAtWaiting) {
-					state = GBCustomerState.RAGE_QUIT;
-				}
-				break;
-			case LEAVING:
-				long leavePlus = offset + arrivalTime + decideTime + waitTime + 4000; // buffer of 2 seconds before leaving
-				if (totalStayTime >= leavePlus) {
-					state = GBCustomerState.RAGE_QUIT;
-				}
-				break;
-			case SERVED:
-				break;
-			case RAGE_QUIT:
-				break;
+		case ARRIVING:
+			if (totalStayTime >= arrivalTime) {
+				state = GBCustomerState.ARRIVED;
+			}
+			break;
+		case ARRIVED:
+			break;
+		case IN_QUEUE:
+			offset = queueTime;
+			if (!angryAtQueue && totalStayTime >= (queueTime + arrivalTime)) {
+				angryAtQueue = true;
+			}
+			break;
+		case DECIDING:
+			long decidePlus = offset + arrivalTime;
+			if (totalStayTime >= (decideTime + decidePlus)) {
+				state = GBCustomerState.WAITING;
+				decide();
+			}
+			break;
+		case WAITING:
+			long waitPlus = offset + arrivalTime + decideTime;
+			if (totalStayTime >= ((waitTime / 2) + waitPlus))
+				soemthing = true;
+			if (!angryAtWaiting && totalStayTime >= (waitTime + waitPlus)) {
+				// Log.w("test", "Customer " + id + " is very angry...");
+				angryAtWaiting = true;
+				state = GBCustomerState.LEAVING;
+			}
+			if (angryAtQueue && angryAtWaiting) {
+				state = GBCustomerState.RAGE_QUIT;
+			}
+			break;
+		case LEAVING:
+			long leavePlus = offset + arrivalTime + decideTime + waitTime
+					+ 4000; // buffer of 2 seconds before leaving
+			if (totalStayTime >= leavePlus) {
+				state = GBCustomerState.RAGE_QUIT;
+			}
+			break;
+		case SERVED:
+			break;
+		case RAGE_QUIT:
+			break;
 		}
 	}
-	
+
 	private boolean soemthing = false;
+
 	public boolean getSomething() {
 		return soemthing;
 	}
-	
+
 	private void decide() {
 		List<GBRecipe> recipes = GBDataManager.getGameData().getMenu();
 		// ai chever para malaman kung anu ung gustong foods
 		int n = recipes.size();
 		int index = Utils.RANDOM.nextInt(n);
-		
+
 		order = recipes.get(index);
-//		Log.w("test", "Customer " + id + " decided to order " + order.getName());
+		// Log.w("test", "Customer " + id + " decided to order " +
+		// order.getName());
 	}
 
 	public void setState(GBCustomerState state) {
 		this.state = state;
 	}
-	
+
 	public GBCustomerState getState() {
 		return this.state;
 	}
@@ -161,26 +165,26 @@ public class GBNewCustomer {
 
 	private long getDecidingTime() {
 		int retVal = 2 + Utils.RANDOM.nextInt(2);
-		
+
 		// the indecisive && prankster
 		if (avatar == 1) {
 			retVal += 2;
 		}
-		
+
 		return retVal * 1000;
 	}
 
 	private int getTolerableWaitingTime() {
 		int retVal = 15 + Utils.RANDOM.nextInt(2);
-		
+
 		// the impatient
 		if (avatar == 5) {
 			retVal -= 5;
 		}
-		
+
 		return retVal * 1000;
 	}
-	
+
 	public GBRecipe getOrder() {
 		return order;
 	}
@@ -188,10 +192,11 @@ public class GBNewCustomer {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[A="+arrivalTime+":"+"Q="+queueTime+":D="+decideTime+":W="+waitTime+"]";
+		return "[A=" + arrivalTime + ":" + "Q=" + queueTime + ":D="
+				+ decideTime + ":W=" + waitTime + "]";
 	}
 
 	public int getTip() {
@@ -205,21 +210,23 @@ public class GBNewCustomer {
 	public void consumed() {
 		this.consumed = true;
 	}
-	
+
 	public int getHit() {
 		int hits = 0;
-		
-		if (angryAtQueue) hits++;
-		if (angryAtWaiting) hits++;
-		
+
+		if (angryAtQueue)
+			hits++;
+		if (angryAtWaiting)
+			hits++;
+
 		return hits;
 	}
-	
+
 	public long getArrivalTime() {
 		return arrivalTime;
 	}
-	
+
 	public long getTotalTime() {
-		return queueTime + decideTime + waitTime + 4000; 
+		return queueTime + decideTime + waitTime + 4000;
 	}
 }

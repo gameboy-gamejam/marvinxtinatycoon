@@ -13,18 +13,18 @@ import com.gj.gb.util.GBDataManager;
 public class GBSystemMenu extends Activity {
 
 	protected String from;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_system_menu);
 
 		from = getIntent().getStringExtra("from");
-		
+
 		if (from.equals("shop") || from.compareTo("shop") == 0) {
 			findViewById(R.id.buttonSave).setEnabled(false);
 		}
-		
+
 		initButtons();
 	}
 
@@ -42,11 +42,11 @@ public class GBSystemMenu extends Activity {
 	}
 
 	private OnClickListener listener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			int id = v.getId();
-			
+
 			switch (id) {
 			case R.id.buttonClose:
 				startActivity(new Intent(GBSystemMenu.this, GBInGameMenu.class));
@@ -67,7 +67,7 @@ public class GBSystemMenu extends Activity {
 
 	protected void saveData() {
 		GBDataManager.saveData();
-		
+
 		Intent intent = new Intent(this, GBPopConfirm.class);
 		intent.putExtra("message", "Successfully saved");
 		intent.putExtra("one_button", true);
@@ -77,14 +77,15 @@ public class GBSystemMenu extends Activity {
 
 	protected void toMainMenu() {
 		Intent intent = new Intent(this, GBPopConfirm.class);
-		intent.putExtra("message", "Do you want to go to the main menu?\n(The data is not saved.)");
+		intent.putExtra("message",
+				"Do you want to go to the main menu?\n(The data is not saved.)");
 		startActivityForResult(intent, 101);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (requestCode == 101 && resultCode == RESULT_OK) {
 			if (from.equals("town") || from.compareTo("town") == 0) {
 				GBTown.returnToMain = true; /* CHEATERS */
@@ -95,5 +96,5 @@ public class GBSystemMenu extends Activity {
 			finish();
 		}
 	}
-	
+
 }

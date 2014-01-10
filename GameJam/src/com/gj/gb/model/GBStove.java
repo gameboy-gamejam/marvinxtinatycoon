@@ -18,16 +18,13 @@ import com.gj.gb.R;
 
 public class GBStove {
 	public enum OvenStatus {
-		VACANT, 
-		COOKING, // RAW pa
+		VACANT, COOKING, // RAW pa
 		FINISHED, // Tama lng
 		OVERCOOKED, // sunog na
 	}
-	
-	public enum ResultStatus{
-		RAW,
-		NORMAL,
-		BUNRT
+
+	public enum ResultStatus {
+		RAW, NORMAL, BUNRT
 	}
 
 	private OvenStatus mOvenStatus;
@@ -76,7 +73,7 @@ public class GBStove {
 	public void setResultStatus(ResultStatus status) {
 		this.mResultStatus = status;
 	}
-	
+
 	public OvenStatus getStatus() {
 		return mOvenStatus;
 	}
@@ -106,8 +103,7 @@ public class GBStove {
 		mResultStatus = ResultStatus.RAW;
 		Log.d("Marvin_Debug", "moved to cooking");
 		startCookingAnim();
-		
-		
+
 		timer = new CountDownTimer(10000, 1000) {
 			public void onTick(long m) {
 				int sec = (int) (10 - (m / 1000));
@@ -144,14 +140,15 @@ public class GBStove {
 	public void reset() {
 		timer.cancel();
 		mOvenStatus = OvenStatus.VACANT;
-		mActivity.runOnUiThread(new Runnable() {  
-            @Override
-            public void run() {
-        		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
-        		img.setBackgroundResource(R.drawable.test2);
-        		((ProgressBar) mActivity.findViewById(mProgressBarId)).setProgress(0);
-            }
-        });
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				ImageView img = ((ImageView) mActivity.findViewById(mResultId));
+				img.setBackgroundResource(R.drawable.test2);
+				((ProgressBar) mActivity.findViewById(mProgressBarId))
+						.setProgress(0);
+			}
+		});
 
 	}
 
@@ -159,10 +156,11 @@ public class GBStove {
 		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
 		img.setBackgroundResource(R.drawable.anim_cooking);
 		AnimationDrawable anim = (AnimationDrawable) img.getBackground();
-		((ImageView) mActivity.findViewById(mResultId)).setVisibility(View.VISIBLE);
+		((ImageView) mActivity.findViewById(mResultId))
+				.setVisibility(View.VISIBLE);
 		anim.start();
 	}
-	
+
 	public void playResultAnimation(ResultStatus status) {
 		ImageView img = ((ImageView) mActivity.findViewById(mResultId));
 		if (status == ResultStatus.RAW) {

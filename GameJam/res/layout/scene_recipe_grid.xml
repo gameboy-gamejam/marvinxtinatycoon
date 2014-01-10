@@ -10,36 +10,50 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Close" />
+        android:background="@drawable/btn_close" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonClose"
         android:layout_centerHorizontal="true"
-        android:text="YOUR CURRENT MENU" />
+        android:background="@drawable/bg_market"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:drawablePadding="2dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:text="YOUR CURRENT MENU"
+        android:textColor="#fff"
+        android:textSize="25dp" />
 
-    <LinearLayout 
-        android:layout_below="@id/textView1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="10dp">
+        android:layout_below="@id/textView1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" >
 
         <GridView
             android:id="@+id/gridList"
             android:layout_width="0dp"
-            android:layout_weight="0.6"
             android:layout_height="match_parent"
-            android:numColumns="3">
+            android:layout_weight="0.6"
+            android:background="@drawable/bg_market"
+            android:numColumns="3" >
         </GridView>
-        
-        <RelativeLayout 
+
+        <RelativeLayout
             android:id="@+id/panelItemDetail"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:layout_height="match_parent">
-            
+            android:background="@drawable/bg_market" >
+
             <ImageView
                 android:id="@+id/imageRecipeIcon"
                 android:layout_width="75dp"
@@ -47,7 +61,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+        android:background="@drawable/bg_grid" />
 
             <TextView
                 android:id="@+id/textRecipeName"
@@ -55,8 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageRecipeIcon"
                 android:layout_centerHorizontal="true"
-                android:text="Potato Salad"
                 android:gravity="center_horizontal"
+                android:text="Potato Salad"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -66,6 +82,8 @@
                 android:layout_below="@+id/textRecipeName"
                 android:layout_centerHorizontal="true"
                 android:text="50"
+                android:textColor="#000"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -75,7 +93,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@+id/textRecipePrice"
                 android:gravity="center"
-                android:text="This is a sample description." />
+                android:text="This is a sample description."
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
+
 </RelativeLayout>

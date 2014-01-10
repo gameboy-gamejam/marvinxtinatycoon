@@ -18,10 +18,10 @@ public class ShopDishGridViewAdapter extends ArrayAdapter<GBRecipe> {
 
 	Context context;
 	List<GBRecipe> data;
-	
+
 	public ShopDishGridViewAdapter(Context context, List<GBRecipe> objects) {
 		super(context, R.layout.part_gridview, R.id.textDummy, objects);
-		
+
 		this.context = context;
 		this.data = objects;
 	}
@@ -29,26 +29,29 @@ public class ShopDishGridViewAdapter extends ArrayAdapter<GBRecipe> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		IngredientHolder holder = null;
-		
+
 		if (convertView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			convertView = inflater.inflate(R.layout.part_ingredient_item, parent, false);
-			
+			convertView = inflater.inflate(R.layout.part_ingredient_item,
+					parent, false);
+
 			holder = new IngredientHolder();
-			holder.imageIcon = (ImageView) convertView.findViewById(R.id.imageIngredientIcon);
-			
+			holder.imageIcon = (ImageView) convertView
+					.findViewById(R.id.imageIngredientIcon);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (IngredientHolder) convertView.getTag();
 		}
-		
+
 		GBRecipe recipe = getItem(position);
 
-		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "recipe_" + recipe.getId()));
-		
+		holder.imageIcon.setImageBitmap(ImageCache.getBitmap(context, "recipe_"
+				+ recipe.getId()));
+
 		return super.getView(position, convertView, parent);
 	}
-	
+
 	static class IngredientHolder {
 		ImageView imageIcon;
 	}
