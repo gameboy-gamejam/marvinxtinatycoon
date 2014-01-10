@@ -6,6 +6,8 @@ import java.util.Random;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -80,6 +82,12 @@ public class FishStage extends Stage {
 			                if(canvas != null) {
 			                	canvas.drawColor(0, Mode.CLEAR);//eraser
 			                	canvas.drawRect(0, 0, 1000, 700, white);
+			               
+			                	Bitmap	bitmap = BitmapFactory.decodeResource(res, R.drawable.bg_water);
+			                        Bitmap.createScaledBitmap(bitmap, 1000, 700, false);
+			                    
+			                    canvas.drawBitmap(bitmap, 0, 0, null);
+			       
 			                	fisher.drawMe(canvas);
 			                    for(Pond pond: ponds) {
 			                    	pond.drawMe(canvas, res);
@@ -142,6 +150,11 @@ public class FishStage extends Stage {
                         synchronized (mSurfaceHolder) {
                             if(canvas != null) {
                             	canvas.drawPaint(white);
+                            	
+                              	Bitmap	bitmap = BitmapFactory.decodeResource(res, R.drawable.bg_water);
+		                        Bitmap.createScaledBitmap(bitmap, 1000, 700, false);
+		                    
+		                    canvas.drawBitmap(bitmap, 0, 0, null);
                                 mFishingRod.drawMe(canvas);
                                 fisher.drawMe(canvas);
                                 for(Pond pond: ponds) {
